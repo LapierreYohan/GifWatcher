@@ -1,12 +1,10 @@
-package com.example.phonenetworks.controllers;
-
+package com.example.gifs_watcher.controllers;
+/*
 import android.util.Log;
 
-import com.example.phonenetworks.managers.ApiManager;
-import com.example.phonenetworks.managers.CacheManager;
-import com.example.phonenetworks.managers.NetworkDataManagerCallBack;
-import com.example.phonenetworks.models.Networks;
-import com.example.phonenetworks.models.Record;
+import com.example.gifs_watcher.managers.ApiManager;
+import com.example.gifs_watcher.managers.CacheManager;
+import com.example.gifs_watcher.managers.NetworkDataManagerCallBack;
 
 import java.util.ArrayList;
 
@@ -86,3 +84,4 @@ public class ListDataController {
     }
 
 }
+*/

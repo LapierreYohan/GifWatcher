@@ -1,6 +1,7 @@
-package com.example.phonenetworks.managers;
+package com.example.gifs_watcher.managers;
 
-import com.example.phonenetworks.services.NetworkService;
+/*
+import com.example.gifs_watcher.services.NetworkService;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -47,3 +48,4 @@ public class ApiManager {
 
 
 }
+*/

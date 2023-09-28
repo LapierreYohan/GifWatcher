@@ -1,4 +1,4 @@
-package com.example.phonenetworks.adapters;
+package com.example.gifs_watcher.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.phonenetworks.R;
-import com.example.phonenetworks.models.Record;
+import com.example.gifs_watcher.R;
 
 import java.util.ArrayList;
 
+/*
 public class NetworkAdapter extends BaseAdapter {
 
     ArrayList<Record> datas = null;
@@ -90,3 +90,4 @@ public class NetworkAdapter extends BaseAdapter {
         return layout;
     }
 }
+*/

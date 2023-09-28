@@ -1,7 +1,7 @@
-package com.example.phonenetworks.controllers;
+package com.example.gifs_watcher.controllers;
 
-import com.example.phonenetworks.managers.CacheManager;
-import com.example.phonenetworks.models.Record;
+/*
+import com.example.gifs_watcher.managers.CacheManager;
 
 import java.util.ArrayList;
 
@@ -20,3 +20,4 @@ public class MapsController {
         return cm.getDatas();
     }
 }
+*/

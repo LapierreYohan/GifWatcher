@@ -1,5 +1,6 @@
-package com.example.phonenetworks.utils;
+package com.example.gifs_watcher.utils;
 
+/*
 import android.widget.AbsListView;
 
 public abstract class EndlessScrollListener implements AbsListView.OnScrollListener {
@@ -64,4 +65,4 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         // Don't take any action on changed
     }
-}
+}*/

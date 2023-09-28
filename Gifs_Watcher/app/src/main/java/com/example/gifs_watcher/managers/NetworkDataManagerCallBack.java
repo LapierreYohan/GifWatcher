@@ -1,8 +1,7 @@
-package com.example.phonenetworks.managers;
-
-import com.example.phonenetworks.models.Networks;
-
+package com.example.gifs_watcher.managers;
+/*
 public interface NetworkDataManagerCallBack {
     void getDataResponseSuccess(Networks network);
     void getDataResponseError(String message);
 }
+*/

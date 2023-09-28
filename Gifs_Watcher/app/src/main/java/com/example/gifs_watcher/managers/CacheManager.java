@@ -1,7 +1,6 @@
-package com.example.phonenetworks.managers;
+package com.example.gifs_watcher.managers;
 
-import com.example.phonenetworks.models.Record;
-
+/*
 import java.util.ArrayList;
 
 public class CacheManager {
@@ -32,3 +31,4 @@ public class CacheManager {
 
     public ArrayList<Record> getDatas() { return this.datas; }
 }
+*/

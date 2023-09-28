@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.ui.home
+package com.example.gifs_watcher.views.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

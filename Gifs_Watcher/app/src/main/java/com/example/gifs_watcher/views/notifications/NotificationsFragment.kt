@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.ui.notifications
+package com.example.gifs_watcher.views.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater

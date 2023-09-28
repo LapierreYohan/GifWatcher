@@ -26,6 +26,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -58,6 +59,13 @@ dependencies {
 
     // Interceptor
     implementation ("com.squareup.okhttp3:logging-interceptor:4.2.1")
+
+    // Picasso
+    implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("jp.wasabeef:picasso-transformations:2.4.0")
+
+    // Gif Drawable
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

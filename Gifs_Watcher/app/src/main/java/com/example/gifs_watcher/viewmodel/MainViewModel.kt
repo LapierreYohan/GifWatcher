@@ -3,47 +3,46 @@ package com.example.gifs_watcher.viewmodel
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.datasource.ApiManager
+import com.example.gifs_watcher.datasource.RetrofitDataSource
 import com.example.gifs_watcher.datasource.CacheManager
 import com.example.gifs_watcher.utils.callback.TenorDataManagerCallBack
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.models.TenorData
+import com.example.gifs_watcher.repositories.GifRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel {
-    private var apiManager : ApiManager = ApiManager
+class MainViewModel : ViewModel() {
+
+    private var gifRepo : GifRepository = GifRepository
     private var cacheManager : CacheManager = CacheManager
 
+    private val data: ArrayList<Results> = arrayListOf()
+    val dataLD: MutableLiveData<ArrayList<Results>> = MutableLiveData()
     fun getRandomGif(context: Context, callBack : TenorDataManagerCallBack) : Unit {
 
         val tenorKey : String = context.getString(R.string.tenor_api_key)
-        var callRandomGifs : Call<TenorData?>? = apiManager.getTenorService()?.getRandomsGifs(tenorKey, "10", "high");
-
-        callRandomGifs?.enqueue(object : Callback<TenorData?> {
-
-            override fun onResponse(call: Call<TenorData?>, response: Response<TenorData?>) {
-                if (response.isSuccessful) {
-                    var tenorData : TenorData? = response.body();
-                    Log.e("onResponse", tenorData.toString());
-
-                    if (tenorData != null) {
-                        callBack.getDataResponseSuccess(tenorData)
-                    };
-
-                } else {
-                    Log.e("onResponse", "Not successfull : " + response.code());
-                    callBack.getDataResponseError("Erreur le serveur a repondu status : " + response.code());
+        viewModelScope.launch {
+            gifRepo.getRandomGif(tenorKey, "10", "high")
+                ?.collect {
+                    it?.let { tenirData->
+                        data.addAll(tenirData.results)
+                        dataLD.postValue(tenirData.results)
+                    }
                 }
-            }
-
-            override fun onFailure(call: Call<TenorData?>, t: Throwable) {
-                Log.e("onFailure", t.localizedMessage);
-                callBack.getDataResponseError("Erreur lors de la requete : " + t.localizedMessage);
-            }
-        })
+        }
     }
 
      fun setCache(data : ArrayList<Results>) : Unit {

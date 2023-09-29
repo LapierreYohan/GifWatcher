@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiManager {
+object RetrofitDataSource {
     val BASE_URL = "https://g.tenor.com/"
     private var tenorService: TenorService? = null
 

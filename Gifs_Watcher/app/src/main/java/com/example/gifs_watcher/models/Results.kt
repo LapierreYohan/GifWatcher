@@ -21,7 +21,7 @@ data class Results (
   var h1Title            : String?           = null,
 
   @SerializedName("media"               )
-  var media              : ArrayList<Media>  = arrayListOf(),
+  var media              : ArrayList<Media>?  = arrayListOf(),
 
   @SerializedName("bg_color"            )
   var bgColor            : String?           = null,

@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 data class TenorData (
 
   @SerializedName("results")
-  var results : ArrayList<Results> = arrayListOf(),
+  var results : ArrayList<Results?> = arrayListOf(),
 )

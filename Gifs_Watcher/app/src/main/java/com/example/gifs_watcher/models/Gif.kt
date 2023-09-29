@@ -12,7 +12,7 @@ data class Gif (
   var url : String? = null,
 
   @SerializedName("dims")
-  var dims : ArrayList<Int> = arrayListOf(),
+  var dims : ArrayList<Int>? = arrayListOf(),
 
   @SerializedName("duration")
   var duration : Double? = null,

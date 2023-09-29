@@ -15,7 +15,7 @@ data class Tinygif (
   var duration : Double? = null,
 
   @SerializedName("dims")
-  var dims : ArrayList<Int> = arrayListOf(),
+  var dims : ArrayList<Int>? = arrayListOf(),
 
   @SerializedName("size")
   var size : Int? = null

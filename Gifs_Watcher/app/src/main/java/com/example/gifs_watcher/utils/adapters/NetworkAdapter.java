@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.adapters;
+package com.example.gifs_watcher.utils.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,6 +1,6 @@
-package com.example.gifs_watcher.managers
+package com.example.gifs_watcher.datasource
 
-import com.example.gifs_watcher.services.TenorService
+import com.example.gifs_watcher.utils.services.TenorService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

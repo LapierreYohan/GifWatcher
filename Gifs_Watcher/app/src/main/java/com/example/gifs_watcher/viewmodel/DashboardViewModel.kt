@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.views.dashboard
+package com.example.gifs_watcher.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

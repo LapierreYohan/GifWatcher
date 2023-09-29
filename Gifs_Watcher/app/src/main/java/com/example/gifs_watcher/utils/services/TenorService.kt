@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.services
+package com.example.gifs_watcher.utils.services
 
 import com.example.gifs_watcher.models.TenorData
 import retrofit2.Call

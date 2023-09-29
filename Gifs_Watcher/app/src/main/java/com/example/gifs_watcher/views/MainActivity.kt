@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.e("DEBUG", getString(R.string.tenor_api_key))
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

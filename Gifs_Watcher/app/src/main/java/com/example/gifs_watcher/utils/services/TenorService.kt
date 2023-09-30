@@ -11,5 +11,5 @@ interface TenorService {
         @Query("key") key: String?,
         @Query("limit") limit: String?,
         @Query("contentfilter") contentfilter: String?
-    ): Flow<TenorData?>
+    ): TenorData?
 }

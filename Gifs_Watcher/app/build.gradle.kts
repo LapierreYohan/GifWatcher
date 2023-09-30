@@ -51,14 +51,14 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.3")
 
     // Gson
-    implementation ("com.google.code.gson:gson:2.8.7")
+    //implementation ("com.google.code.gson:gson:2.8.7")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
 
     // Interceptor
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.2.1")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // Picasso
     implementation ("com.squareup.picasso:picasso:2.71828")
@@ -68,8 +68,8 @@ dependencies {
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
 
     // Co Routine
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
     // Timber
     implementation ("com.jakewharton.timber:timber:5.0.1")

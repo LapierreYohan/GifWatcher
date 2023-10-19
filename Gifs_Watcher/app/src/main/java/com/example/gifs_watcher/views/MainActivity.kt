@@ -13,13 +13,14 @@ import com.example.gifs_watcher.viewmodel.MainViewModel
 import com.example.gifs_watcher.databinding.ActivityMainBinding
 import com.example.gifs_watcher.models.Results
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel = MainViewModel()
-    private val data: ArrayList<Results?> = arrayListOf()
+    private var printedGif : Results? = Results()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +41,13 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        mainViewModel.dataLD.observe(this) {
-            data.addAll(it)
-            Log.e("DEBUG", data.toString())
+        mainViewModel.printedGifLD.observe(this) {
+            printedGif = it
+            Timber.e(printedGif.toString())
         }
 
+        mainViewModel.getRandomGif(this)
+        mainViewModel.getRandomGif(this)
         mainViewModel.getRandomGif(this)
     }
 }

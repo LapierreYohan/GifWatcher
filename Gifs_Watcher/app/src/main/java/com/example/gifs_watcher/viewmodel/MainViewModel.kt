@@ -14,33 +14,20 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
 
     private var gifRepo : GifRepository = GifRepository
-    private var cacheManager : CacheManager = CacheManager
 
-    private val data: ArrayList<Results?> = arrayListOf()
-    val dataLD: MutableLiveData<ArrayList<Results?>> = MutableLiveData()
+    private var printedGif: Results? = Results()
+    val printedGifLD: MutableLiveData<Results?> = MutableLiveData()
     fun getRandomGif(context: Context) {
 
         val tenorKey : String = context.getString(R.string.tenor_api_key)
         viewModelScope.launch {
-            gifRepo.getRandomGif(tenorKey, "10", "high")
+            gifRepo.getRandomGif(context)
                 .collect {
                     it?.let { tenorData ->
-                        data.addAll(tenorData.results)
-                        dataLD.postValue(tenorData.results)
+                        printedGif = tenorData
+                        printedGifLD.postValue(tenorData)
                     }
                 }
         }
-    }
-
-     fun setCache(data : ArrayList<Results>) : Unit {
-        cacheManager.setArray(data);
-    }
-
-    fun addCache(data : ArrayList<Results>) : Unit {
-        cacheManager.addArray(data);
-    }
-
-    fun getCache() : ArrayList<Results> {
-        return cacheManager.getData();
     }
 }

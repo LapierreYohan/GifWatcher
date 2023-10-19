@@ -5,27 +5,27 @@ import com.google.gson.annotations.SerializedName
 
 data class Results (
 
-  @SerializedName("id"                  )
+  @SerializedName("id")
   var id                 : String?           = null,
 
-  @SerializedName("title"               )
+  @SerializedName("title")
   var title              : String?           = null,
 
-  @SerializedName("content_description" )
+  @SerializedName("content_description")
   var contentDescription : String?           = null,
 
-  @SerializedName("content_rating"      )
+  @SerializedName("content_rating")
   var contentRating      : String?           = null,
 
-  @SerializedName("h1_title"            )
+  @SerializedName("h1_title")
   var h1Title            : String?           = null,
 
-  @SerializedName("media"               )
+  @SerializedName("media")
   var media              : ArrayList<Media>?  = arrayListOf(),
 
-  @SerializedName("bg_color"            )
+  @SerializedName("bg_color")
   var bgColor            : String?           = null,
 
-  @SerializedName("created"             )
+  @SerializedName("created")
   var created            : Double?           = null,
 )

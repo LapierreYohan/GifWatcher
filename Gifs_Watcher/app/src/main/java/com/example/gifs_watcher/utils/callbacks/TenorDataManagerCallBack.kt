@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.utils.callback
+package com.example.gifs_watcher.utils.callbacks
 
 import com.example.gifs_watcher.models.TenorData
 

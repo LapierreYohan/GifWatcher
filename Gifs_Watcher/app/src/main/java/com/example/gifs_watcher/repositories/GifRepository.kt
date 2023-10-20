@@ -25,9 +25,7 @@ object GifRepository {
              cache.switch(CacheMode.RANDOM)
          }
 
-         Timber.e(cache.size().toString())
-
-         if (cache.size() == 0) {
+         if (cache.size() < 1) {
              randomData = tenorApi.getTenorService().getRandomsGifs(context.getString(R.string.tenor_api_key), limit, filter)
 
              cache.add(randomData?.results ?: arrayListOf())
@@ -36,13 +34,14 @@ object GifRepository {
              randomData = TenorData()
              randomData.results.addAll(cache.get())
          }
+        try {
+             var resultData : Results? = randomData?.results?.removeAt(0)
+             cache.replace(randomData?.results ?: arrayListOf())
 
-         var resultData : Results? = randomData?.results?.removeAt(1)
-         cache.replace(randomData?.results ?: arrayListOf())
-
-         Timber.e(randomData?.results.toString())
-
-         emit(resultData)
+             emit(resultData)
+        } catch (error : Exception) {
+            emit(Results())
+        }
     }
 
 }

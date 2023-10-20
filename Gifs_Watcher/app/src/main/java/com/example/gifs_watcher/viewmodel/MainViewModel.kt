@@ -19,7 +19,6 @@ class MainViewModel : ViewModel() {
     val printedGifLD: MutableLiveData<Results?> = MutableLiveData()
     fun getRandomGif(context: Context) {
 
-        val tenorKey : String = context.getString(R.string.tenor_api_key)
         viewModelScope.launch {
             gifRepo.getRandomGif(context)
                 .collect {

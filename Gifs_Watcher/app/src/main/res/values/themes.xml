@@ -35,4 +35,17 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
     </style>
+
+    <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="colorControlActivated">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="colorControlHighlight">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="colorPrimary">@color/md_theme_dark_onSurfaceVariant</item>
+    </style>
+
+    <style name="MyTransparentBottomSheetDialogTheme" parent="Theme.AppCompat.Light">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

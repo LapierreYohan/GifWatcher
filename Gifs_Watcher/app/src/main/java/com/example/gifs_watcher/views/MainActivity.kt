@@ -47,7 +47,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.getRandomGif(this)
-        mainViewModel.getRandomGif(this)
-        mainViewModel.getRandomGif(this)
     }
 }

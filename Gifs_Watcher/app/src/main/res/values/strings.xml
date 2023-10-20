@@ -3,4 +3,16 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="background_description">Une loutre</string>
+
+    <!-- Strings related to login -->
+    <string name="login_title">SIGN IN</string>
+    <string name="login_identifiant">Username / Mail</string>
+    <string name="login_password">Password</string>
+    <string name="login_forgot">Forgot Password ?</string>
+    <string name="login_register">Don\'t have any account ? Create one</string>
+    <string name="login_button">"Sign In"</string>
+    <string name="login_invalid_username">Not a valid username</string>
+    <string name="login_invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>

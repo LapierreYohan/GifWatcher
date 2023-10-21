@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.datasource.CacheManager
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.repositories.GifRepository
 import kotlinx.coroutines.launch
@@ -17,6 +16,11 @@ class MainViewModel : ViewModel() {
 
     private var printedGif: Results? = Results()
     val printedGifLD: MutableLiveData<Results?> = MutableLiveData()
+
+    enum class View{
+        HOME, FRIENDS, PROFIL
+    }
+
     fun getRandomGif(context: Context) {
 
         val tenorKey : String = context.getString(R.string.tenor_api_key)
@@ -29,5 +33,8 @@ class MainViewModel : ViewModel() {
                     }
                 }
         }
+    }
+    fun getText(view: View) : String {
+        return "This is " + view.toString()
     }
 }

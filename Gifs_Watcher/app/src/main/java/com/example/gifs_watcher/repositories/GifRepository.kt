@@ -37,7 +37,7 @@ object GifRepository {
              randomData.results.addAll(cache.get())
          }
 
-         var resultData : Results? = randomData?.results?.removeAt(1)
+         var resultData : Results? = randomData?.results?.removeAt(0)
          cache.replace(randomData?.results ?: arrayListOf())
 
          Timber.e(randomData?.results.toString())

@@ -26,7 +26,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun showLoginModal() : Unit {
         val loginMenu: ModalLogin = ModalLogin
-        loginMenu.view?.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+
         loginMenu.show(supportFragmentManager, loginMenu.TAG)
 
     }

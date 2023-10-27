@@ -1,13 +1,11 @@
 package com.example.gifs_watcher.views.splashscreen
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.viewmodel.SplashScreenViewModel
-import com.example.gifs_watcher.views.splashscreen.bottomsheets.ModalLogin
+import com.example.gifs_watcher.views.splashscreen.modals.ModalLogin
 
 class SplashScreenActivity : AppCompatActivity() {
 

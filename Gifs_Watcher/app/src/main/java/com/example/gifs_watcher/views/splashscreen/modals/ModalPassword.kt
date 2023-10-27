@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.views.splashscreen.bottomsheets
+package com.example.gifs_watcher.views.splashscreen.modals
 
 import android.app.Dialog
 import android.graphics.Color
@@ -6,26 +6,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.gifs_watcher.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-
-object ModalLogin : BottomSheetDialogFragment() {
-
-    const val TAG = "ModalBottomSheetFragmentMenu"
+object ModalPassword : BottomSheetDialogFragment() {
+    const val TAG = "ModalPassword"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.modal_fragment_login ,container,false)
+        val view = inflater.inflate(R.layout.modal_fragment_password ,container,false)
 
+        /*
         val register : TextView = view.findViewById(R.id.login_register)
         register.setOnClickListener {
             this.dismiss()
-        }
+        }*/
 
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
@@ -36,7 +32,7 @@ object ModalLogin : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         var dialog : BottomSheetDialog
         dialog = context?.let {
-           BottomSheetDialog(
+            BottomSheetDialog(
                 it,
                 R.style.MyTransparentBottomSheetDialogTheme
             )
@@ -47,13 +43,13 @@ object ModalLogin : BottomSheetDialogFragment() {
 
     override fun onStart() : Unit {
         super.onStart();
-        var dialog : Dialog? = getDialog();
+        var dialog : Dialog? = ModalLogin.getDialog();
 
         if (dialog != null) {
             var bottomSheet : View = dialog.findViewById(R.id.modal_fragment)
             bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-            var view : View? = getView();
+            var view : View? = ModalLogin.getView();
 
             val post = view?.post {
 

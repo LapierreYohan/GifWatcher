@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.gifs_watcher.R
@@ -92,16 +93,34 @@ object LoginModal : BottomSheetDialogFragment() {
     }
 
     private fun login(view: View) : Unit {
+        // Bouton de Connexion
         val connectButton : Button = view.findViewById(R.id.login_signin_button)
         connectButton.setOnClickListener {
             startActivity()
         }
 
+        // Bouton de Connexion avec Google
+        val connectGoogleButton : ImageView = view.findViewById(R.id.login_google_signin)
+        connectGoogleButton.setOnClickListener {
+            startActivity()
+        }
+
+        // Bouton de Connexion avec Facebook
+        val connectFacebookButton : ImageView = view.findViewById(R.id.login_facebook_signin)
+        connectFacebookButton.setOnClickListener {
+            startActivity()
+        }
+
+        // Bouton de Connexion avec Apple
+        val connectAppleButton : ImageView = view.findViewById(R.id.login_apple_signin)
+        connectAppleButton.setOnClickListener {
+            startActivity()
+        }
     }
 
     private fun startActivity() : Unit {
         val intent : Intent = Intent(context, MainActivity::class.java)
-        
+
         this.dismiss()
         startActivity(intent)
         activity?.finish()

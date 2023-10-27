@@ -30,7 +30,7 @@ object LoginModal : BottomSheetDialogFragment() {
 
         // Ajout d'un moyen de reset son mot de passe
         val forgotPassword : TextView = view.findViewById(R.id.login_forgot_password)
-        register.setOnClickListener {
+        forgotPassword.setOnClickListener {
             this.dismiss()
             val passwordMenu: PasswordModal = PasswordModal
             passwordMenu.show(parentFragmentManager, passwordMenu.TAG)

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.gifs_watcher.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -17,12 +18,15 @@ object PasswordModal : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_password ,container,false)
 
-        /*
-        val register : TextView = view.findViewById(R.id.login_register)
-        register.setOnClickListener {
+        // Ajout d'un moyen de retour sur login
+        val login : TextView = view.findViewById(R.id.password_login)
+        login.setOnClickListener {
             this.dismiss()
-        }*/
+            val loginMenu: LoginModal = LoginModal
+            loginMenu.show(parentFragmentManager, loginMenu.TAG)
+        }
 
+        // Empêche de quitter le modal
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
 
@@ -30,6 +34,7 @@ object PasswordModal : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // Définir un background transparent
         var dialog : BottomSheetDialog
         dialog = context?.let {
             BottomSheetDialog(
@@ -43,6 +48,7 @@ object PasswordModal : BottomSheetDialogFragment() {
 
     override fun onStart() : Unit {
         super.onStart();
+        // Adapter la fenêtre à la taille de la modal
         var dialog : Dialog? = PasswordModal.getDialog();
 
         if (dialog != null) {

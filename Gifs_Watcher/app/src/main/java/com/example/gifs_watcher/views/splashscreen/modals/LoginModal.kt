@@ -20,6 +20,7 @@ object LoginModal : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_login ,container,false)
 
+        // Ajout d'un moyen de register un compte
         val register : TextView = view.findViewById(R.id.login_register)
         register.setOnClickListener {
             this.dismiss()
@@ -27,6 +28,7 @@ object LoginModal : BottomSheetDialogFragment() {
             registerMenu.show(parentFragmentManager, registerMenu.TAG)
         }
 
+        // Ajout d'un moyen de reset son mot de passe
         val forgotPassword : TextView = view.findViewById(R.id.login_forgot_password)
         register.setOnClickListener {
             this.dismiss()
@@ -34,6 +36,7 @@ object LoginModal : BottomSheetDialogFragment() {
             passwordMenu.show(parentFragmentManager, passwordMenu.TAG)
         }
 
+        // Empêche de quitter le modal
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
 
@@ -41,6 +44,7 @@ object LoginModal : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // Définir un background transparent
         var dialog : BottomSheetDialog
         dialog = context?.let {
            BottomSheetDialog(
@@ -54,6 +58,7 @@ object LoginModal : BottomSheetDialogFragment() {
 
     override fun onStart() : Unit {
         super.onStart();
+        // Adapter la fenêtre à la taille de la modal
         var dialog : Dialog? = getDialog();
 
         if (dialog != null) {

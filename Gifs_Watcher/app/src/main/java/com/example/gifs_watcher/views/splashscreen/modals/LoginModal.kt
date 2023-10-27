@@ -1,14 +1,17 @@
 package com.example.gifs_watcher.views.splashscreen.modals
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.views.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -35,6 +38,10 @@ object LoginModal : BottomSheetDialogFragment() {
             val passwordMenu: PasswordModal = PasswordModal
             passwordMenu.show(parentFragmentManager, passwordMenu.TAG)
         }
+
+        // Autorisé la connection à la main activity
+        //? Pas de vérification utilisateur
+        this.setUpLoginListeners(view)
 
         // Empêche de quitter le modal
         dialog?.setCanceledOnTouchOutside(false)
@@ -78,5 +85,25 @@ object LoginModal : BottomSheetDialogFragment() {
                 (bottomSheet.getParent() as View).setBackgroundColor(Color.TRANSPARENT)
             }
         }
+    }
+
+    private fun setUpLoginListeners(view: View) : Unit {
+        this.login(view)
+    }
+
+    private fun login(view: View) : Unit {
+        val connectButton : Button = view.findViewById(R.id.login_signin_button)
+        connectButton.setOnClickListener {
+            startActivity()
+        }
+
+    }
+
+    private fun startActivity() : Unit {
+        val intent : Intent = Intent(context, MainActivity::class.java)
+        
+        this.dismiss()
+        startActivity(intent)
+        activity?.finish()
     }
 }

@@ -43,13 +43,13 @@ object PasswordModal : BottomSheetDialogFragment() {
 
     override fun onStart() : Unit {
         super.onStart();
-        var dialog : Dialog? = LoginModal.getDialog();
+        var dialog : Dialog? = PasswordModal.getDialog();
 
         if (dialog != null) {
             var bottomSheet : View = dialog.findViewById(R.id.modal_fragment_pass)
             bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-            var view : View? = LoginModal.getView();
+            var view : View? = PasswordModal.getView();
 
             val post = view?.post {
 

@@ -197,7 +197,7 @@
         <View
             android:id="@+id/login_separator_view3"
             android:layout_width="300dp"
-            android:layout_height="1px"
+            android:layout_height="0.1px"
             android:layout_marginTop="20dp"
             android:background="@color/md_theme_dark_onSurfaceVariant"
             app:layout_constraintEnd_toEndOf="parent"

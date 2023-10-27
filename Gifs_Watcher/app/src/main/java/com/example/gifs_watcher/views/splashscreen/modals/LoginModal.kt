@@ -23,6 +23,8 @@ object LoginModal : BottomSheetDialogFragment() {
         val register : TextView = view.findViewById(R.id.login_register)
         register.setOnClickListener {
             this.dismiss()
+            val registerMenu: RegisterModal = RegisterModal
+            registerMenu.show(getParentFragmentManager(), registerMenu.TAG)
         }
 
         dialog?.setCanceledOnTouchOutside(false)

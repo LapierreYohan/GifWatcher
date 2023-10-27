@@ -19,7 +19,7 @@ class SplashScreenActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_splash_screen)
 
-        Handler().postDelayed(this::showLoginModal, 500)
+        showLoginModal()
     }
 
     private fun showLoginModal() : Unit {

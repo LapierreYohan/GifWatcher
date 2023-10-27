@@ -28,4 +28,13 @@
     <string name="register_invalid_username">Not a valid username</string>
     <string name="register_invalid_password">Password must be >5 characters</string>
     <string name="register_failed">"Register failed"</string>
+
+    <!-- Strings related to forgot password -->
+    <string name="password_title">FORGOT PASSWORD</string>
+    <string name="password_desc">Send an Email to reset your password.</string>
+    <string name="password_email">Email</string>
+    <string name="password_login">Do you remember your password ? Log in</string>
+    <string name="password_button">"Send Email"</string>
+    <string name="password_invalid_email">Not a valid email</string>
+    <string name="password_failed">"Register failed"</string>
 </resources>

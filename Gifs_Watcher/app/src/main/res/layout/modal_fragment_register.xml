@@ -1,6 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modal_fragment_sign"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    app:behavior_hideable="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modal_fragment_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_signin"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="-109dp">
+
+        <Button
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/back_icon"
+            android:backgroundTint="@color/md_theme_dark_onBackground"
+            app:layout_constraintBottom_toBottomOf="@+id/register_title"
+            app:layout_constraintEnd_toStartOf="@+id/register_title"
+            app:layout_constraintHorizontal_bias="0.56"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/register_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/register_title"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+            android:textColor="@color/md_theme_dark_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/register_separator_view"
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/md_theme_dark_onSurfaceVariant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_username_textinput"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/register_username"
+            android:textColorHint="@color/md_theme_dark_onSurface"
+            android:theme="@style/EditTextTheme"
+            app:hintTextAppearance="@style/EditTextThemeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_separator_view"
+            app:startIconDrawable="@drawable/identidiant_icon"
+            app:startIconMinSize="30dp"
+            app:startIconTint="@color/md_theme_dark_onSurface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_dark_surfaceVariant"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textColorHint="@color/md_theme_dark_onSurfaceVariant" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_mail_textinput"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/register_email"
+            android:textColorHint="@color/md_theme_dark_onSurface"
+            android:theme="@style/EditTextTheme"
+            app:hintTextAppearance="@style/EditTextThemeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_username_textinput"
+            app:startIconDrawable="@drawable/identidiant_icon"
+            app:startIconMinSize="30dp"
+            app:startIconTint="@color/md_theme_dark_onSurface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_dark_surfaceVariant"
+                android:inputType="textEmailAddress"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textColorHint="@color/md_theme_dark_onSurfaceVariant" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_password_textinput"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/register_password"
+            android:textColorHint="@color/md_theme_dark_onSurface"
+            android:theme="@style/EditTextTheme"
+            app:hintTextAppearance="@style/EditTextThemeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_mail_textinput"
+            app:startIconDrawable="@drawable/password_icon"
+            app:startIconMinSize="30dp"
+            app:startIconTint="@color/md_theme_dark_onSurface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_dark_surfaceVariant"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textColorHint="@color/md_theme_dark_onSurfaceVariant" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_confirmpassword_textinput"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/register_confirm_password"
+            android:textColorHint="@color/md_theme_dark_onSurface"
+            android:theme="@style/EditTextTheme"
+            app:hintTextAppearance="@style/EditTextThemeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_password_textinput"
+            app:startIconDrawable="@drawable/password_icon"
+            app:startIconMinSize="30dp"
+            app:startIconTint="@color/md_theme_dark_onSurface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_dark_surfaceVariant"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textColorHint="@color/md_theme_dark_onSurfaceVariant" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_birthday_textinput"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/register_birthday"
+            android:textColorHint="@color/md_theme_dark_onSurface"
+            android:theme="@style/EditTextTheme"
+            app:hintTextAppearance="@style/EditTextThemeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_confirmpassword_textinput"
+            app:startIconDrawable="@drawable/password_icon"
+            app:startIconMinSize="30dp"
+            app:startIconTint="@color/md_theme_dark_onSurface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_dark_surfaceVariant"
+                android:inputType="text|date"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textColorHint="@color/md_theme_dark_onSurfaceVariant" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/register_signin_button"
+            android:layout_width="140dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="@color/md_theme_dark_primaryContainer"
+            android:text="@string/register_button"
+            android:textColor="@color/md_theme_dark_onPrimaryContainer"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_birthday_textinput" />
+
+        <View
+            android:id="@+id/register_separator_view2"
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/md_theme_dark_onSurfaceVariant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_signin_button" />
+
+        <TextView
+            android:id="@+id/register_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/register_login"
+            android:textColor="@color/md_theme_dark_primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_separator_view2" />
+
+        <View
+            android:id="@+id/register_separator_view3"
+            android:layout_width="300dp"
+            android:layout_height="1px"
+            android:layout_marginTop="20dp"
+            android:background="@color/md_theme_dark_onSurfaceVariant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_login" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

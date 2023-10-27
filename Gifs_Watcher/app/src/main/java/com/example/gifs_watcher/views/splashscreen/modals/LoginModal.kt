@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-object ModalLogin : BottomSheetDialogFragment() {
+object LoginModal : BottomSheetDialogFragment() {
 
     const val TAG = "ModalLogin"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,7 +48,7 @@ object ModalLogin : BottomSheetDialogFragment() {
         var dialog : Dialog? = getDialog();
 
         if (dialog != null) {
-            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment)
+            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment_log)
             bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
             var view : View? = getView();
@@ -62,7 +62,6 @@ object ModalLogin : BottomSheetDialogFragment() {
                 bottomSheetBehavior.setPeekHeight(view.getMeasuredHeight());
 
                 (bottomSheet.getParent() as View).setBackgroundColor(Color.TRANSPARENT)
-
             }
         }
     }

@@ -5,7 +5,7 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.viewmodel.SplashScreenViewModel
-import com.example.gifs_watcher.views.splashscreen.modals.ModalLogin
+import com.example.gifs_watcher.views.splashscreen.modals.LoginModal
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -23,7 +23,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun showLoginModal() : Unit {
-        val loginMenu: ModalLogin = ModalLogin
+        val loginMenu: LoginModal = LoginModal
 
         loginMenu.show(supportFragmentManager, loginMenu.TAG)
 

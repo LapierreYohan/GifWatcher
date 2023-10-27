@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-object ModalPassword : BottomSheetDialogFragment() {
+object PasswordModal : BottomSheetDialogFragment() {
     const val TAG = "ModalPassword"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_password ,container,false)
@@ -43,13 +43,13 @@ object ModalPassword : BottomSheetDialogFragment() {
 
     override fun onStart() : Unit {
         super.onStart();
-        var dialog : Dialog? = ModalLogin.getDialog();
+        var dialog : Dialog? = LoginModal.getDialog();
 
         if (dialog != null) {
-            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment)
+            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment_pass)
             bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-            var view : View? = ModalLogin.getView();
+            var view : View? = LoginModal.getView();
 
             val post = view?.post {
 

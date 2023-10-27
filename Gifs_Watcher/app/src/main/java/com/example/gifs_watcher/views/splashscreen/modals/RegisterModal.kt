@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.gifs_watcher.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-object ModalRegister : BottomSheetDialogFragment() {
+object RegisterModal : BottomSheetDialogFragment() {
     const val TAG = "ModalRegister"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_register ,container,false)
@@ -44,13 +43,13 @@ object ModalRegister : BottomSheetDialogFragment() {
 
     override fun onStart() : Unit {
         super.onStart();
-        var dialog : Dialog? = ModalLogin.getDialog();
+        var dialog : Dialog? = LoginModal.getDialog();
 
         if (dialog != null) {
-            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment)
+            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment_sign)
             bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-            var view : View? = ModalLogin.getView();
+            var view : View? = LoginModal.getView();
 
             val post = view?.post {
 

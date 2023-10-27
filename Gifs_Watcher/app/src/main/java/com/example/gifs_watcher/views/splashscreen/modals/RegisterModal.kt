@@ -22,7 +22,7 @@ object RegisterModal : BottomSheetDialogFragment() {
         login.setOnClickListener {
             this.dismiss()
             val loginMenu: LoginModal = LoginModal
-            loginMenu.show(getParentFragmentManager(), loginMenu.TAG)
+            loginMenu.show(parentFragmentManager, loginMenu.TAG)
         }
 
         dialog?.setCanceledOnTouchOutside(false)

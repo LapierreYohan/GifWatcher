@@ -24,7 +24,14 @@ object LoginModal : BottomSheetDialogFragment() {
         register.setOnClickListener {
             this.dismiss()
             val registerMenu: RegisterModal = RegisterModal
-            registerMenu.show(getParentFragmentManager(), registerMenu.TAG)
+            registerMenu.show(parentFragmentManager, registerMenu.TAG)
+        }
+
+        val forgotPassword : TextView = view.findViewById(R.id.login_forgot_password)
+        register.setOnClickListener {
+            this.dismiss()
+            val passwordMenu: PasswordModal = PasswordModal
+            passwordMenu.show(parentFragmentManager, passwordMenu.TAG)
         }
 
         dialog?.setCanceledOnTouchOutside(false)

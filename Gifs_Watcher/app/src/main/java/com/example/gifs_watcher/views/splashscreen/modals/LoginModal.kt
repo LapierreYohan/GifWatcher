@@ -89,33 +89,34 @@ object LoginModal : BottomSheetDialogFragment() {
     }
 
     private fun setUpLoginListeners(view: View) : Unit {
-        this.login(view)
-    }
-
-    private fun login(view: View) : Unit {
         // Bouton de Connexion
         val connectButton : Button = view.findViewById(R.id.login_signin_button)
         connectButton.setOnClickListener {
-            startActivity()
+            this.login()
         }
 
         // Bouton de Connexion avec Google
         val connectGoogleButton : ImageView = view.findViewById(R.id.login_google_signin)
         connectGoogleButton.setOnClickListener {
-            startActivity()
+            this.login()
         }
 
         // Bouton de Connexion avec Facebook
         val connectFacebookButton : ImageView = view.findViewById(R.id.login_facebook_signin)
         connectFacebookButton.setOnClickListener {
-            startActivity()
+            this.login()
         }
 
         // Bouton de Connexion avec Apple
         val connectAppleButton : ImageView = view.findViewById(R.id.login_apple_signin)
         connectAppleButton.setOnClickListener {
-            startActivity()
+            this.login()
         }
+    }
+
+    private fun login() : Unit {
+
+        startActivity()
     }
 
     private fun startActivity() : Unit {

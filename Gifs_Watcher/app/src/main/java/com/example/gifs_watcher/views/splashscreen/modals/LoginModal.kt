@@ -10,11 +10,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.fragment.app.viewModels
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.viewmodel.SplashScreenViewModel
 import com.example.gifs_watcher.views.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -24,7 +21,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 object LoginModal : BottomSheetDialogFragment() {
 
     const val TAG = "ModalLogin"
-    private val splashScreenViewModel : SplashScreenViewModel by viewModels<SplashScreenViewModel>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_login ,container,false)
 
@@ -93,35 +89,34 @@ object LoginModal : BottomSheetDialogFragment() {
     }
 
     private fun setUpLoginListeners(view: View) : Unit {
-        this.login(view)
-    }
-
-    private fun login(view: View) : Unit {
         // Bouton de Connexion
         val connectButton : Button = view.findViewById(R.id.login_signin_button)
         connectButton.setOnClickListener {
-
-            val user = splashScreenViewModel.getUser();
-            startActivity()
+            this.login()
         }
 
         // Bouton de Connexion avec Google
         val connectGoogleButton : ImageView = view.findViewById(R.id.login_google_signin)
         connectGoogleButton.setOnClickListener {
-            startActivity()
+            this.login()
         }
 
         // Bouton de Connexion avec Facebook
         val connectFacebookButton : ImageView = view.findViewById(R.id.login_facebook_signin)
         connectFacebookButton.setOnClickListener {
-            startActivity()
+            this.login()
         }
 
         // Bouton de Connexion avec Apple
         val connectAppleButton : ImageView = view.findViewById(R.id.login_apple_signin)
         connectAppleButton.setOnClickListener {
-            startActivity()
+            this.login()
         }
+    }
+
+    private fun login() : Unit {
+
+        startActivity()
     }
 
     private fun startActivity() : Unit {

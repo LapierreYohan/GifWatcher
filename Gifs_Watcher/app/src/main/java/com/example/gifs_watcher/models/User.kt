@@ -1,22 +1,17 @@
-package com.example.gifswatcher.models
+package com.example.gifs_watcher.models
 
-/* Import et fonctions afin de transformer un String en une chaine MD5SUM */
-import java.security.MessageDigest
-import kotlin.text.Charsets.UTF_8
-
+/*
 fun md5(str: String): ByteArray = MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))
 fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byte) }
-// Exemple : println(md5("Hello, world!").toHex())
-/*------------------------------------------------------------------------*/
+ */
 
 data class User (
-    var username: String,
-    var password: String,
-    var name: String?,
-    var lastName: String?,
-    var mail: String?,
-    var bio: String?,
-    var profilPicture: String?,
-    val idUsers: String
-){
-}
+    var username: String? = null,
+    var password: String? = null,
+    var name: String? = null,
+    var lastName: String? = null,
+    var mail: String? = null,
+    var bio: String? = null,
+    var profilPicture: String? = null,
+    val idUsers: String? = null
+)

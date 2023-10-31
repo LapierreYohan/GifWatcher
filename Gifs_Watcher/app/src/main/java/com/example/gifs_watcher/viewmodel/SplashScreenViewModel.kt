@@ -5,16 +5,16 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.repositories.UserRepository
-import com.example.gifswatcher.models.User
 import kotlinx.coroutines.launch
 
 class SplashScreenViewModel() : ViewModel() {
 
     private var userRepo : UserRepository = UserRepository
 
-    private val _userLiveData: MutableLiveData<User?> = MutableLiveData()
-    val userLiveData : LiveData<User?> = _userLiveData
+    private val _userLiveData: MutableLiveData<User> = MutableLiveData()
+    val userLiveData : LiveData<User> = _userLiveData
 
     private fun isUserNameValid(username: String): Boolean {
         return if (username.contains("@")) {

@@ -10,8 +10,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.viewModels
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.viewmodel.SplashScreenViewModel
 import com.example.gifs_watcher.views.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -21,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 object LoginModal : BottomSheetDialogFragment() {
 
     const val TAG = "ModalLogin"
+    private val splashScreenViewModel : SplashScreenViewModel by viewModels<SplashScreenViewModel>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_login ,container,false)
 
@@ -96,6 +100,8 @@ object LoginModal : BottomSheetDialogFragment() {
         // Bouton de Connexion
         val connectButton : Button = view.findViewById(R.id.login_signin_button)
         connectButton.setOnClickListener {
+
+            val user = splashScreenViewModel.getUser();
             startActivity()
         }
 

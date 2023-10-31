@@ -10,13 +10,13 @@ fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byt
 /*------------------------------------------------------------------------*/
 
 data class Users (
-    var username: String,
-    var password: String,
-    var name: String?,
-    var lastName: String?,
-    var mail: String?,
-    var bio: String?,
-    var profilPicture: String?,
+    val username: String,
+    val password: String,
+    val name: String?,
+    val lastName: String?,
+    val mail: String?,
+    val bio: String?,
+    val profilPicture: String?,
     val idUsers: String
 ){
 }

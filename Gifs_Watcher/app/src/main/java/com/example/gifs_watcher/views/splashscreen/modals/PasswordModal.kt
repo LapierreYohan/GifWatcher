@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.activityViewModels
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.viewmodel.SplashScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 object PasswordModal : BottomSheetDialogFragment() {
     const val TAG = "ModalPassword"
+    private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_password ,container,false)
 

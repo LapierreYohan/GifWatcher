@@ -13,8 +13,8 @@ class SplashScreenViewModel() : ViewModel() {
 
     private var userRepo : UserRepository = UserRepository
 
-    private val _userLiveData: MutableLiveData<User> = MutableLiveData()
-    val userLiveData : LiveData<User> = _userLiveData
+    private val _loggedLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    val loggedLiveData : LiveData<Boolean> = _loggedLiveData
 
     private fun isUserNameValid(username: String): Boolean {
         return if (username.contains("@")) {
@@ -32,7 +32,11 @@ class SplashScreenViewModel() : ViewModel() {
             userRepo.verifyConnectionData(id, password)
                 .collect {
                     it?.let { userLogged ->
-                        _userLiveData.postValue(userLogged)
+                        if (userLogged.idUsers != null) {
+                            _loggedLiveData.postValue(true)
+                        } else {
+                            _loggedLiveData.postValue(false)
+                        }
                     }
                 }
         }

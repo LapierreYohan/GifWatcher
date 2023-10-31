@@ -9,7 +9,7 @@ fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byt
 // Exemple : println(md5("Hello, world!").toHex())
 /*------------------------------------------------------------------------*/
 
-data class Users (
+data class User (
     var username: String,
     var password: String,
     var name: String?,

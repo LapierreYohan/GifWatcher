@@ -1,10 +1,10 @@
 package com.example.gifs_watcher.views.main.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -24,15 +24,13 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.println(Log.INFO,"debug","on create home")
         val mainViewModel_ =
             ViewModelProvider(this).get(MainViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-
-        textView.text = mainViewModel_.getText(MainViewModel.View.HOME)
 
         return root
     }

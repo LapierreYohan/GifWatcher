@@ -6,17 +6,155 @@
     android:layout_height="match_parent"
     tools:context=".views.main.fragments.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/backgroundGif"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#BFAFAF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/delete_floatingActionButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="54dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/star_floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:clickable="true"
+        android:src="@android:drawable/btn_star_big_on"
+        app:fabCustomSize="70dp"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundGif"
+        app:layout_constraintEnd_toStartOf="@+id/like_floatingActionButton"
+        app:layout_constraintStart_toEndOf="@+id/delete_floatingActionButton" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/like_floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="54dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_dialog_dialer"
+        app:layout_constraintBottom_toTopOf="@+id/CardDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SearchView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/on_surface_round"
+        app:layout_constraintBottom_toTopOf="@+id/CardDescription"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CardDescription"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="136dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="162dp"
+        android:background="@drawable/surface_container_low_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/Gif"
+            android:layout_width="match_parent"
+            android:layout_height="332dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="?android:attr/scrollbarTrackVertical" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/moreOptions_floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:src="?attr/actionModeShareDrawable"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/Gif" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Gif">
+
+            <TextView
+                android:id="@+id/TitleGif"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="TextView"
+                android:textColor="@color/md_theme_dark_onSurface"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/moreInformations_floatingActionButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/moreInformations_floatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:src="@android:drawable/arrow_down_float"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

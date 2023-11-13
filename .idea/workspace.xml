@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93c6681b-e12f-4821-b76e-2fed3d7fa275" name="Changes" comment="" />
+    <list default="true" id="93c6681b-e12f-4821-b76e-2fed3d7fa275" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/viewmodel/SplashScreenViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/views/splashscreen/SplashScreenActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/views/splashscreen/bottomsheets/ModalLogin.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/drawable/bg_signin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/drawable/edit_text.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/drawable/identidiant_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/drawable/splashscreen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/layout/activity_splash_screen.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/layout/modal_fragment_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/datasource/RetrofitDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/datasource/RetrofitDataSource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/repositories/GifRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/repositories/GifRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/viewmodel/MainViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/viewmodel/MainViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/views/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/java/com/example/gifs_watcher/views/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/values-night/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/values/dimens.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Gifs_Watcher/app/src/main/res/values/themes.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +51,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "C:/Users/alexg/OneDrive/Bureau/Cours/A3/Kotlin/Projets/lapierre-gailliard-gifswatcher/Gifs_Watcher",
+    "last_opened_file_path": "D:/Users/lapierryoh/OneDrive - Martin Belaysoud/Bureau/lapierre-gailliard-gifswatcher/Gifs_Watcher",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.20304568"
@@ -99,9 +120,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
       <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

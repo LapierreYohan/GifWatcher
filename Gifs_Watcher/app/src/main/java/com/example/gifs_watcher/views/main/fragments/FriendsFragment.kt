@@ -38,20 +38,21 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupFriendsAdapter(view)
+
+    }
+
+    fun setupFriendsAdapter(view: View){
         val rv = view.findViewById(R.id.rv_pending_request) as RecyclerView
-
-        mainViewModel.listFriend.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata
+        mainViewModel.listFriend.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
         mainViewModel.getUsers()
-        mainViewModel.Friends.observe(viewLifecycleOwner) {response ->
-
+        mainViewModel.Friends.observe(viewLifecycleOwner) { response ->
             response?.let {
                 val adapter = FriendsAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }
-
         }
-
     }
 
     override fun onDestroyView() {

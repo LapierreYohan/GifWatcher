@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.repositories.GifRepository
-import com.example.gifswatcher.models.Users
+import com.example.gifs_watcher.models.User
 import kotlinx.coroutines.launch
 import kotlin.math.log
 
@@ -21,8 +21,8 @@ class MainViewModel : ViewModel() {
 
     //surement à modifier sans le mutable
     val printedGifLD: MutableLiveData<Results?> = MutableLiveData()
-    val listFriend: MutableLiveData<ArrayList<Users?>> = MutableLiveData()
-    val Friends : LiveData<ArrayList<Users?>> = listFriend
+    val listFriend: MutableLiveData<ArrayList<User?>> = MutableLiveData()
+    val Friends : LiveData<ArrayList<User?>> = listFriend
 
     enum class View{
         HOME, FRIENDS, PROFIL
@@ -45,8 +45,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun getUsers() {
-        val u1 = Users("Nekioux", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
-        val u2 = Users("Galstrip", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
+        val u1 = User("Nekioux", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
+        val u2 = User("Galstrip", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
         addUser(u1)
         addUser(u2)
         viewModelScope.launch {
@@ -54,7 +54,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun addUser(user : Users) {
+    fun addUser(user : User) {
         listFriend.value?.add(user)
     }
 }

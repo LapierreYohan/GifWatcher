@@ -15,7 +15,7 @@ import com.example.gifs_watcher.databinding.ActivityMainBinding
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.utils.adapters.FriendsAdapter
 import com.example.gifs_watcher.viewmodel.MainViewModel
-import com.example.gifswatcher.models.Users
+import com.example.gifs_watcher.models.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
 

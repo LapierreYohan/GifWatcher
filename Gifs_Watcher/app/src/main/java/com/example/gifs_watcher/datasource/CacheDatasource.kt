@@ -3,7 +3,7 @@ package com.example.gifs_watcher.datasource
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.utils.enums.CacheMode
 
-object CacheDataSource {
+object CacheDatasource {
 
     private var randomData : ArrayList<Results?> = arrayListOf()
     private var searchData : ArrayList<Results?> = arrayListOf()

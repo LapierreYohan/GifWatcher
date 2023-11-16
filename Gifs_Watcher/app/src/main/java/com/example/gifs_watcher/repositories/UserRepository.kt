@@ -1,12 +1,12 @@
 package com.example.gifs_watcher.repositories
 
-import com.example.gifs_watcher.datasource.CacheDataSource
+import com.example.gifs_watcher.datasource.CacheDatasource
 import com.example.gifs_watcher.models.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 object UserRepository {
-    private var cache : CacheDataSource = CacheDataSource
+    private var cache : CacheDatasource = CacheDatasource
     val user = User("UserTest", "1234", "User", "TEST", "test@gmail.com", "", "", "1")
 
     fun verifyConnectionData(id : String, password : String) : Flow<User> = flow {

@@ -2,7 +2,6 @@ package com.example.gifs_watcher.models
 
 import com.google.gson.annotations.SerializedName
 
-
 data class Gif (
 
   @SerializedName("preview")

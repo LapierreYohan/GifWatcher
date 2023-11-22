@@ -1,5 +1,7 @@
 package com.example.gifs_watcher.utils.adapters
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +14,8 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 
 
-class FriendsAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
+class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
+
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
@@ -27,12 +30,15 @@ class FriendsAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<Friend
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        Log.println(Log.INFO,"debug","onBindViewHolder open" )
-        val item = users?.get(position)
-        Log.println(Log.INFO,"debug","onBindViewHolder item : " + item )
+
+        val item = users?.get(position) // met dans item l'utilisateur
+
         holder.itemView.setOnClickListener {
             Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
+            callBack(item)
         }
+
+        //set les valeurs de l'utilsateur dans les différents champs
         holder.textView.text = item?.username
         holder.descView.text = item?.bio
         holder.card.setOnClickListener { Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show() }

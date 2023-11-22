@@ -62,7 +62,9 @@ class FriendsFragment : Fragment() {
         mainViewModel.getFriendsUsers()
         mainViewModel.Friends.observe(viewLifecycleOwner) { response ->
             response?.let {
-                val adapter = FriendsAdapter(it)
+                val adapter = FriendsAdapter(it) {
+
+                }
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }

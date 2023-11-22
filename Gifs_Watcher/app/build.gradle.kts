@@ -62,7 +62,7 @@ dependencies {
 
     // Picasso
     implementation ("com.squareup.picasso:picasso:2.71828")
-    implementation ("jp.wasabeef:picasso-transformations:2.4.0")
+    //implementation ("jp.wasabeef:picasso-transformations:2.4.0") //bloc les transformations du glide
 
     // Gif Drawable
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
@@ -78,6 +78,8 @@ dependencies {
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("jp.wasabeef:glide-transformations:4.3.0")
+    implementation ("jp.co.cyberagent.android:gpuimage:2.1.0")
 
 
     testImplementation("junit:junit:4.13.2")

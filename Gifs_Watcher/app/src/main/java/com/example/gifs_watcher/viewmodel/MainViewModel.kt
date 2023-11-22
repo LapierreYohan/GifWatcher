@@ -2,7 +2,6 @@ package com.example.gifs_watcher.viewmodel
 
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,6 @@ import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.repositories.GifRepository
 import com.example.gifs_watcher.models.User
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class MainViewModel : ViewModel() {
 
@@ -23,6 +21,8 @@ class MainViewModel : ViewModel() {
     val printedGifLD: MutableLiveData<Results?> = MutableLiveData()
     val listFriend: MutableLiveData<ArrayList<User?>> = MutableLiveData()
     val Friends : LiveData<ArrayList<User?>> = listFriend
+    val pendingFriends : MutableLiveData<ArrayList<User?>> = MutableLiveData()
+    val pendings : LiveData<ArrayList<User?>> = pendingFriends
 
     enum class View{
         HOME, FRIENDS, PROFIL
@@ -44,17 +44,44 @@ class MainViewModel : ViewModel() {
         return "This is " + view.toString()
     }
 
-    fun getUsers() {
-        val u1 = User("Nekioux", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "")
-        val u2 = User("Galstrip", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "")
-        addUser(u1)
-        addUser(u2)
+    fun getFriendsUsers() {
+        val u1 = User("Nekioux3", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
+        val u2 = User("Galstrip3", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
+        addFriendsUser(u1)
+        addFriendsUser(u2)
+        addFriendsUser(u1)
+        addFriendsUser(u2)
+        addFriendsUser(u1)
+        addFriendsUser(u2)
+        addFriendsUser(u1)
+        addFriendsUser(u2)
         viewModelScope.launch {
             listFriend.postValue(listFriend.value)
         }
     }
 
-    fun addUser(user : User) {
+    fun addFriendsUser(user : User) {
         listFriend.value?.add(user)
     }
+
+    fun getPendingFriendsUsers() {
+        val u1 = User("Nekioux22", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
+        val u2 = User("Galstrip22", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
+        addPendingFriendsUser(u1)
+        addPendingFriendsUser(u2)
+        addPendingFriendsUser(u1)
+        addPendingFriendsUser(u2)
+        addPendingFriendsUser(u1)
+        addPendingFriendsUser(u2)
+        addPendingFriendsUser(u1)
+        addPendingFriendsUser(u2)
+        viewModelScope.launch {
+            pendingFriends.postValue(pendingFriends.value)
+        }
+    }
+
+    fun addPendingFriendsUser(user : User) {
+        pendingFriends.value?.add(user)
+    }
+
 }

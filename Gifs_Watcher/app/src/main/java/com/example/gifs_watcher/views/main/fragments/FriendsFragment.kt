@@ -1,7 +1,6 @@
 package com.example.gifs_watcher.views.main.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.example.gifs_watcher.databinding.FragmentFriendsBinding
 import com.example.gifs_watcher.viewmodel.MainViewModel
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.utils.adapters.FriendsAdapter
+import com.example.gifs_watcher.utils.adapters.PendingRequesteAdapter
 
 class FriendsFragment : Fragment() {
 
@@ -38,17 +38,33 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupFriendsAdapter(view)
+        setupFriendsAdapterForPendingRequest(view)
+        setupFriendsAdapterForFriendsList(view)
 
     }
 
-    fun setupFriendsAdapter(view: View){
+    fun setupFriendsAdapterForPendingRequest(view: View){
         val rv = view.findViewById(R.id.rv_pending_request) as RecyclerView
+        mainViewModel.pendingFriends.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
+        mainViewModel.getPendingFriendsUsers()
+        mainViewModel.pendings.observe(viewLifecycleOwner) { response ->
+            response?.let {
+                val adapter = PendingRequesteAdapter(it)
+                rv.adapter = adapter
+                rv.layoutManager = LinearLayoutManager(this.context)
+            }
+        }
+    }
+
+    fun setupFriendsAdapterForFriendsList(view: View){
+        val rv = view.findViewById(R.id.rv_friends_list) as RecyclerView
         mainViewModel.listFriend.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
-        mainViewModel.getUsers()
+        mainViewModel.getFriendsUsers()
         mainViewModel.Friends.observe(viewLifecycleOwner) { response ->
             response?.let {
-                val adapter = FriendsAdapter(it)
+                val adapter = FriendsAdapter(it) {
+
+                }
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }

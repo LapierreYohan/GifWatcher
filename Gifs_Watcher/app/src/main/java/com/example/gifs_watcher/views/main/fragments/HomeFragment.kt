@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.databinding.FragmentHomeBinding
 import com.example.gifs_watcher.viewmodel.MainViewModel
-import com.squareup.picasso.Picasso
 
 class HomeFragment : Fragment() {
 
@@ -44,8 +43,9 @@ class HomeFragment : Fragment() {
             val Gif: ImageView = binding.Gif
             val backgroundGif: ImageView = binding.backgroundGif
             //Picasso.get().load(R.drawable.bobawooyo_dog_confused).into(Gif)
+
             Glide.with(this).load(R.drawable.bobawooyo_dog_confused).into(Gif)
-            Glide.with(this).load(R.drawable.bobawooyo_dog_confused).centerCrop().into(backgroundGif)
+            Glide.with(this).load("https://media.tenor.com/5_E52aMtD4EAAAAd/bobawooyo-dog-confused.gif").centerCrop().into(backgroundGif)
         }catch (e: Exception) {
             Log.println(Log.ERROR,"debug","Gif create error : " + e.message)
         }

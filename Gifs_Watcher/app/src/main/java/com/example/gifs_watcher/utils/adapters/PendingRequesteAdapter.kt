@@ -12,7 +12,7 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 
 
-class FriendsAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
+class PendingRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<PendingRequesteAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)

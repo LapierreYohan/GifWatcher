@@ -12,6 +12,7 @@ import com.example.gifs_watcher.databinding.FragmentFriendsBinding
 import com.example.gifs_watcher.viewmodel.MainViewModel
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.utils.adapters.FriendsAdapter
+import com.example.gifs_watcher.utils.adapters.PendingRequesteAdapter
 
 class FriendsFragment : Fragment() {
 
@@ -48,7 +49,7 @@ class FriendsFragment : Fragment() {
         mainViewModel.getPendingFriendsUsers()
         mainViewModel.pendings.observe(viewLifecycleOwner) { response ->
             response?.let {
-                val adapter = FriendsAdapter(it)
+                val adapter = PendingRequesteAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }

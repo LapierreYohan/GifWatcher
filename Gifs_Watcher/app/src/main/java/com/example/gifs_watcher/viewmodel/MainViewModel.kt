@@ -2,7 +2,6 @@ package com.example.gifs_watcher.viewmodel
 
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,6 @@ import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.repositories.GifRepository
 import com.example.gifs_watcher.models.User
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class MainViewModel : ViewModel() {
 
@@ -51,6 +49,12 @@ class MainViewModel : ViewModel() {
         val u2 = User("Galstrip3", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
         addFriendsUser(u1)
         addFriendsUser(u2)
+        addFriendsUser(u1)
+        addFriendsUser(u2)
+        addFriendsUser(u1)
+        addFriendsUser(u2)
+        addFriendsUser(u1)
+        addFriendsUser(u2)
         viewModelScope.launch {
             listFriend.postValue(listFriend.value)
         }
@@ -63,6 +67,12 @@ class MainViewModel : ViewModel() {
     fun getPendingFriendsUsers() {
         val u1 = User("Nekioux22", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
         val u2 = User("Galstrip22", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
+        addPendingFriendsUser(u1)
+        addPendingFriendsUser(u2)
+        addPendingFriendsUser(u1)
+        addPendingFriendsUser(u2)
+        addPendingFriendsUser(u1)
+        addPendingFriendsUser(u2)
         addPendingFriendsUser(u1)
         addPendingFriendsUser(u2)
         viewModelScope.launch {

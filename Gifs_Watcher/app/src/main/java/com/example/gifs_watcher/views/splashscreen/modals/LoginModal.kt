@@ -85,10 +85,12 @@ object LoginModal : BottomSheetDialogFragment() {
                     when (userError) {
                         UserErrors.ID_NOT_FOUND, UserErrors.ID_EMPTY -> {
                             idInputLayout.error = userError.message
+                            idInput.setError(userError.message, null)
                         }
 
                         UserErrors.PASSWORD_INVALID, UserErrors.PASSWORD_IS_EMPTY -> {
                             passwordInputLayout.error = userError.message
+                            passwordInput.setError(userError.message, null)
                         }
                         else -> {}
                     }

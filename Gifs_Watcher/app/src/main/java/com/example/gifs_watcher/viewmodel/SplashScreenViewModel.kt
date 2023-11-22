@@ -30,7 +30,7 @@ class SplashScreenViewModel() : ViewModel() {
     val signinLiveData : LiveData<UserResponse> = _signinLiveData
 
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 6
+        return password.length >= 6
     }
 
     fun login(id : String, password : String) : Unit {

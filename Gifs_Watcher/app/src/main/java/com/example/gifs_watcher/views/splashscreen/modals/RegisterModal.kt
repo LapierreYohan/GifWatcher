@@ -99,6 +99,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.USERNAME_CONTAINS_EXCEPTED_CHARACTERS -> {
                             if (this.userInputLayout.error == null || this.userInputLayout.error.toString() != "") {
                                 this.userInputLayout.error = userError.message
+                                this.userInput.setError(userError.message, null)
                             }
                         }
 
@@ -108,6 +109,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.PASSWORDS_NOT_MATCHING -> {
                             if (this.passwordInputLayout.error == null || this.userInputLayout.error.toString() != "") {
                                 this.passwordInputLayout.error = userError.message
+                                passwordInput.setError(userError.message, null)
                             }
                         }
 
@@ -115,6 +117,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.PASSWORDS_NOT_MATCHING -> {
                             if (this.confirmPasswordInputLayout.error == null || this.userInputLayout.error.toString() != "") {
                                 this.confirmPasswordInputLayout.error = userError.message
+                                confirmPasswordInput.setError(userError.message, null)
                             }
                         }
 
@@ -124,6 +127,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.EMAIL_CONTAINS_EXCEPTED_CHARACTERS -> {
                             if (this.emailInputLayout.error == null || this.userInputLayout.error.toString() != "") {
                                 this.emailInputLayout.error = userError.message
+                                emailInput.setError(userError.message, null)
                             }
                         }
 
@@ -132,6 +136,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.BIRTHDATE_TOO_YOUNG -> {
                             if (this.birthdayInputLayout.error == null || this.userInputLayout.error.toString() != "") {
                                 this.birthdayInputLayout.error = userError.message
+                                birthdayInput.setError(userError.message, null)
                             }
                         }
 

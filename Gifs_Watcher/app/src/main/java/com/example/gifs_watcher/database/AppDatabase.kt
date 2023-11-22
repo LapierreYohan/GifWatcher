@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.gifs_watcher.datasource.RoomDatasource
+import com.example.gifs_watcher.database.dao.UserDao
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.Converters
 
@@ -13,11 +13,13 @@ import com.example.gifs_watcher.utils.Converters
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract fun userDao(): UserDao
+
     companion object {
 
         private lateinit var instance: AppDatabase
         fun initDatabase(context: Context) {
-            Room.databaseBuilder(
+            this.instance = Room.databaseBuilder(
                 context,
                 AppDatabase::class.java,
                 "GifWatcher"

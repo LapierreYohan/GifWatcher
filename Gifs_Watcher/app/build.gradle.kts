@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -52,7 +52,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.3")
 
     // Gson
-    //implementation ("com.google.code.gson:gson:2.8.7")
+    implementation ("com.google.code.gson:gson:2.8.7")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Retrofit
@@ -79,8 +79,11 @@ dependencies {
 
     //Room
     implementation("androidx.room:room-runtime:2.6.0")
-    ksp("androidx.room:room-compiler:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0")
     implementation("androidx.room:room-ktx:2.6.0")
+
+    //Chiffrement
+    implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

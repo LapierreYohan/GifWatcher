@@ -1,12 +1,14 @@
 package com.example.gifs_watcher.datasource
 
 import com.example.gifs_watcher.models.Results
+import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.CacheMode
 
 object CacheDatasource {
 
     private var randomData : ArrayList<Results?> = arrayListOf()
     private var searchData : ArrayList<Results?> = arrayListOf()
+    private var authUser : User? = null
     private var mode : CacheMode = CacheMode.RANDOM
 
     fun size() : Int {
@@ -59,5 +61,13 @@ object CacheDatasource {
 
     fun getMode() : CacheMode {
         return this.mode
+    }
+
+    fun setAuthUser(user : User?) {
+        this.authUser = user
+    }
+
+    fun getAuthUser() : User? {
+        return this.authUser
     }
 }

@@ -45,8 +45,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun getUsers() {
-        val u1 = User("Nekioux", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
-        val u2 = User("Galstrip", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
+        val u1 = User("Nekioux", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "")
+        val u2 = User("Galstrip", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "")
         addUser(u1)
         addUser(u2)
         viewModelScope.launch {

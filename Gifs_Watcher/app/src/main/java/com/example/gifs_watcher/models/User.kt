@@ -3,37 +3,43 @@ package com.example.gifs_watcher.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-/*
-fun md5(str: String): ByteArray = MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))
-fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byte) }
- */
+import java.time.LocalDate
+import java.util.Date
 
 @Entity(tableName = "users")
 data class User (
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    val idUsers: Int? = null,
-
     @ColumnInfo(name = "username")
-    var username: String? = null,
+    val username: String? = null,
 
     @ColumnInfo(name = "password")
-    var password: String? = null,
+    val password: String? = null,
 
     @ColumnInfo(name = "name")
-    var name: String? = null,
+    val name: String? = null,
 
     @ColumnInfo(name = "lastname")
-    var lastName: String? = null,
+    val lastName: String? = null,
 
     @ColumnInfo(name = "mail")
-    var mail: String? = null,
+    val mail: String? = null,
 
     @ColumnInfo(name = "bio")
-    var bio: String? = null,
+    val bio: String? = null,
+
+    @ColumnInfo(name = "birthdate")
+    val birthdate: String? = null,
 
     @ColumnInfo(name = "picture")
-    var profilPicture: String? = null
-)
+    val profilPicture: String? = null,
+
+    @ColumnInfo(name = "created")
+    val created: String? = null,
+) {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var idUsers: Int? = null
+
+
+}

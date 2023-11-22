@@ -3,7 +3,7 @@ package com.example.gifs_watcher.repositories
 import android.content.Context
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.datasource.CacheDatasource
-import com.example.gifs_watcher.datasource.RetrofitDatasource
+import com.example.gifs_watcher.datasource.ApiDatasource
 import com.example.gifs_watcher.models.TenorData
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.utils.enums.CacheMode
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flow
 
 object GifRepository {
 
-    private var tenorApi : RetrofitDatasource = RetrofitDatasource
+    private var tenorApi : ApiDatasource = ApiDatasource
     private var cache : CacheDatasource = CacheDatasource
 
      fun getRandomGif(context: Context, limit : String = "10", filter : String = "high") : Flow<Results?> = flow {

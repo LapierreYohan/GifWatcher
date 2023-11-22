@@ -1,23 +1,46 @@
 package com.example.gifs_watcher.views.splashscreen.modals
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.viewmodel.SplashScreenViewModel
+import com.example.gifs_watcher.views.main.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 object RegisterModal : BottomSheetDialogFragment() {
     const val TAG = "ModalRegister"
     private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
+
+    private lateinit var userInput : TextInputEditText
+    private lateinit var passwordInput : TextInputEditText
+    private lateinit var emailInput : TextInputEditText
+    private lateinit var confirmPasswordInput : TextInputEditText
+    private lateinit var birthdayInput : TextInputEditText
+
+    private lateinit var userInputLayout : TextInputLayout
+    private lateinit var passwordInputLayout : TextInputLayout
+    private lateinit var emailInputLayout : TextInputLayout
+    private lateinit var confirmPasswordInputLayout : TextInputLayout
+    private lateinit var birthdayInputLayout : TextInputLayout
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_register ,container,false)
 
@@ -32,6 +55,93 @@ object RegisterModal : BottomSheetDialogFragment() {
         // Empêche de quitter le modal
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
+
+        this.userInput = view?.findViewById(R.id.register_username_textinput)!!
+        this.passwordInput = view?.findViewById(R.id.register_password_textinput)!!
+        this.emailInput = view?.findViewById(R.id.register_mail_textinput)!!
+        this.confirmPasswordInput = view?.findViewById(R.id.register_confirmpassword_textinput)!!
+        this.birthdayInput = view?.findViewById(R.id.register_birthday_textinput)!!
+
+        this.userInputLayout = view?.findViewById(R.id.register_username_textinput_layout)!!
+        this.passwordInputLayout = view?.findViewById(R.id.register_password_textinput_layout)!!
+        this.emailInputLayout = view?.findViewById(R.id.register_mail_textinput_layout)!!
+        this.confirmPasswordInputLayout = view?.findViewById(R.id.register_confirmpassword_textinput_layout)!!
+        this.birthdayInputLayout = view?.findViewById(R.id.register_birthday_textinput_layout)!!
+
+        this.userInputLayout.error = null
+        this.passwordInputLayout.error = null
+        this.emailInputLayout.error = null
+        this.confirmPasswordInputLayout.error = null
+        this.birthdayInputLayout.error = null
+
+        this.splashScreenViewModel.signinLiveData.observe(this) {
+            Toast.makeText(context, "Register", Toast.LENGTH_SHORT).show()
+            println(it)
+            if (it.success()) {
+                this.startActivity()
+            } else if (it.failed()) {
+                this.passwordInput.setText("")
+                this.confirmPasswordInput.setText("")
+
+                //Reset des errors
+                this.userInputLayout.error = null
+                this.passwordInputLayout.error = null
+                this.emailInputLayout.error = null
+                this.confirmPasswordInputLayout.error = null
+                this.birthdayInputLayout.error = null
+
+                it.error().forEach { userError ->
+                    when (userError) {
+                        UserErrors.USERNAME_IS_EMPTY,
+                        UserErrors.USERNAME_ALREADY_USED,
+                        UserErrors.USERNAME_NOT_VALID,
+                        UserErrors.USERNAME_TOO_SHORT,
+                        UserErrors.USERNAME_CONTAINS_EXCEPTED_CHARACTERS -> {
+                            if (this.userInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                                this.userInputLayout.error = userError.message
+                            }
+                        }
+
+                        UserErrors.PASSWORD_IS_EMPTY,
+                        UserErrors.PASSWORD_TOO_SHORT,
+                        UserErrors.PASSWORD_INVALID,
+                        UserErrors.PASSWORDS_NOT_MATCHING -> {
+                            if (this.passwordInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                                this.passwordInputLayout.error = userError.message
+                            }
+                        }
+
+                        UserErrors.PASSWORD_IS_EMPTY,
+                        UserErrors.PASSWORDS_NOT_MATCHING -> {
+                            if (this.confirmPasswordInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                                this.confirmPasswordInputLayout.error = userError.message
+                            }
+                        }
+
+                        UserErrors.EMAIL_IS_EMPTY,
+                        UserErrors.EMAIL_NOT_VALID,
+                        UserErrors.EMAIL_ALREADY_USED,
+                        UserErrors.EMAIL_CONTAINS_EXCEPTED_CHARACTERS -> {
+                            if (this.emailInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                                this.emailInputLayout.error = userError.message
+                            }
+                        }
+
+                        UserErrors.BIRTHDATE_IS_EMPTY,
+                        UserErrors.BIRTHDATE_NOT_VALID,
+                        UserErrors.BIRTHDATE_TOO_YOUNG -> {
+                            if (this.birthdayInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                                this.birthdayInputLayout.error = userError.message
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+        }
+
+        setUpRegisterListeners(view)
 
         return view
     }
@@ -72,5 +182,29 @@ object RegisterModal : BottomSheetDialogFragment() {
 
             }
         }
+    }
+
+    private fun setUpRegisterListeners(view: View) : Unit {
+        // Bouton de Connexion
+        val registerButton : Button = view.findViewById(R.id.register_signin_button)
+
+        registerButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                this.splashScreenViewModel.register(
+                    this.userInput.text.toString().trim(),
+                    this.passwordInput.text.toString().trim(),
+                    this.confirmPasswordInput.text.toString().trim(),
+                    this.emailInput.text.toString().trim(),
+                    this.birthdayInput.text.toString().trim()
+                )
+            }
+        }
+    }
+    private fun startActivity() : Unit {
+        val intent : Intent = Intent(context, MainActivity::class.java)
+
+        this.dismiss()
+        startActivity(intent)
+        activity?.finish()
     }
 }

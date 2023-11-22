@@ -10,20 +10,30 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.viewmodel.SplashScreenViewModel
 import com.example.gifs_watcher.views.main.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 
 object LoginModal : BottomSheetDialogFragment() {
 
     const val TAG = "ModalLogin"
     private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
+
+    private lateinit var idInput : TextInputEditText
+    private lateinit var passwordInput : TextInputEditText
+    private lateinit var idInputLayout : TextInputLayout
+    private lateinit var passwordInputLayout : TextInputLayout
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_login ,container,false)
 
@@ -50,6 +60,41 @@ object LoginModal : BottomSheetDialogFragment() {
         // Empêche de quitter le modal
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
+
+        idInput = view?.findViewById(R.id.login_identifiant_textinput)!!
+        passwordInput = view?.findViewById(R.id.login_password_textinput)!!
+
+        idInputLayout = view?.findViewById(R.id.login_identifiant_textinput_layout)!!
+        passwordInputLayout = view?.findViewById(R.id.login_password_textinput_layout)!!
+
+        idInputLayout.error = null
+        passwordInputLayout.error = null
+
+        splashScreenViewModel.loggedLiveData.observe(this) {
+            if (it.success()) {
+                this.startActivity()
+            } else if (it.failed()) {
+                idInput.setText("")
+                passwordInput.setText("")
+
+                //reset des errors
+                idInputLayout.error = null
+                passwordInputLayout.error = null
+
+                it.error().forEach { userError ->
+                    when (userError) {
+                        UserErrors.ID_NOT_FOUND, UserErrors.ID_EMPTY -> {
+                            idInputLayout.error = userError.message
+                        }
+
+                        UserErrors.PASSWORD_INVALID, UserErrors.PASSWORD_IS_EMPTY -> {
+                            passwordInputLayout.error = userError.message
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
 
         return view
     }
@@ -95,7 +140,7 @@ object LoginModal : BottomSheetDialogFragment() {
         // Bouton de Connexion
         val connectButton : Button = view.findViewById(R.id.login_signin_button)
         connectButton.setOnClickListener {
-            this.login()
+            this.splashScreenViewModel.login(idInput.text.toString().trim(), passwordInput.text.toString().trim())
         }
 
         // Bouton de Connexion avec Google
@@ -119,7 +164,6 @@ object LoginModal : BottomSheetDialogFragment() {
 
     private fun login() : Unit {
 
-        startActivity()
     }
 
     private fun startActivity() : Unit {

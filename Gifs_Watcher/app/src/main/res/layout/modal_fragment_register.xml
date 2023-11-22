@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/register_title" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_username_textinput"
+            android:id="@+id/register_username_textinput_layout"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginStart="24dp"
@@ -64,6 +64,7 @@
             app:startIconTint="@color/md_theme_dark_onSurface">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_username_textinput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_theme_dark_surfaceVariant"
@@ -75,7 +76,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_mail_textinput"
+            android:id="@+id/register_mail_textinput_layout"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginStart="24dp"
@@ -87,12 +88,13 @@
             app:hintTextAppearance="@style/EditTextThemeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_username_textinput"
+            app:layout_constraintTop_toBottomOf="@+id/register_username_textinput_layout"
             app:startIconDrawable="@drawable/identidiant_icon"
             app:startIconMinSize="30dp"
             app:startIconTint="@color/md_theme_dark_onSurface">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_mail_textinput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_theme_dark_surfaceVariant"
@@ -105,7 +107,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_password_textinput"
+            android:id="@+id/register_password_textinput_layout"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginStart="24dp"
@@ -117,12 +119,13 @@
             app:hintTextAppearance="@style/EditTextThemeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_mail_textinput"
+            app:layout_constraintTop_toBottomOf="@+id/register_mail_textinput_layout"
             app:startIconDrawable="@drawable/password_icon"
             app:startIconMinSize="30dp"
             app:startIconTint="@color/md_theme_dark_onSurface">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_password_textinput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_theme_dark_surfaceVariant"
@@ -135,7 +138,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_confirmpassword_textinput"
+            android:id="@+id/register_confirmpassword_textinput_layout"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginStart="24dp"
@@ -147,12 +150,13 @@
             app:hintTextAppearance="@style/EditTextThemeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_password_textinput"
+            app:layout_constraintTop_toBottomOf="@+id/register_password_textinput_layout"
             app:startIconDrawable="@drawable/password_icon"
             app:startIconMinSize="30dp"
             app:startIconTint="@color/md_theme_dark_onSurface">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_confirmpassword_textinput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_theme_dark_surfaceVariant"
@@ -165,7 +169,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_birthday_textinput"
+            android:id="@+id/register_birthday_textinput_layout"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginStart="24dp"
@@ -177,12 +181,13 @@
             app:hintTextAppearance="@style/EditTextThemeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_confirmpassword_textinput"
+            app:layout_constraintTop_toBottomOf="@+id/register_confirmpassword_textinput_layout"
             app:startIconDrawable="@drawable/password_icon"
             app:startIconMinSize="30dp"
             app:startIconTint="@color/md_theme_dark_onSurface">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_birthday_textinput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_theme_dark_surfaceVariant"
@@ -205,7 +210,7 @@
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_birthday_textinput" />
+            app:layout_constraintTop_toBottomOf="@+id/register_birthday_textinput_layout"/>
 
         <View
             android:id="@+id/register_separator_view2"

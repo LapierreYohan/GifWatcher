@@ -87,6 +87,7 @@ dependencies {
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     implementation ("jp.wasabeef:glide-transformations:4.3.0")
     implementation ("jp.co.cyberagent.android:gpuimage:2.1.0")
 
@@ -104,6 +105,9 @@ dependencies {
 
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
+
+    // LottieAnimation
+    implementation ("com.airbnb.android:lottie:3.4.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

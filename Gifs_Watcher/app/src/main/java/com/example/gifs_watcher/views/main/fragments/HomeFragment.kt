@@ -1,32 +1,50 @@
 package com.example.gifs_watcher.views.main.fragments
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.databinding.FragmentHomeBinding
+import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.viewmodel.MainViewModel
 import jp.wasabeef.glide.transformations.BlurTransformation
+import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private var printedGif : Results = Results()
 
     private val binding get() = _binding!!
     private val mainViewModel by activityViewModels<MainViewModel>()
+
+    private lateinit var  gifUi : ImageView
+    private lateinit var  backgroundGifUi : ImageView
+    private lateinit var  gifTitle : TextView
+
+    // All Interactive Gifs Buttons
+    private lateinit var  likeGif : LottieAnimationView
+    private lateinit var  dislikeGif : LottieAnimationView
+    private lateinit var  starGif : LottieAnimationView
+    private var isClicked : Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,23 +55,92 @@ class HomeFragment : Fragment() {
         val mainViewModel_ = ViewModelProvider(this).get(MainViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        try {
-            val Gif: ImageView = binding.Gif
-            val backgroundGif: ImageView = binding.backgroundGif
-            Glide.with(this)
-                .load(R.drawable.bobawooyo_dog_confused)
-                .transform(MultiTransformation(RoundedCorners(25)))
-                .into(Gif)
-            Glide.with(this)
-                .load("https://media.tenor.com/5_E52aMtD4EAAAAd/bobawooyo-dog-confused.gif")
-                .transform(MultiTransformation(CenterCrop(),BlurTransformation(25, 4),))
-                .into(backgroundGif)
-        }catch (e: Exception) {
-            Log.println(Log.ERROR,"debug","Gif create error : " + e.message)
+        this.gifUi = binding.Gif
+        this.backgroundGifUi = binding.backgroundGif
+        this.gifTitle = binding.TitleGif
+
+        mainViewModel.printedGifLD.observe(viewLifecycleOwner) {
+            if (it != null) {
+                printedGif = it
+                //Timber.e(printedGif.toString())
+                gifTitle.setText(printedGif.contentDescription)
+
+                try {
+                    // Loading main gif
+                    Glide.with(this)
+                        .load(printedGif.media?.get(0)?.tinygif?.url)
+                        .transform(MultiTransformation(CenterCrop(), FitCenter(), RoundedCorners(45)))
+                        .into(this.gifUi)
+
+                    // Loading background gif
+                    Glide.with(this)
+                        .load(printedGif.media?.get(0)?.gif?.url)
+                        .apply(RequestOptions().centerCrop())
+                        .transform(MultiTransformation(BlurTransformation(25, 4), CenterCrop(), FitCenter()))
+                        .into(this.backgroundGifUi)
+                } catch (e: Exception) {
+                    Log.println(Log.ERROR,"debug","Gif create error : " + e.message)
+                }
+            }
         }
+
+        initializeButtons()
 
         val root: View = binding.root
         return root
+    }
+
+    private fun initializeButtons() {
+        this.likeGif = binding.likeFloatingActionButton
+        this.dislikeGif = binding.deleteFloatingActionButton
+        this.starGif = binding.starFloatingActionButton
+
+        likeGif.addAnimatorListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                mainViewModel.getRandomGif(requireContext())
+                isClicked = false
+                likeGif.progress = 0f
+            }
+        })
+
+        this.likeGif.setOnClickListener {
+            if (!isClicked) {
+                isClicked = true
+                this.likeGif.setMinProgress(0.2f)
+                this.likeGif.playAnimation()
+
+            }
+        }
+
+        dislikeGif.addAnimatorListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                mainViewModel.getRandomGif(requireContext())
+                isClicked = false
+                dislikeGif.progress = 0f
+            }
+        })
+
+        this.dislikeGif.setOnClickListener {
+            if (!isClicked) {
+                isClicked = true
+                this.dislikeGif.playAnimation()
+            }
+        }
+
+        starGif.addAnimatorListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                mainViewModel.getRandomGif(requireContext())
+                isClicked = false
+                starGif.progress = 0f
+            }
+        })
+
+        this.starGif.setOnClickListener {
+            if (!isClicked) {
+                isClicked = true
+                this.starGif.playAnimation()
+            }
+        }
     }
 
     override fun onDestroyView() {

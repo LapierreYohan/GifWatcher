@@ -9,7 +9,10 @@ interface TenorService {
     @GET("v1/random?key=LIVDSRZULELA&limit=10&contentfilter=high")
     suspend fun getRandomsGifs(
         @Query("key") key: String?,
+        @Query("locale") locale: String?,
         @Query("limit") limit: String?,
-        @Query("contentfilter") contentfilter: String?
+        @Query("contentfilter") contentfilter: String?,
+        @Query("media_filter") media_filter: String?,
+        @Query("q") q: String?
     ): TenorData?
 }

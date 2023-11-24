@@ -32,12 +32,12 @@ object UserRepository {
                 cache.setAuthUser(user)
                 emit(response)
             } else if (!samePassword) {
-                response.addError(UserErrors.PASSWORD_INVALID)
+                response.addError(UserErrors.ID_OR_PASSWORD_INVALID)
                 emit(response)
             }
 
         } else {
-            response.addError(UserErrors.ID_NOT_FOUND)
+            response.addError(UserErrors.ID_OR_PASSWORD_INVALID)
             emit(response)
         }
     }

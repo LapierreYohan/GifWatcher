@@ -61,14 +61,14 @@ object LoginModal : BottomSheetDialogFragment() {
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
 
-        idInput = view?.findViewById(R.id.login_identifiant_textinput)!!
-        passwordInput = view?.findViewById(R.id.login_password_textinput)!!
+        this.idInput = view?.findViewById(R.id.login_identifiant_textinput)!!
+        this.passwordInput = view.findViewById(R.id.login_password_textinput)!!
 
-        idInputLayout = view?.findViewById(R.id.login_identifiant_textinput_layout)!!
-        passwordInputLayout = view?.findViewById(R.id.login_password_textinput_layout)!!
+        this.idInputLayout = view.findViewById(R.id.login_identifiant_textinput_layout)!!
+        this.passwordInputLayout = view.findViewById(R.id.login_password_textinput_layout)!!
 
-        idInputLayout.error = null
-        passwordInputLayout.error = null
+        this.idInputLayout.error = null
+        this.passwordInputLayout.error = null
 
         splashScreenViewModel.loggedLiveData.observe(this) {
             if (it.success()) {
@@ -83,15 +83,23 @@ object LoginModal : BottomSheetDialogFragment() {
 
                 it.error().forEach { userError ->
                     when (userError) {
-                        UserErrors.ID_NOT_FOUND, UserErrors.ID_EMPTY -> {
+                        UserErrors.ID_EMPTY -> {
                             idInputLayout.error = userError.message
                             idInput.setError(userError.message, null)
                         }
 
-                        UserErrors.PASSWORD_INVALID, UserErrors.PASSWORD_IS_EMPTY -> {
+                        UserErrors.PASSWORD_IS_EMPTY -> {
                             passwordInputLayout.error = userError.message
                             passwordInput.setError(userError.message, null)
                         }
+
+                        UserErrors.ID_OR_PASSWORD_INVALID -> {
+                            passwordInputLayout.error = userError.message
+                            passwordInput.setError(userError.message, null)
+                            idInputLayout.error = userError.message
+                            idInput.setError(userError.message, null)
+                        }
+
                         else -> {}
                     }
                 }

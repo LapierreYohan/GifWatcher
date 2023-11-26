@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.repositories.GifRepository
 import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.views.main.fragments.HomeFragment
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {

@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModels<MainViewModel>()
-    private var printedGif : Results? = Results()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +44,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_friends, R.id.navigation_home, R.id.navigation_profil
             )
         )
+
+        mainViewModel.getRandomGif(applicationContext)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        mainViewModel.printedGifLD.observe(this) {
-            printedGif = it
-            Timber.e(printedGif.toString())
-        }
-
-        mainViewModel.getRandomGif(this)
     }
 }

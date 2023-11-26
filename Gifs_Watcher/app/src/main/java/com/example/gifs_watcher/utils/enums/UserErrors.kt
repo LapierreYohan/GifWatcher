@@ -2,6 +2,7 @@ package com.example.gifs_watcher.utils.enums
 
 enum class UserErrors (val message : String) {
     ID_NOT_FOUND("L'identifiant saisi n'est pas valide."),
+    ID_OR_PASSWORD_INVALID("L'identifiant ou le mot de passe saisi n'est pas valide."),
     ID_EMPTY("L'identifiant saisi est vide."),
     PASSWORD_INVALID("Le mot de passe saisi n'est pas valide."),
     PASSWORD_TOO_SHORT("Le mot de passe saisi est trop court (minimum 6 caractères)."),

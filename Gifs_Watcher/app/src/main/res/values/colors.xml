@@ -70,6 +70,9 @@
     <color name="md_theme_dark_scrim">#000000</color>
 
 
+    <color name="like_button">#8BEC48</color>
+    <color name="dislike_button">#F74E4E</color>
+
     <color name="md_theme_dark_on_container_low">#1A1C1E</color>
     <color name="md_theme_dark_onSurface_Alpha30">#30C5C6C9</color>
 </resources>

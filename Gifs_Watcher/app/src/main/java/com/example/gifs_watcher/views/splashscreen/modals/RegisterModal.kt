@@ -57,16 +57,16 @@ object RegisterModal : BottomSheetDialogFragment() {
         dialog?.setCancelable(false)
 
         this.userInput = view?.findViewById(R.id.register_username_textinput)!!
-        this.passwordInput = view?.findViewById(R.id.register_password_textinput)!!
-        this.emailInput = view?.findViewById(R.id.register_mail_textinput)!!
-        this.confirmPasswordInput = view?.findViewById(R.id.register_confirmpassword_textinput)!!
-        this.birthdayInput = view?.findViewById(R.id.register_birthday_textinput)!!
+        this.passwordInput = view.findViewById(R.id.register_password_textinput)!!
+        this.emailInput = view.findViewById(R.id.register_mail_textinput)!!
+        this.confirmPasswordInput = view.findViewById(R.id.register_confirmpassword_textinput)!!
+        this.birthdayInput = view.findViewById(R.id.register_birthday_textinput)!!
 
-        this.userInputLayout = view?.findViewById(R.id.register_username_textinput_layout)!!
-        this.passwordInputLayout = view?.findViewById(R.id.register_password_textinput_layout)!!
-        this.emailInputLayout = view?.findViewById(R.id.register_mail_textinput_layout)!!
-        this.confirmPasswordInputLayout = view?.findViewById(R.id.register_confirmpassword_textinput_layout)!!
-        this.birthdayInputLayout = view?.findViewById(R.id.register_birthday_textinput_layout)!!
+        this.userInputLayout = view.findViewById(R.id.register_username_textinput_layout)!!
+        this.passwordInputLayout = view.findViewById(R.id.register_password_textinput_layout)!!
+        this.emailInputLayout = view.findViewById(R.id.register_mail_textinput_layout)!!
+        this.confirmPasswordInputLayout = view.findViewById(R.id.register_confirmpassword_textinput_layout)!!
+        this.birthdayInputLayout = view.findViewById(R.id.register_birthday_textinput_layout)!!
 
         this.userInputLayout.error = null
         this.passwordInputLayout.error = null
@@ -97,17 +97,15 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.USERNAME_NOT_VALID,
                         UserErrors.USERNAME_TOO_SHORT,
                         UserErrors.USERNAME_CONTAINS_EXCEPTED_CHARACTERS -> {
-                            if (this.userInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                            if (this.userInputLayout.error == null) {
                                 this.userInputLayout.error = userError.message
                                 this.userInput.setError(userError.message, null)
                             }
                         }
 
-                        UserErrors.PASSWORD_IS_EMPTY,
                         UserErrors.PASSWORD_TOO_SHORT,
-                        UserErrors.PASSWORD_INVALID,
-                        UserErrors.PASSWORDS_NOT_MATCHING -> {
-                            if (this.passwordInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                        UserErrors.PASSWORD_INVALID -> {
+                            if (this.passwordInputLayout.error == null) {
                                 this.passwordInputLayout.error = userError.message
                                 passwordInput.setError(userError.message, null)
                             }
@@ -115,9 +113,13 @@ object RegisterModal : BottomSheetDialogFragment() {
 
                         UserErrors.PASSWORD_IS_EMPTY,
                         UserErrors.PASSWORDS_NOT_MATCHING -> {
-                            if (this.confirmPasswordInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                            if (this.confirmPasswordInputLayout.error == null && this.passwordInputLayout.error == null) {
+
                                 this.confirmPasswordInputLayout.error = userError.message
                                 confirmPasswordInput.setError(userError.message, null)
+                                this.passwordInputLayout.error = userError.message
+                                passwordInput.setError(userError.message, null)
+
                             }
                         }
 
@@ -125,7 +127,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.EMAIL_NOT_VALID,
                         UserErrors.EMAIL_ALREADY_USED,
                         UserErrors.EMAIL_CONTAINS_EXCEPTED_CHARACTERS -> {
-                            if (this.emailInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                            if (this.emailInputLayout.error == null) {
                                 this.emailInputLayout.error = userError.message
                                 emailInput.setError(userError.message, null)
                             }
@@ -134,7 +136,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.BIRTHDATE_IS_EMPTY,
                         UserErrors.BIRTHDATE_NOT_VALID,
                         UserErrors.BIRTHDATE_TOO_YOUNG -> {
-                            if (this.birthdayInputLayout.error == null || this.userInputLayout.error.toString() != "") {
+                            if (this.birthdayInputLayout.error == null) {
                                 this.birthdayInputLayout.error = userError.message
                                 birthdayInput.setError(userError.message, null)
                             }

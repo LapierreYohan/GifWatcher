@@ -16,7 +16,7 @@ object GifRepository {
     private var tenorApi : ApiDatasource = ApiDatasource
     private var cache : CacheDatasource = CacheDatasource
 
-     fun getRandomGif(context: Context, limit : String = "10", filter : String = "high") : Flow<Results?> = flow {
+     fun getRandomGif(context: Context, limit : String = "50", filter : String = "high") : Flow<Results?> = flow {
 
          var randomData : TenorData?
 
@@ -25,7 +25,7 @@ object GifRepository {
          }
 
          if (cache.size() < 1) {
-             randomData = tenorApi.getTenorService().getRandomsGifs(context.getString(R.string.tenor_api_key), limit, filter)
+             randomData = tenorApi.getTenorService().getRandomsGifs(context.getString(R.string.tenor_api_key),"fr_FR", limit, filter, "minimal", "bleach")
 
              cache.add(randomData?.results ?: arrayListOf())
 

@@ -4,7 +4,8 @@
     <item
         android:id="@+id/navigation_friends"
         android:icon="@drawable/icon_friends"
-        android:title="@string/title_friends" />
+        android:title="@string/title_friends"
+        />
 
     <item
         android:id="@+id/navigation_home"

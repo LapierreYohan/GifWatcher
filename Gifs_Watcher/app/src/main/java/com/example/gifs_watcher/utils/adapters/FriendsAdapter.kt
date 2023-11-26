@@ -41,8 +41,6 @@ class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit
         //set les valeurs de l'utilsateur dans les différents champs
         holder.textView.text = item?.username
         holder.descView.text = item?.bio
-        holder.card.setOnClickListener { Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show() }
-
     }
 
     override fun getItemId(p0: Int): Long {

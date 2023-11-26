@@ -23,6 +23,8 @@ class MainViewModel : ViewModel() {
     val Friends : LiveData<ArrayList<User?>> = listFriend
     val pendingFriends : MutableLiveData<ArrayList<User?>> = MutableLiveData()
     val pendings : LiveData<ArrayList<User?>> = pendingFriends
+    val sentFriends : MutableLiveData<ArrayList<User?>> = MutableLiveData()
+    val sents : LiveData<ArrayList<User?>> = sentFriends
 
     enum class View{
         HOME, FRIENDS, PROFIL
@@ -82,6 +84,26 @@ class MainViewModel : ViewModel() {
 
     fun addPendingFriendsUser(user : User) {
         pendingFriends.value?.add(user)
+    }
+
+    fun getSentFriendsUsers() {
+        val u1 = User("Nekioux1", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
+        val u2 = User("Galstrip1", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
+        addSentFriendsUser(u1)
+        addSentFriendsUser(u2)
+        addSentFriendsUser(u1)
+        addSentFriendsUser(u2)
+        addSentFriendsUser(u1)
+        addSentFriendsUser(u2)
+        addSentFriendsUser(u1)
+        addSentFriendsUser(u2)
+        viewModelScope.launch {
+            sentFriends.postValue(sentFriends.value)
+        }
+    }
+
+    fun addSentFriendsUser(user : User) {
+        sentFriends.value?.add(user)
     }
 
 }

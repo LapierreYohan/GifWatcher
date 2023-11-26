@@ -64,8 +64,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/friend_list_txt"
-                android:nestedScrollingEnabled="false"
-                tools:listitem="@layout/pending_request"/>
+                tools:listitem="@layout/pending_request"
+                android:nestedScrollingEnabled="false"/>
+
+            <TextView
+                android:id="@+id/sent_request_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rv_friends_list"
+                android:text="Sent request :" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_sent_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sent_request_txt"
+                tools:listitem="@layout/pending_request"
+                android:nestedScrollingEnabled="false"/>
 
         </RelativeLayout>
     </ScrollView>

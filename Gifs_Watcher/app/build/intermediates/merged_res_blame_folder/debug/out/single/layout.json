@@ -1,38 +1,38 @@
 [
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/fragment_profil.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/fragment_profil.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/modal_fragment_login.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/modal_fragment_login.xml"
     },
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/modal_fragment_login.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/modal_fragment_login.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/modal_fragment_password.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/modal_fragment_password.xml"
     },
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/pending_request.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/pending_request.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/fragment_home.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/fragment_home.xml"
     },
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/modal_fragment_register.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/modal_fragment_register.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/fragment_profil.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/fragment_profil.xml"
     },
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/activity_main.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/activity_main.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/activity_main.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/activity_main.xml"
     },
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/modal_fragment_password.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/modal_fragment_password.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/activity_splash_screen.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/activity_splash_screen.xml"
     },
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/activity_splash_screen.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/activity_splash_screen.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/pending_request.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/pending_request.xml"
     },
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/fragment_friends.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/fragment_friends.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/fragment_friends.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/fragment_friends.xml"
     },
     {
-        "merged": "com.example.gifs_watcher.app-mergeDebugResources-62:/layout/fragment_home.xml",
-        "source": "com.example.gifs_watcher.app-main-65:/layout/fragment_home.xml"
+        "merged": "com.example.gifs_watcher.app-mergeDebugResources-68:/layout/modal_fragment_register.xml",
+        "source": "com.example.gifs_watcher.app-main-71:/layout/modal_fragment_register.xml"
     }
 ]

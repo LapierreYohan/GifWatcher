@@ -1,6 +1,5 @@
 *.iml
 .gradle
-.idea
 local.properties
 .idea/caches
 .idea/libraries
@@ -14,5 +13,3 @@ captures
 .externalNativeBuild
 .cxx
 local.properties
-*.dex
-Gifs_Watcher/.idea

@@ -78,6 +78,11 @@
     <dimen name="fragment_vertical_margin">16dp</dimen>
     <string name="app_name">Gifs_Watcher</string>
     <string name="background_description">Une loutre</string>
+    <string name="gcm_defaultSenderId" translatable="false">783718256781</string>
+    <string name="google_api_key" translatable="false">AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI</string>
+    <string name="google_app_id" translatable="false">1:783718256781:android:9c01d0a025a1359d4f92c4</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI</string>
+    <string name="google_storage_bucket" translatable="false">gifswatcher-1695048501603.appspot.com</string>
     <string name="login_button">"Sign In"</string>
     <string name="login_failed">"Login failed"</string>
     <string name="login_forgot">Forgot Password ?</string>
@@ -94,6 +99,7 @@
     <string name="password_invalid_email">Not a valid email</string>
     <string name="password_login">Do you remember your password ? Log in</string>
     <string name="password_title">FORGOT PASSWORD</string>
+    <string name="project_id" translatable="false">gifswatcher-1695048501603</string>
     <string name="register_birthday">Birthday</string>
     <string name="register_button">"Sign Up"</string>
     <string name="register_confirm_password">Confirm Password</string>

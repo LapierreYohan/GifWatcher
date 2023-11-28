@@ -202,6 +202,11 @@ raw green_heart
 raw pink_dislike
 string app_name
 string background_description
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
 string login_button
 string login_failed
 string login_forgot
@@ -218,6 +223,7 @@ string password_failed
 string password_invalid_email
 string password_login
 string password_title
+string project_id
 string register_birthday
 string register_button
 string register_confirm_password

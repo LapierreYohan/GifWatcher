@@ -1,7 +1,7 @@
 package com.example.gifs_watcher.repositories
 
 import com.example.gifs_watcher.datasource.CacheDatasource
-import com.example.gifs_watcher.datasource.DatabaseDatasource
+import com.example.gifs_watcher.datasource.LocalDatabaseDatasource
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.utils.managers.PasswordManager
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flow
 
 object UserRepository {
     private var cache : CacheDatasource = CacheDatasource
-    private  var database : DatabaseDatasource = DatabaseDatasource
+    private  var database : LocalDatabaseDatasource = LocalDatabaseDatasource
 
     fun verifyConnectionData(id : String, password : String) : Flow<UserResponse> = flow {
 

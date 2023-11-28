@@ -1,6 +1,5 @@
 package com.example.gifs_watcher.repositories
 
-import com.example.gifs_watcher.database.AppDatabase
 import com.example.gifs_watcher.datasource.CacheDatasource
 import com.example.gifs_watcher.datasource.DatabaseDatasource
 import com.example.gifs_watcher.models.User
@@ -9,7 +8,6 @@ import com.example.gifs_watcher.utils.managers.PasswordManager
 import com.example.gifs_watcher.utils.responses.UserResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.security.MessageDigest
 
 object UserRepository {
     private var cache : CacheDatasource = CacheDatasource

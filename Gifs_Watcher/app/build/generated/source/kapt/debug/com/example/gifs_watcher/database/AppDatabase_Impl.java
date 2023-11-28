@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-public final class AppDatabase_Impl extends AppDatabase {
+public final class AppDatabase_Impl extends LocalDatabase {
   private volatile UserDao _userDao;
 
   @Override

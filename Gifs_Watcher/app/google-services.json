@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "783718256781",
+    "project_id": "gifswatcher-1695048501603",
+    "storage_bucket": "gifswatcher-1695048501603.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783718256781:android:9c01d0a025a1359d4f92c4",
+        "android_client_info": {
+          "package_name": "com.example.gifs_watcher"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,22 +11,22 @@ import com.example.gifs_watcher.utils.Converters
 
 @Database(entities = [User::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class AppDatabase : RoomDatabase() {
+abstract class LocalDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
 
     companion object {
 
-        private lateinit var instance: AppDatabase
+        private lateinit var instance: LocalDatabase
         fun initDatabase(context: Context) {
             this.instance = Room.databaseBuilder(
                 context,
-                AppDatabase::class.java,
+                LocalDatabase::class.java,
                 "GifWatcher"
             ).build()
         }
 
-        fun getInstance(): AppDatabase {
+        fun getInstance(): LocalDatabase {
             return instance
         }
     }

@@ -13,6 +13,7 @@ import com.example.gifs_watcher.viewmodel.MainViewModel
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.utils.adapters.FriendsAdapter
 import com.example.gifs_watcher.utils.adapters.PendingRequesteAdapter
+import com.example.gifs_watcher.utils.adapters.SentRequesteAdapter
 
 class FriendsFragment : Fragment() {
 
@@ -40,11 +41,12 @@ class FriendsFragment : Fragment() {
 
         setupFriendsAdapterForPendingRequest(view)
         setupFriendsAdapterForFriendsList(view)
+        setupFriendsAdapterForSentRequest(view)
 
     }
 
     fun setupFriendsAdapterForPendingRequest(view: View){
-        val rv = view.findViewById(R.id.rv_pending_request) as RecyclerView
+        val rv = view.findViewById(R.id.rv_super_like) as RecyclerView
         mainViewModel.pendingFriends.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
         mainViewModel.getPendingFriendsUsers()
         mainViewModel.pendings.observe(viewLifecycleOwner) { response ->
@@ -57,7 +59,7 @@ class FriendsFragment : Fragment() {
     }
 
     fun setupFriendsAdapterForFriendsList(view: View){
-        val rv = view.findViewById(R.id.rv_friends_list) as RecyclerView
+        val rv = view.findViewById(R.id.rv_like) as RecyclerView
         mainViewModel.listFriend.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
         mainViewModel.getFriendsUsers()
         mainViewModel.Friends.observe(viewLifecycleOwner) { response ->
@@ -65,6 +67,19 @@ class FriendsFragment : Fragment() {
                 val adapter = FriendsAdapter(it) {
 
                 }
+                rv.adapter = adapter
+                rv.layoutManager = LinearLayoutManager(this.context)
+            }
+        }
+    }
+
+    fun setupFriendsAdapterForSentRequest(view: View){
+        val rv = view.findViewById(R.id.rv_sent_request) as RecyclerView
+        mainViewModel.sentFriends.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
+        mainViewModel.getSentFriendsUsers()
+        mainViewModel.sents.observe(viewLifecycleOwner) { response ->
+            response?.let {
+                val adapter = SentRequesteAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }

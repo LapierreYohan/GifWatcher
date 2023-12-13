@@ -46,7 +46,7 @@ class FriendsFragment : Fragment() {
     }
 
     fun setupFriendsAdapterForPendingRequest(view: View){
-        val rv = view.findViewById(R.id.rv_pending_request) as RecyclerView
+        val rv = view.findViewById(R.id.rv_super_like) as RecyclerView
         mainViewModel.pendingFriends.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
         mainViewModel.getPendingFriendsUsers()
         mainViewModel.pendings.observe(viewLifecycleOwner) { response ->
@@ -59,7 +59,7 @@ class FriendsFragment : Fragment() {
     }
 
     fun setupFriendsAdapterForFriendsList(view: View){
-        val rv = view.findViewById(R.id.rv_friends_list) as RecyclerView
+        val rv = view.findViewById(R.id.rv_like) as RecyclerView
         mainViewModel.listFriend.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
         mainViewModel.getFriendsUsers()
         mainViewModel.Friends.observe(viewLifecycleOwner) { response ->

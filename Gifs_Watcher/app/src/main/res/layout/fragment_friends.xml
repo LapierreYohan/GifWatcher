@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/smooth"
+        android:id="@+id/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alwaysDrawnWithCache="true"
@@ -39,39 +39,39 @@
             android:fillViewport="true">
 
             <TextView
-                android:id="@+id/pending_request_txt"
+                android:id="@+id/super_like_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pending request :" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_pending_request"
+                android:id="@+id/rv_super_like"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pending_request_txt"
-                tools:listitem="@layout/pending_request"
+                android:layout_below="@+id/super_like_txt"
+                tools:listitem="@layout/friends_card_list"
                 android:nestedScrollingEnabled="false"/>
 
             <TextView
-                android:id="@+id/friend_list_txt"
+                android:id="@+id/like_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_pending_request"
+                android:layout_below="@+id/rv_super_like"
                 android:text="Friends :" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_friends_list"
+                android:id="@+id/rv_like"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/friend_list_txt"
-                tools:listitem="@layout/pending_request"
+                android:layout_below="@+id/like_txt"
+                tools:listitem="@layout/friends_card_list"
                 android:nestedScrollingEnabled="false"/>
 
             <TextView
                 android:id="@+id/sent_request_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_friends_list"
+                android:layout_below="@+id/rv_like"
                 android:text="Sent request :" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sent_request_txt"
-                tools:listitem="@layout/pending_request"
+                tools:listitem="@layout/friends_card_list"
                 android:nestedScrollingEnabled="false"/>
 
         </RelativeLayout>

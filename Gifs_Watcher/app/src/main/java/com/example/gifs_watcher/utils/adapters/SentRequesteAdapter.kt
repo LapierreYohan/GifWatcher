@@ -22,7 +22,7 @@ class SentRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<S
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.pending_request, parent, false)
+            .inflate(R.layout.friends_card_list, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 

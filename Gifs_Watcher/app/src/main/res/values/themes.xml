@@ -53,5 +53,21 @@
         <item name="android:colorBackground">@android:color/transparent</item>
     </style>
 
+    <style name="CustomDatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Ajoutez d'autres attributs de style selon vos besoins -->
+        <item name="android:buttonBarPositiveButtonStyle">@style/MyDialogButton.OK</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/MyDialogButton.Cancel</item>
+    </style>
+
+    <style name="MyDialogButton.OK" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <!-- Ajoutez d'autres styles personnalisés si nécessaire -->
+    </style>
+
+    <style name="MyDialogButton.Cancel" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorAccent</item>
+        <!-- Ajoutez d'autres styles personnalisés si nécessaire -->
+    </style>
 
 </resources>

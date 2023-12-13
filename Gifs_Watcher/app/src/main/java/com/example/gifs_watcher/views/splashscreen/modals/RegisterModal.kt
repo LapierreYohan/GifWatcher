@@ -1,26 +1,33 @@
 package com.example.gifs_watcher.views.splashscreen.modals
 
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.utils.enums.UserErrors
-import com.example.gifs_watcher.views.splashscreen.SplashScreenViewModel
 import com.example.gifs_watcher.views.main.MainActivity
+import com.example.gifs_watcher.views.splashscreen.SplashScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Locale
 
 object RegisterModal : BottomSheetDialogFragment() {
     const val TAG = "ModalRegister"
@@ -38,6 +45,7 @@ object RegisterModal : BottomSheetDialogFragment() {
     private lateinit var confirmPasswordInputLayout : TextInputLayout
     private lateinit var birthdayInputLayout : TextInputLayout
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_register ,container,false)
 
@@ -142,6 +150,51 @@ object RegisterModal : BottomSheetDialogFragment() {
                     }
                 }
             }
+        }
+
+        val currentDate = LocalDate.now()
+        val year = currentDate.year
+        val month = currentDate.monthValue
+        val day = currentDate.dayOfMonth
+        Locale.setDefault(Locale.FRENCH)
+
+        val configuration: Configuration = requireContext().resources.configuration
+        configuration.setLocale(Locale.FRENCH)
+        configuration.setLayoutDirection(Locale.FRENCH)
+        requireContext().createConfigurationContext(configuration)
+
+        val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                R.style.CustomDatePickerDialog,
+                { _, year, monthOfYear, dayOfMonth ->
+                    val month = monthOfYear + 1
+                    val formattedDate = String.format("%02d/%02d/%04d", dayOfMonth, month, year)
+                    birthdayInput.setText(formattedDate)
+                },
+                year - 15,
+                month - 1,
+                day
+        )
+
+        // Changer le texte du bouton négatif de "Cancel" à "Annuler"
+        val negativeButton: Button? = datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+        negativeButton?.text = "Annuler"
+
+        // Personnalisez le DatePickerDialog pour ajouter un NumberPicker pour les années
+        datePickerDialog.setOnShowListener { dialog ->
+            val datePicker = (dialog as DatePickerDialog).datePicker
+
+            datePicker.maxDate = currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+            datePicker.minDate = currentDate.minusYears(120).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        }
+
+        birthdayInput.showSoftInputOnFocus = false
+
+        birthdayInput.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                datePickerDialog.show()
+            }
+            true
         }
 
         setUpRegisterListeners(view)

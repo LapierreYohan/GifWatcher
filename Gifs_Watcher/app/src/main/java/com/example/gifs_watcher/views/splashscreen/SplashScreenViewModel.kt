@@ -12,7 +12,10 @@ import com.example.gifs_watcher.repositories.UserRepository
 import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.models.responses.UserResponse
 import kotlinx.coroutines.launch
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.Locale
 
 class SplashScreenViewModel() : ViewModel() {
 
@@ -55,6 +58,7 @@ class SplashScreenViewModel() : ViewModel() {
     fun register(username : String, password : String, confirmPassword : String, mail : String, birthdate : String) : Unit {
 
         var response = UserResponse()
+        var convertedBirthdate = convertDateFormat(birthdate)
 
         if (username.isBlank()) {
             response.addError(UserErrors.USERNAME_IS_EMPTY)
@@ -71,7 +75,7 @@ class SplashScreenViewModel() : ViewModel() {
         if (mail.isBlank()) {
             response.addError(UserErrors.EMAIL_IS_EMPTY)
         }
-        if (birthdate.isBlank()) {
+        if (convertedBirthdate.isBlank()) {
             response.addError(UserErrors.BIRTHDATE_IS_EMPTY)
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
@@ -83,12 +87,12 @@ class SplashScreenViewModel() : ViewModel() {
         if (password != confirmPassword) {
             response.addError(UserErrors.PASSWORDS_NOT_MATCHING)
         }
-        if (birthdate.length != 10) {
+        if (convertedBirthdate.length != 10) {
             response.addError(UserErrors.BIRTHDATE_NOT_VALID)
         }
 
         try {
-            val localDate = LocalDate.parse(birthdate)
+            val localDate = LocalDate.parse(convertedBirthdate)
             val current = LocalDate.now()
             val age = current.year - localDate.year
 
@@ -119,7 +123,7 @@ class SplashScreenViewModel() : ViewModel() {
             displayname = username,
             mail = mail.lowercase(),
             password = password,
-            birthdate = birthdate,
+            birthdate = convertedBirthdate,
         )
 
         viewModelScope.launch {
@@ -148,5 +152,19 @@ class SplashScreenViewModel() : ViewModel() {
                     _signinLiveData.postValue(it)
                 }
         }
+    }
+
+    fun convertDateFormat(inputDate: String): String {
+        val inputDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        try {
+            val date = inputDateFormat.parse(inputDate)
+            return outputDateFormat.format(date!!)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return inputDate
     }
 }

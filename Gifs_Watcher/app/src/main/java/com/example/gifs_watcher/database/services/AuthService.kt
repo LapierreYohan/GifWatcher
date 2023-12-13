@@ -1,10 +1,7 @@
 package com.example.gifs_watcher.database.services
 
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.SignInMethodQueryResult
-import timber.log.Timber
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -7,17 +7,12 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import at.favre.lib.crypto.bcrypt.BCrypt
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.repositories.UserRepository
 import com.example.gifs_watcher.utils.enums.UserErrors
-import com.example.gifs_watcher.utils.managers.PasswordManager
 import com.example.gifs_watcher.utils.responses.UserResponse
-import com.toxicbakery.bcrypt.Bcrypt
 import kotlinx.coroutines.launch
-import java.security.MessageDigest
 import java.time.LocalDate
-import java.util.Date
 
 class SplashScreenViewModel() : ViewModel() {
 

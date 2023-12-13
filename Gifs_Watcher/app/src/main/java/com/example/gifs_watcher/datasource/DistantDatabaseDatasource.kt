@@ -6,7 +6,6 @@ import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.utils.responses.UserResponse
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 object DistantDatabaseDatasource {

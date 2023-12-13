@@ -5,7 +5,6 @@ import com.example.gifs_watcher.datasource.DistantDatabaseDatasource
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.responses.UserResponse
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 object UserRepository {

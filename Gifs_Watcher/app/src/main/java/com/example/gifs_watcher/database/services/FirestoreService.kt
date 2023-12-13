@@ -1,8 +1,6 @@
 package com.example.gifs_watcher.database.services
 
 import com.example.gifs_watcher.models.User
-import com.google.android.gms.tasks.Tasks
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -63,7 +63,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/alata"
-                android:text="Pending request"
+                android:text="Demandes en attente"
                 android:textSize="20sp"
                 android:textColor="@color/md_theme_dark_onBackground"
                 />
@@ -99,7 +99,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/alata"
-                android:text="Friends"
+                android:text="Amis"
                 android:textSize="20sp"
                 android:textColor="@color/md_theme_dark_onBackground"/>
 
@@ -134,7 +134,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/alata"
-                android:text="Sent request"
+                android:text="Demandes envoyées"
                 android:textSize="20sp"
                 android:textColor="@color/md_theme_dark_onBackground"/>
 

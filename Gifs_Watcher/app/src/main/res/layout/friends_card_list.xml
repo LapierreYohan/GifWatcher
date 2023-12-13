@@ -77,14 +77,14 @@
 
         <ImageView
             android:id="@+id/action_delete_F"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/md_theme_dark_error"
-            app:srcCompat="@drawable/icons8_bin_200___" />
+            app:srcCompat="@drawable/delete" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -61,7 +61,10 @@ class SplashScreenViewModel() : ViewModel() {
         }
         if (username.length < 3) {
             response.addError(UserErrors.USERNAME_TOO_SHORT)
+        } else if (username.length > 20) {
+            response.addError(UserErrors.USERNAME_TOO_LONG)
         }
+
         if (password.isBlank()) {
             response.addError(UserErrors.PASSWORD_IS_EMPTY)
         }

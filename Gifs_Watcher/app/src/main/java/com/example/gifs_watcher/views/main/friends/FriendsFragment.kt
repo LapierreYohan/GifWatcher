@@ -45,7 +45,7 @@ class FriendsFragment : Fragment() {
 
     fun setupFriendsAdapterForPendingRequest(view: View){
         val rv = view.findViewById(R.id.rv_pending_request) as RecyclerView
-         mainViewModel.getPendingFriendsUsers()
+        mainViewModel.getPendingFriendsUsers()
         mainViewModel.pendings.observe(viewLifecycleOwner) { response ->
             response?.let {
                 val adapter = PendingRequesteAdapter(it)

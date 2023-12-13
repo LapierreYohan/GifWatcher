@@ -44,8 +44,8 @@ class SentRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<S
         holder.action.setOnClickListener {
             Toast.makeText(holder.card.context, "Clicked: delete ${item?.username}", Toast.LENGTH_SHORT).show()
         }
-        holder.textView.text = item?.username
-        holder.descView.text = item?.bio
+        holder.textView.text = item?.displayname
+        holder.descView.text = item?.username
         try {
             // Loading main gif
             Glide.with(holder.itemView.context)

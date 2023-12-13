@@ -55,7 +55,7 @@
             android:textColor="@color/md_theme_dark_onPrimaryContainer"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/action_delete_PR"
+            app:layout_constraintEnd_toStartOf="@+id/action_valide_PR"
             app:layout_constraintStart_toEndOf="@+id/Iv_preview"
             app:layout_constraintTop_toTopOf="@+id/Iv_preview">
 
@@ -70,32 +70,34 @@
             android:textColor="@color/md_theme_dark_onSecondaryContainer"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/Iv_preview"
-            app:layout_constraintEnd_toStartOf="@+id/action_delete_PR"
+            app:layout_constraintEnd_toStartOf="@+id/action_valide_PR"
             app:layout_constraintStart_toEndOf="@+id/Iv_preview"
             app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
         </TextView>
 
         <ImageView
-            android:id="@+id/action_valide_PR"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/action_delete_PR"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icons8_approved_checkmark_symbol_to_verify_the_result_96___" />
+            app:srcCompat="@drawable/icons8_cross_90___"
+            app:tint="@color/md_theme_dark_error"
+            />
 
         <ImageView
-            android:id="@+id/action_delete_PR"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/action_valide_PR"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/action_valide_PR"
+            app:layout_constraintEnd_toStartOf="@+id/action_delete_PR"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/md_theme_dark_error"
-            app:srcCompat="@drawable/icons8_bin_200___" />
+            app:srcCompat="@drawable/icons8_approved_checkmark_symbol_to_verify_the_result_96___"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

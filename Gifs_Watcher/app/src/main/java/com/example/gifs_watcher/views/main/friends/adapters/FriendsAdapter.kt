@@ -49,8 +49,8 @@ class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit
         }
 
         //set les valeurs de l'utilsateur dans les différents champs
-        holder.textView.text = item?.username
-        holder.descView.text = item?.bio
+        holder.textView.text = item?.displayname
+        holder.descView.text = item?.username
         try {
             // Loading main gif
             Glide.with(holder.itemView.context)

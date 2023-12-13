@@ -1,9 +1,9 @@
 package com.example.gifs_watcher.repositories
 
-import com.example.gifs_watcher.datasource.CacheDatasource
-import com.example.gifs_watcher.datasource.DistantDatabaseDatasource
+import com.example.gifs_watcher.cache.CacheDatasource
+import com.example.gifs_watcher.database.DistantDatabaseDatasource
 import com.example.gifs_watcher.models.User
-import com.example.gifs_watcher.utils.responses.UserResponse
+import com.example.gifs_watcher.models.responses.UserResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

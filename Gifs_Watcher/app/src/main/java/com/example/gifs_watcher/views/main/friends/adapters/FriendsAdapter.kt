@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.utils.adapters
+package com.example.gifs_watcher.views.main.friends.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,36 +18,37 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 
 
-class PendingRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<PendingRequesteAdapter.ItemViewHolder>() {
+class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
+
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
         val descView: TextView = itemView.findViewById(R.id.tv_subTitle)
         val card: ConstraintLayout = itemView.findViewById(R.id.friend_card)
         val gif: ImageView = itemView.findViewById(R.id.Iv_preview)
-        val actionValide : ImageView = itemView.findViewById(R.id.action_valide_PR)
-        val actionDelete : ImageView = itemView.findViewById(R.id.action_delete_PR)
+        val action : ImageView = itemView.findViewById(R.id.action_delete_F)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.pending_request_card_list, parent, false)
+            .inflate(R.layout.friends_card_list, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        Log.println(Log.INFO,"debug","onBindViewHolder open" )
-        val item = users?.get(position)
-        Log.println(Log.INFO,"debug","onBindViewHolder item : " + item )
+
+        val item = users?.get(position) // met dans item l'utilisateur
+
         holder.itemView.setOnClickListener {
             Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
+            callBack(item)
         }
-        holder.actionValide.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: valide ${item?.username}", Toast.LENGTH_SHORT).show()
-        }
-        holder.actionDelete.setOnClickListener {
+        holder.action.setOnClickListener {
             Toast.makeText(holder.card.context, "Clicked: delete ${item?.username}", Toast.LENGTH_SHORT).show()
+            callBack(item)
         }
+
+        //set les valeurs de l'utilsateur dans les différents champs
         holder.textView.text = item?.username
         holder.descView.text = item?.bio
         try {

@@ -1,9 +1,8 @@
-package com.example.gifs_watcher.datasource
+package com.example.gifs_watcher.database
 
-import com.example.gifs_watcher.database.DistantDatabase
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.UserErrors
-import com.example.gifs_watcher.utils.responses.UserResponse
+import com.example.gifs_watcher.models.responses.UserResponse
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

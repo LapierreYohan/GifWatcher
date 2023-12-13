@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.views.main.fragments
+package com.example.gifs_watcher.views.main.home
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -20,12 +19,10 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.example.gifs_watcher.R
 import com.example.gifs_watcher.databinding.FragmentHomeBinding
 import com.example.gifs_watcher.models.Results
-import com.example.gifs_watcher.viewmodel.MainViewModel
+import com.example.gifs_watcher.views.main.MainViewModel
 import jp.wasabeef.glide.transformations.BlurTransformation
-import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
@@ -39,7 +36,6 @@ class HomeFragment : Fragment() {
     private lateinit var  backgroundGifUi : ImageView
     private lateinit var  gifTitle : TextView
 
-    // All Interactive Gifs Buttons
     private lateinit var  likeGif : LottieAnimationView
     private lateinit var  dislikeGif : LottieAnimationView
     private lateinit var  starGif : LottieAnimationView
@@ -62,17 +58,14 @@ class HomeFragment : Fragment() {
         mainViewModel.printedGifLD.observe(viewLifecycleOwner) {
             if (it != null) {
                 printedGif = it
-                //Timber.e(printedGif.toString())
                 gifTitle.setText(printedGif.contentDescription)
 
                 try {
-                    // Loading main gif
                     Glide.with(this)
                         .load(printedGif.media?.get(0)?.tinygif?.url)
                         .transform(MultiTransformation(CenterCrop(), FitCenter(), RoundedCorners(45)))
                         .into(this.gifUi)
 
-                    // Loading background gif
                     Glide.with(this)
                         .load(printedGif.media?.get(0)?.gif?.url)
                         .apply(RequestOptions().centerCrop())

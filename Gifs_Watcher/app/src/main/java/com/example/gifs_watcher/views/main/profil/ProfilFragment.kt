@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.views.main.fragments
+package com.example.gifs_watcher.views.main.profil
 
 import android.os.Bundle
 import android.util.Log
@@ -16,23 +16,18 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.databinding.FragmentProfilBinding
-import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.models.User
-import com.example.gifs_watcher.utils.adapters.LikesAdapter
-import com.example.gifs_watcher.utils.adapters.PendingRequesteAdapter
-import com.example.gifs_watcher.viewmodel.MainViewModel
+import com.example.gifs_watcher.views.main.profil.adapters.LikesAdapter
+import com.example.gifs_watcher.views.main.MainViewModel
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 class ProfilFragment : Fragment() {
 
     private var _binding: FragmentProfilBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private val mainViewModel by activityViewModels<MainViewModel>()
 
@@ -62,13 +57,9 @@ class ProfilFragment : Fragment() {
         this.bio = binding.tvBio
 
         this.userName.setText(ProfilUser.username)
-        this.name.setText(ProfilUser.name + " " + ProfilUser.lastName)
         this.bio.setText(ProfilUser.bio)
 
-
-
         try {
-            // Loading background gif
             Glide.with(this)
                 .load(ProfilUser.profilPicture)
                 .apply(RequestOptions().centerCrop())
@@ -104,7 +95,6 @@ class ProfilFragment : Fragment() {
 
     fun setupProfilAdapterForLike(view: View){
         val rv = view.findViewById(R.id.rv_like) as RecyclerView
-        mainViewModel.likesGif.value = ArrayList() // je sais pas ou l'ecrire mais est super important sinon on peut pas intégrer des données dans le livedata, une sorte d'initialisation
         mainViewModel.getLikesProfil(context?.applicationContext!!)
         mainViewModel.likes.observe(viewLifecycleOwner) { response ->
             response?.let {

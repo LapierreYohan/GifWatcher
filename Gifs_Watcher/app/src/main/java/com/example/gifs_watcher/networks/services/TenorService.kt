@@ -1,7 +1,6 @@
-package com.example.gifs_watcher.utils.services
+package com.example.gifs_watcher.networks.services
 
 import com.example.gifs_watcher.models.TenorData
-import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Query
 

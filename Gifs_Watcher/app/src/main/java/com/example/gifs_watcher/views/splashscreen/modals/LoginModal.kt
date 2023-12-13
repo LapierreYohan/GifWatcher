@@ -10,12 +10,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.utils.enums.UserErrors
-import com.example.gifs_watcher.viewmodel.SplashScreenViewModel
+import com.example.gifs_watcher.views.splashscreen.SplashScreenViewModel
 import com.example.gifs_watcher.views.main.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog

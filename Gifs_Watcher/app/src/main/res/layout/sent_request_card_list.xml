@@ -5,14 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/friend_card_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/border_card_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/friend_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/surface_container_low_round"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,8 +39,8 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/on_surface_round"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,9 +53,9 @@
             android:layout_marginStart="16dp"
             android:text="None"
             android:textColor="@color/md_theme_dark_onPrimaryContainer"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/action_delete_PR"
+            app:layout_constraintEnd_toStartOf="@+id/action_delete_SR"
             app:layout_constraintStart_toEndOf="@+id/Iv_preview"
             app:layout_constraintTop_toTopOf="@+id/Iv_preview">
 
@@ -54,33 +68,24 @@
             android:layout_marginStart="16dp"
             android:text="None"
             android:textColor="@color/md_theme_dark_onSecondaryContainer"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/Iv_preview"
-            app:layout_constraintEnd_toStartOf="@+id/action_delete_PR"
+            app:layout_constraintEnd_toStartOf="@+id/action_delete_SR"
             app:layout_constraintStart_toEndOf="@+id/Iv_preview"
             app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
         </TextView>
 
         <ImageView
-            android:id="@+id/action_valide_PR"
+            android:id="@+id/action_delete_SR"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icons8_approved_checkmark_symbol_to_verify_the_result_96___" />
-
-        <ImageView
-            android:id="@+id/action_delete_PR"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/action_valide_PR"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icons8_bin_200___" />
+            app:tint="@color/md_theme_dark_error"
+            app:srcCompat="@drawable/icons8_cross_90___" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.utils.adapters
+package com.example.gifs_watcher.views.main.friends.adapters
 
 import android.util.Log
 import android.view.LayoutInflater

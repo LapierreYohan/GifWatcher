@@ -38,49 +38,108 @@
             android:layout_height="match_parent"
             android:fillViewport="true">
 
+            <View
+                android:id="@+id/separator_pending_request_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignBottom="@+id/pending_request_txt"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/pending_request_txt"
+                android:background="@color/md_theme_dark_onSurfaceVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
-                android:id="@+id/super_like_txt"
+                android:id="@+id/pending_request_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pending request :" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/alata"
+                android:text="Pending request"
+                android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_super_like"
+                android:id="@+id/rv_pending_request"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/super_like_txt"
-                tools:listitem="@layout/friends_card_list"
-                android:nestedScrollingEnabled="false"/>
+                android:layout_below="@+id/pending_request_txt"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/friends_card_list" />
+
+            <View
+                android:id="@+id/separator_friends_txt"
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:layout_alignBottom="@+id/friends_txt"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/friends_txt"
+                android:background="@color/md_theme_dark_onSurfaceVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/like_txt"
+                android:id="@+id/friends_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_super_like"
-                android:text="Friends :" />
+                android:layout_below="@+id/rv_pending_request"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/alata"
+                android:text="Friends"
+                android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_like"
+                android:id="@+id/rv_friends"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/like_txt"
-                tools:listitem="@layout/friends_card_list"
-                android:nestedScrollingEnabled="false"/>
+                android:layout_below="@+id/friends_txt"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/friends_card_list" />
+
+            <View
+                android:id="@+id/separator_sent_request_txt"
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:layout_alignBottom="@+id/sent_request_txt"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/sent_request_txt"
+                android:background="@color/md_theme_dark_onSurfaceVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/sent_request_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_like"
-                android:text="Sent request :" />
+                android:layout_below="@+id/rv_friends"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/alata"
+                android:text="Sent request"
+                android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_sent_request"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sent_request_txt"
-                tools:listitem="@layout/friends_card_list"
-                android:nestedScrollingEnabled="false"/>
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/friends_card_list" />
 
         </RelativeLayout>
     </ScrollView>

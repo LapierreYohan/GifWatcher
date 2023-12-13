@@ -2,8 +2,8 @@ package com.example.gifs_watcher.repositories
 
 import android.content.Context
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.datasource.CacheDatasource
-import com.example.gifs_watcher.datasource.ApiDatasource
+import com.example.gifs_watcher.cache.CacheDatasource
+import com.example.gifs_watcher.networks.ApiDatasource
 import com.example.gifs_watcher.models.TenorData
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.utils.enums.CacheMode

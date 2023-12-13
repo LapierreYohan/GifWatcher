@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.datasource
+package com.example.gifs_watcher.cache
 
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.models.User

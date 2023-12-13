@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/navigation_friends"
-        android:name="com.example.gifs_watcher.views.main.fragments.FriendsFragment"
+        android:name="com.example.gifs_watcher.views.main.friends.FriendsFragment"
         tools:layout="@layout/fragment_friends" />
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.gifs_watcher.views.main.fragments.HomeFragment"
+        android:name="com.example.gifs_watcher.views.main.home.HomeFragment"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_profil"
-        android:name="com.example.gifs_watcher.views.main.fragments.ProfilFragment"
+        android:name="com.example.gifs_watcher.views.main.profil.ProfilFragment"
         tools:layout="@layout/fragment_profil" />
 </navigation>

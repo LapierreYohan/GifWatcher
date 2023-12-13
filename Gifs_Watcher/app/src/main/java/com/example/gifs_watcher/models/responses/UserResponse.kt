@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.utils.responses
+package com.example.gifs_watcher.models.responses
 
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.UserErrors
@@ -6,10 +6,6 @@ import com.example.gifs_watcher.utils.enums.UserErrors
 class UserResponse {
     private var error : ArrayList<UserErrors?> = arrayListOf()
     private var user : User? = null
-
-    constructor(user : User?) {
-        this.user = user
-    }
 
     constructor(){}
 
@@ -40,6 +36,4 @@ class UserResponse {
     override fun toString(): String {
         return "UserResponse(error=$error, user=$user)"
     }
-
-
 }

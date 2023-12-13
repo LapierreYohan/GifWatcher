@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.viewmodel
+package com.example.gifs_watcher.views.splashscreen
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.repositories.UserRepository
 import com.example.gifs_watcher.utils.enums.UserErrors
-import com.example.gifs_watcher.utils.responses.UserResponse
+import com.example.gifs_watcher.models.responses.UserResponse
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -113,6 +113,7 @@ class SplashScreenViewModel() : ViewModel() {
 
         val user = User(
             username = username.lowercase(),
+            displayname = username,
             mail = mail.lowercase(),
             password = password,
             birthdate = birthdate,

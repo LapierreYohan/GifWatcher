@@ -26,7 +26,7 @@ class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit
         val descView: TextView = itemView.findViewById(R.id.tv_subTitle)
         val card: ConstraintLayout = itemView.findViewById(R.id.friend_card)
         val gif: ImageView = itemView.findViewById(R.id.Iv_preview)
-        val action : ImageView = itemView.findViewById(R.id.action_valide_F)
+        val action : ImageView = itemView.findViewById(R.id.action_delete_F)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

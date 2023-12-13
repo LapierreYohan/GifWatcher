@@ -65,7 +65,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/alata"
-                android:text="Pending request :" />
+                android:text="Name" />
 
             <TextView
                 android:id="@+id/tv_bio"

@@ -1,7 +1,6 @@
 package com.example.gifs_watcher
 
 import android.app.Application
-import com.example.gifs_watcher.database.LocalDatabase
 import timber.log.Timber
 
 class GifsWatcherApp : Application() {
@@ -9,7 +8,5 @@ class GifsWatcherApp : Application() {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
-
-        LocalDatabase.initDatabase(context = applicationContext)
     }
 }

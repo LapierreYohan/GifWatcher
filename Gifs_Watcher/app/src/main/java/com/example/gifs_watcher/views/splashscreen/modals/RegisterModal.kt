@@ -75,7 +75,6 @@ object RegisterModal : BottomSheetDialogFragment() {
         this.birthdayInputLayout.error = null
 
         this.splashScreenViewModel.signinLiveData.observe(this) {
-            Toast.makeText(context, "Register", Toast.LENGTH_SHORT).show()
             println(it)
             if (it.success()) {
                 this.startActivity()

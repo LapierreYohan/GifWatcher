@@ -116,29 +116,26 @@ class SplashScreenViewModel() : ViewModel() {
             return
         }
 
-        var cryptedPassword = PasswordManager.hashPassword(password)
-
         val user = User(
-            username = username,
-            mail = mail,
-            password = cryptedPassword,
+            username = username.lowercase(),
+            mail = mail.lowercase(),
+            password = password,
             birthdate = birthdate,
-            created = LocalDate.now().toString()
         )
 
         viewModelScope.launch {
-
-            userRepo.isEmailUsed(mail.lowercase())
-                .collect {
-                    if (it) {
-                        response.addError(UserErrors.EMAIL_ALREADY_USED)
-                    }
-                }
 
             userRepo.isUsernameUsed(username.lowercase())
                 .collect {
                     if (it) {
                         response.addError(UserErrors.USERNAME_ALREADY_USED)
+                    }
+                }
+
+            userRepo.isMailUsed(mail.lowercase())
+                .collect {
+                    if (it) {
+                        response.addError(UserErrors.EMAIL_ALREADY_USED)
                     }
                 }
 

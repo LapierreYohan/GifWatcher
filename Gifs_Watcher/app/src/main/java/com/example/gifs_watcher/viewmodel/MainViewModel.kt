@@ -46,8 +46,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun getFriendsUsers() {
-        val u1 = User("Nekioux3", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
-        val u2 = User("Galstrip3", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
+        val u1 = User("", "Nekioux3", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "")
+        val u2 = User("", "Galstrip3", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "")
         addFriendsUser(u1)
         addFriendsUser(u2)
         addFriendsUser(u1)
@@ -66,8 +66,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun getPendingFriendsUsers() {
-        val u1 = User("Nekioux22", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "pas d'idee", "", "")
-        val u2 = User("Galstrip22", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "toujours pas d'idee", "", "")
+        val u1 = User("", "Nekioux3", "pwd", "Axel", "Gailliard", "axel.g@gmail.com", "")
+        val u2 = User("", "Galstrip3", "pwd2", "Yohan", "Lapierre", "yohan.l@gmail.com", "")
         addPendingFriendsUser(u1)
         addPendingFriendsUser(u2)
         addPendingFriendsUser(u1)

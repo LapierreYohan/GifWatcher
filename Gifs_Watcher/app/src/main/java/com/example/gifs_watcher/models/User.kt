@@ -14,15 +14,11 @@ data class User (
 
     var password: String? = null,
 
-    val name: String? = null,
-
-    val lastName: String? = null,
-
     val mail: String? = null,
 
-    val bio: String? = null,
+    var bio: String? = null,
 
     val birthdate: String? = null,
 
-    val profilPicture: String? = null,
+    var profilPicture: String? = null,
 )

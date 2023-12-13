@@ -23,6 +23,9 @@ class FirestoreService {
             // Si viens a être nécessaire, il faudra hasher le password avec utils/PasswordManager
             user.password = null
 
+            // Image de profil par défaut
+            user.profilPicture = "https://media.tenor.com/Gn82P94Ap5wAAAAd/beluga-cat.gif"
+
             val result = suspendCoroutine<Boolean> { cont ->
                 firestore.collection("users").document(user.idUsers!!).set(user)
                     .addOnSuccessListener {

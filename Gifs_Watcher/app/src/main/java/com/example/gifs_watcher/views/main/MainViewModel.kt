@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gifs_watcher.cache.CacheDatasource
 import com.example.gifs_watcher.models.Gif
 import com.example.gifs_watcher.models.Media
 import com.example.gifs_watcher.models.Results
@@ -143,8 +144,8 @@ class MainViewModel : ViewModel() {
         likesGif.value?.add(like)
     }
 
-    fun getProfil() : User {
-        return u1
+    fun getProfil() : User? {
+        return CacheDatasource.getAuthUser()
     }
 
 

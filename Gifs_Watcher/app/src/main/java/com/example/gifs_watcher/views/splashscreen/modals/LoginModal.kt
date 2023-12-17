@@ -63,6 +63,10 @@ object LoginModal : BottomSheetDialogFragment() {
         this.idInput = view?.findViewById(R.id.login_identifiant_textinput)!!
         this.passwordInput = view.findViewById(R.id.login_password_textinput)!!
 
+        //TODO : DEV ONLY
+        idInput.setText("galtrips")
+        passwordInput.setText("azerty")
+
         this.idInputLayout = view.findViewById(R.id.login_identifiant_textinput_layout)!!
         this.passwordInputLayout = view.findViewById(R.id.login_password_textinput_layout)!!
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,8 @@ class FriendsFragment : Fragment() {
     private val binding get() = _binding!!
     private val mainViewModel by activityViewModels<MainViewModel>()
 
+    private lateinit var searchBar : SearchView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +39,20 @@ class FriendsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        this.searchBar = this.binding.friendsSearchView
+        searchBar.queryHint = "Recherchez un utilisateur"
+
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchBar.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
 
         setupFriendsAdapterForPendingRequest(view)
         setupFriendsAdapterForFriendsList(view)

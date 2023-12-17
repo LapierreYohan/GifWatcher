@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         this.searchBar = binding.mainSearchView
+        this.searchBar.queryHint = "Recherchez un GIF"
 
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

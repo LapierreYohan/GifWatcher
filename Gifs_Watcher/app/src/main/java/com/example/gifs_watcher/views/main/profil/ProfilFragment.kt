@@ -18,6 +18,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.request.RequestOptions
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.cache.CacheDatasource
 import com.example.gifs_watcher.databinding.FragmentProfilBinding
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.views.main.profil.adapters.LikesAdapter
@@ -48,7 +49,7 @@ class ProfilFragment : Fragment() {
         _binding = FragmentProfilBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val ProfilUser: User = mainViewModel.getProfil()
+        val ProfilUser: User? = mainViewModel.getProfil()
 
         this.backgroundGif = binding.backgroundGifA
         this.profilGif = binding.profilPicture
@@ -56,12 +57,13 @@ class ProfilFragment : Fragment() {
         this.name = binding.tvName
         this.bio = binding.tvBio
 
-        this.userName.setText(ProfilUser.username)
-        this.bio.setText(ProfilUser.bio)
+        this.userName.setText(ProfilUser?.displayname)
+        this.name.setText(ProfilUser?.username)
+        this.bio.setText(ProfilUser?.bio)
 
         try {
             Glide.with(this)
-                .load(ProfilUser.profilPicture)
+                .load(ProfilUser?.profilPicture)
                 .apply(RequestOptions().centerCrop())
                 .transform(
                     MultiTransformation(
@@ -73,7 +75,7 @@ class ProfilFragment : Fragment() {
                 .into(this.backgroundGif)
 
             Glide.with(this)
-                .load(ProfilUser.profilPicture)
+                .load(ProfilUser?.profilPicture)
                 .apply(RequestOptions().centerCrop())
                 .transform(
                     MultiTransformation(CenterCrop(), FitCenter())

@@ -149,4 +149,40 @@
 
         </RelativeLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/add_friend_button"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="@android:color/transparent"
+        android:foreground="@drawable/white_add_rounded_button"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+    </Button>
+
+
+    <SearchView
+        android:id="@+id/friends_searchView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:queryHint="Entrez un thème de GIF"
+        android:iconifiedByDefault="false"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/add_friend_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/searchview_background_friends"
+        android:queryBackground="@android:color/transparent"
+        android:theme="@style/YourSearchViewStyle"
+        android:searchIcon="@drawable/search"
+        android:closeIcon="@drawable/ic_close_white_24dp"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

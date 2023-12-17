@@ -96,29 +96,39 @@
 
     <Button
         android:id="@+id/floatingActionButton3"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:background="@android:color/transparent"
-        android:foreground="@drawable/qrcode_fab2"
-        android:layout_marginTop="16dp"
+        android:foreground="@drawable/white_qrcode_rounded_button"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/CardDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0">
+    </Button>
+
 
     <SearchView
+        android:id="@+id/main_searchView"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
+        android:queryHint="Entrez un thème de GIF"
+        android:iconifiedByDefault="false"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/on_surface_round"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/searchview_background"
+        android:queryBackground="@android:color/transparent"
+        android:theme="@style/YourSearchViewStyle"
+        android:searchIcon="@drawable/search"
+        android:closeIcon="@drawable/ic_close_white_24dp"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/CardDescription"
@@ -174,7 +184,7 @@
                 android:layout_marginEnd="80dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Bleach AIZEN Gif"
+                android:text=""
                 android:textColor="@color/md_theme_dark_onSurface"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"

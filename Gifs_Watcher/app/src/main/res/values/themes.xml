@@ -70,4 +70,14 @@
         <!-- Ajoutez d'autres styles personnalisés si nécessaire -->
     </style>
 
+    <style name="YourSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Couleur du hint text -->
+        <item name="android:textColorHint">#FFFFFF</item>
+        <!-- Couleur du texte -->
+        <item name="android:editTextColor">#FFFFFF</item>
+        <!-- Couleur du curseur -->
+        <item name="colorAccent">#FFFFFF</item>
+
+    </style>
+
 </resources>

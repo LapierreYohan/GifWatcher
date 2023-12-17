@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.views.main.popUp.Friends_popup
 
 
 class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
@@ -44,8 +46,8 @@ class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit
             callBack(item)
         }
         holder.action.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: delete ${item?.username}", Toast.LENGTH_SHORT).show()
-            callBack(item)
+            val showPopUp = Friends_popup()
+            showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
 
         //set les valeurs de l'utilsateur dans les différents champs

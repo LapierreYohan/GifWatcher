@@ -58,7 +58,7 @@ class FriendsFragment : Fragment() {
     fun setupFriendsAdapterForFriendsList(view: View){
         val rv = view.findViewById(R.id.rv_friends) as RecyclerView
         mainViewModel.getFriendsUsers()
-        mainViewModel.Friends.observe(viewLifecycleOwner) { response ->
+        mainViewModel.friends.observe(viewLifecycleOwner) { response ->
             response?.let {
                 val adapter = FriendsAdapter(it) {
 

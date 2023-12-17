@@ -1,9 +1,11 @@
 package com.example.gifs_watcher.views.splashscreen
 
+import android.content.Context
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,6 +13,8 @@ import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.repositories.UserRepository
 import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.models.responses.UserResponse
+import com.example.gifs_watcher.repositories.GifRepository
+import com.example.gifs_watcher.views.main.MainViewModel
 import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -20,6 +24,7 @@ import java.util.Locale
 class SplashScreenViewModel() : ViewModel() {
 
     private var userRepo : UserRepository = UserRepository
+    private var gifRepo : GifRepository = GifRepository
 
     private val _loggedLiveData: MutableLiveData<UserResponse> = MutableLiveData()
     val loggedLiveData : LiveData<UserResponse> = _loggedLiveData
@@ -166,5 +171,11 @@ class SplashScreenViewModel() : ViewModel() {
         }
 
         return inputDate
+    }
+
+    fun prepareGifs(context: Context) {
+        viewModelScope.launch {
+            gifRepo.prepareGifs(context)
+        }
     }
 }

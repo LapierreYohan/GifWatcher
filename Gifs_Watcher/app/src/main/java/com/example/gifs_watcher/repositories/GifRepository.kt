@@ -7,25 +7,37 @@ import com.example.gifs_watcher.networks.ApiDatasource
 import com.example.gifs_watcher.models.TenorData
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.utils.enums.CacheMode
+import com.example.gifs_watcher.utils.managers.ThemeManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
 object GifRepository {
 
-    private var tenorApi : ApiDatasource = ApiDatasource
-    private var cache : CacheDatasource = CacheDatasource
+    val LIMIT = "50"
+    val FILTER = "high"
+    val LANG = "fr_FR"
+    val MEDIA_FILTER = "minimal"
+    val NB_GIFS_PER_FETCH = 5
 
-     fun getRandomGif(context: Context, limit : String = "50", filter : String = "high") : Flow<Results?> = flow {
+    private val tenorApi : ApiDatasource = ApiDatasource
+    private val cache : CacheDatasource = CacheDatasource
+
+    private val themeManager : ThemeManager = ThemeManager
+
+     fun getRandomGif(context: Context, theme: String = "") : Flow<Results?> = flow {
 
          var randomData : TenorData?
 
-         if (cache.getMode() != CacheMode.RANDOM) {
+         if (theme == "") {
+             cache.clear(CacheMode.SEARCH)
              cache.switch(CacheMode.RANDOM)
+         } else {
+             cache.clear(CacheMode.RANDOM)
+             cache.switch(CacheMode.SEARCH)
          }
 
          if (cache.size() < 1) {
-             randomData = tenorApi.getTenorService().getRandomsGifs(context.getString(R.string.tenor_api_key),"fr_FR", limit, filter, "minimal", "bleach")
+             randomData = fetchGif(context, theme)
 
              cache.add(randomData?.results ?: arrayListOf())
 
@@ -43,4 +55,52 @@ object GifRepository {
         }
     }
 
+    suspend fun prepareGifs(context: Context) : Unit {
+
+        var randomData : TenorData?
+
+        if (cache.getMode() != CacheMode.RANDOM) {
+            cache.switch(CacheMode.RANDOM)
+        }
+
+        if (cache.size() < 1) {
+            randomData = fetchGif(context, "")
+            cache.add(randomData?.results ?: arrayListOf())
+        }
+    }
+
+    private suspend fun fetchGif(context: Context, theme: String): TenorData? {
+
+        val randomData = TenorData()
+        var currentTheme: String = theme
+        var listOfAlreadyUsedTheme = arrayListOf<String>()
+
+        for (i in 0 until LIMIT.toInt()) {
+
+            if (i % NB_GIFS_PER_FETCH == 0 && theme == "") {
+                currentTheme = themeManager.getRandomTheme(listOfAlreadyUsedTheme)
+                listOfAlreadyUsedTheme.add(currentTheme)
+            }
+
+            val remainingGifs = LIMIT.toInt() - i
+            val gifsToFetch = if (remainingGifs >= NB_GIFS_PER_FETCH) NB_GIFS_PER_FETCH else remainingGifs
+
+            val fetchedData = tenorApi.getTenorService().getRandomsGifs(
+                context.getString(R.string.tenor_api_key),
+                LANG,
+                gifsToFetch.toString(),
+                FILTER,
+                MEDIA_FILTER,
+                currentTheme
+            )
+
+            randomData.results.addAll(fetchedData?.results ?: emptyList())
+        }
+
+        for (j in 0 until NB_GIFS_PER_FETCH*2) {
+            randomData.results.shuffle()
+        }
+
+        return randomData
+    }
 }

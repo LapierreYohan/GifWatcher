@@ -70,4 +70,18 @@ object CacheDatasource {
     fun getAuthUser() : User? {
         return this.authUser
     }
+
+    fun clear(mode : CacheMode? = null) {
+        if (mode == null && this.mode == CacheMode.RANDOM) {
+            this.randomData.clear()
+        } else if (mode == null && this.mode == CacheMode.SEARCH) {
+            this.searchData.clear()
+        } else if (mode != null){
+            if (mode == CacheMode.RANDOM) {
+                this.randomData.clear()
+            } else if (mode == CacheMode.SEARCH) {
+                this.searchData.clear()
+            }
+        }
+    }
 }

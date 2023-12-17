@@ -2,13 +2,18 @@ package com.example.gifs_watcher.views.main.home
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +27,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.gifs_watcher.databinding.FragmentHomeBinding
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.views.main.MainViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 class HomeFragment : Fragment() {
@@ -32,9 +38,12 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val mainViewModel by activityViewModels<MainViewModel>()
 
+    private var searchTheme : String = ""
+
     private lateinit var  gifUi : ImageView
     private lateinit var  backgroundGifUi : ImageView
     private lateinit var  gifTitle : TextView
+    private lateinit var  searchBar : SearchView
 
     private lateinit var  likeGif : LottieAnimationView
     private lateinit var  dislikeGif : LottieAnimationView
@@ -51,14 +60,50 @@ class HomeFragment : Fragment() {
         val mainViewModel_ = ViewModelProvider(this).get(MainViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        this.searchBar = binding.mainSearchView
+
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchTheme = query ?: ""
+                searchBar.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchTheme = newText ?: ""
+                return true
+            }
+        })
+
         this.gifUi = binding.Gif
         this.backgroundGifUi = binding.backgroundGif
         this.gifTitle = binding.TitleGif
 
-        mainViewModel.printedGifLD.observe(viewLifecycleOwner) {
+        mainViewModel.printedGifA.observe(viewLifecycleOwner) {
             if (it != null) {
                 printedGif = it
-                gifTitle.setText(printedGif.contentDescription)
+
+                val fullText = printedGif.contentDescription ?: ""
+                val maxLength = 50
+
+                val minTextSize = 18f
+                val maxTextSize = 25f
+
+                val textSize = when {
+                    fullText.length > maxLength -> minTextSize
+                    fullText.length > maxLength - 10 -> ((maxTextSize - minTextSize) / 10 * (maxLength - 10 - fullText.length)) + minTextSize
+                    else -> maxTextSize
+                }
+
+                gifTitle.textSize = textSize
+
+                if (fullText.length > maxLength) {
+                    val truncatedText = "${fullText.substring(0, maxLength - 6)}..."
+
+                    gifTitle.text = truncatedText
+                } else {
+                    gifTitle.text = fullText
+                }
 
                 try {
                     Glide.with(this)
@@ -88,51 +133,50 @@ class HomeFragment : Fragment() {
         this.dislikeGif = binding.deleteFloatingActionButton
         this.starGif = binding.starFloatingActionButton
 
-        likeGif.addAnimatorListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                mainViewModel.getRandomGif(requireContext())
+        val likeAnimator = createGifAnimator(likeGif, 0.35f, 0.7f, 1600)
+        val dislikeAnimator = createGifAnimator(dislikeGif, 0f, 0.7f, 600)
+        val starAnimator = createGifAnimator(starGif, 0.25f, 0.7f, 1300)
+
+        likeGif.setOnClickListener {
+            startGifAnimation(likeAnimator)
+        }
+
+        dislikeGif.setOnClickListener {
+            startGifAnimation(dislikeAnimator)
+        }
+
+        starGif.setOnClickListener {
+            startGifAnimation(starAnimator)
+        }
+    }
+
+    private fun createGifAnimator(fab: LottieAnimationView, startFraction: Float, endFraction: Float, duration : Long): ObjectAnimator {
+        val animator = ObjectAnimator.ofFloat(fab, "progress", 0f, 1f)
+        animator.duration = duration
+
+        animator.addUpdateListener { animation ->
+            val progress = animation.animatedValue as Float
+            if (progress >= endFraction && isClicked) {
+                mainViewModel.getRandomGif(requireContext(), searchTheme)
                 isClicked = false
-                likeGif.progress = 0f
-            }
-        })
-
-        this.likeGif.setOnClickListener {
-            if (!isClicked) {
-                isClicked = true
-                this.likeGif.setMinProgress(0.2f)
-                this.likeGif.playAnimation()
-
             }
         }
 
-        dislikeGif.addAnimatorListener(object : AnimatorListenerAdapter() {
+        animator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                mainViewModel.getRandomGif(requireContext())
-                isClicked = false
-                dislikeGif.progress = 0f
+                animator.setCurrentFraction(startFraction)
             }
         })
 
-        this.dislikeGif.setOnClickListener {
-            if (!isClicked) {
-                isClicked = true
-                this.dislikeGif.playAnimation()
-            }
+        return animator.apply {
+            setCurrentFraction(startFraction)
         }
+    }
 
-        starGif.addAnimatorListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                mainViewModel.getRandomGif(requireContext())
-                isClicked = false
-                starGif.progress = 0f
-            }
-        })
-
-        this.starGif.setOnClickListener {
-            if (!isClicked) {
-                isClicked = true
-                this.starGif.playAnimation()
-            }
+    private fun startGifAnimation(animator: ObjectAnimator) {
+        if (!isClicked) {
+            isClicked = true
+            animator.start()
         }
     }
 

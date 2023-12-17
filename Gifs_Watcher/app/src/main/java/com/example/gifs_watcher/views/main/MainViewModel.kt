@@ -33,26 +33,24 @@ class MainViewModel : ViewModel() {
     private val u12 = User("id12", "alex", "Alex", "pwd12", "user12@example.com", "Bio de l'utilisateur 12", "05/04/1982", "https://media.tenor.com/wz4mA2-SG8cAAAAC/luffy-one-piece.gif")
     private val u13 = User("id13", "gaetan", "Gaetan", "pwd13", "user13@example.com", "Bio de l'utilisateur 13", "22/11/1997", "https://media1.tenor.com/m/z2FuWLCu0MsAAAAC/merry-christmas.gif")
 
-    //surement à modifier sans le mutable
-    val printedGifLD: MutableLiveData<Results?> = MutableLiveData()
+    private val printedGifLD: MutableLiveData<Results?> = MutableLiveData()
     val printedGifA : LiveData<Results?> = printedGifLD
-    val listFriend: MutableLiveData<ArrayList<User?>> = MutableLiveData(arrayListOf())
-    val Friends : LiveData<ArrayList<User?>> = listFriend
-    val pendingFriends : MutableLiveData<ArrayList<User?>> = MutableLiveData(arrayListOf())
+
+    private val listFriend: MutableLiveData<ArrayList<User?>> = MutableLiveData(arrayListOf())
+    val friends : LiveData<ArrayList<User?>> = listFriend
+
+    private val pendingFriends : MutableLiveData<ArrayList<User?>> = MutableLiveData(arrayListOf())
     val pendings : LiveData<ArrayList<User?>> = pendingFriends
-    val sentFriends : MutableLiveData<ArrayList<User?>> = MutableLiveData(arrayListOf())
+
+    private val sentFriends : MutableLiveData<ArrayList<User?>> = MutableLiveData(arrayListOf())
     val sents : LiveData<ArrayList<User?>> = sentFriends
-    val likesGif : MutableLiveData<ArrayList<Results?>> = MutableLiveData(arrayListOf())
+
+    private val likesGif : MutableLiveData<ArrayList<Results?>> = MutableLiveData(arrayListOf())
     val likes : LiveData<ArrayList<Results?>> = likesGif
 
-    enum class View{
-        HOME, FRIENDS, PROFIL
-    }
-
-    fun getRandomGif(context: Context) {
-
+    fun getRandomGif(context: Context, theme: String = "") {
         viewModelScope.launch {
-            gifRepo.getRandomGif(context)
+            gifRepo.getRandomGif(context, theme)
                 .collect {
                     it?.let { tenorData ->
                         printedGif = tenorData
@@ -60,9 +58,6 @@ class MainViewModel : ViewModel() {
                     }
                 }
         }
-    }
-    fun getText(view: View) : String {
-        return "This is " + view.toString()
     }
 
     fun getFriendsUsers() {

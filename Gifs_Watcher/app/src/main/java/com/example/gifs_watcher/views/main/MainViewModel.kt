@@ -12,6 +12,7 @@ import com.example.gifs_watcher.models.Media
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.repositories.GifRepository
 import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.models.maps.GifMapper
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -58,6 +59,33 @@ class MainViewModel : ViewModel() {
                         printedGifLD.postValue(tenorData)
                     }
                 }
+        }
+    }
+
+    fun likeGif() {
+        viewModelScope.launch {
+            gifRepo.likeGif(
+                GifMapper.map(printedGif!!),
+                "like"
+            )
+        }
+    }
+
+    fun dislikeGif() {
+        viewModelScope.launch {
+            gifRepo.likeGif(
+                GifMapper.map(printedGif!!),
+                "dislike"
+            )
+        }
+    }
+
+    fun starGif() {
+        viewModelScope.launch {
+            gifRepo.likeGif(
+                GifMapper.map(printedGif!!),
+                "star"
+            )
         }
     }
 

@@ -138,14 +138,18 @@ class HomeFragment : Fragment() {
         val starAnimator = createGifAnimator(starGif, 0.25f, 0.7f, 1300)
 
         likeGif.setOnClickListener {
+
+            mainViewModel.likeGif()
             startGifAnimation(likeAnimator)
         }
 
         dislikeGif.setOnClickListener {
+            mainViewModel.dislikeGif()
             startGifAnimation(dislikeAnimator)
         }
 
         starGif.setOnClickListener {
+            mainViewModel.starGif()
             startGifAnimation(starAnimator)
         }
     }

@@ -3,9 +3,12 @@ package com.example.gifs_watcher.repositories
 import android.content.Context
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.cache.CacheDatasource
+import com.example.gifs_watcher.database.DistantDatabaseDatasource
 import com.example.gifs_watcher.networks.ApiDatasource
 import com.example.gifs_watcher.models.TenorData
 import com.example.gifs_watcher.models.Results
+import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.CacheMode
 import com.example.gifs_watcher.utils.managers.ThemeManager
 import kotlinx.coroutines.flow.Flow
@@ -13,18 +16,19 @@ import kotlinx.coroutines.flow.flow
 
 object GifRepository {
 
-    val LIMIT = "50"
+    val LIMIT = "15"
     val FILTER = "high"
     val LANG = "fr_FR"
     val MEDIA_FILTER = "minimal"
-    val NB_GIFS_PER_FETCH = 5
+    val NB_GIFS_PER_FETCH = 3
 
     private val tenorApi : ApiDatasource = ApiDatasource
     private val cache : CacheDatasource = CacheDatasource
+    private val database : DistantDatabaseDatasource = DistantDatabaseDatasource
 
     private val themeManager : ThemeManager = ThemeManager
 
-     fun getRandomGif(context: Context, theme: String = "") : Flow<Results?> = flow {
+    fun getRandomGif(context: Context, theme: String = "") : Flow<Results?> = flow {
 
          var randomData : TenorData?
 
@@ -75,32 +79,69 @@ object GifRepository {
         var currentTheme: String = theme
         var listOfAlreadyUsedTheme = arrayListOf<String>()
 
-        for (i in 0 until LIMIT.toInt()) {
-
-            if (i % NB_GIFS_PER_FETCH == 0 && theme == "") {
-                currentTheme = themeManager.getRandomTheme(listOfAlreadyUsedTheme)
-                listOfAlreadyUsedTheme.add(currentTheme)
-            }
-
-            val remainingGifs = LIMIT.toInt() - i
-            val gifsToFetch = if (remainingGifs >= NB_GIFS_PER_FETCH) NB_GIFS_PER_FETCH else remainingGifs
-
+        if (theme != "") {
             val fetchedData = tenorApi.getTenorService().getRandomsGifs(
                 context.getString(R.string.tenor_api_key),
                 LANG,
-                gifsToFetch.toString(),
+                LIMIT,
                 FILTER,
                 MEDIA_FILTER,
                 currentTheme
             )
 
             randomData.results.addAll(fetchedData?.results ?: emptyList())
-        }
+            return randomData
+        } else {
 
-        for (j in 0 until NB_GIFS_PER_FETCH*2) {
-            randomData.results.shuffle()
-        }
+            for (i in 0 until LIMIT.toInt()) {
 
-        return randomData
+                if (i % NB_GIFS_PER_FETCH == 0 && theme == "") {
+                    currentTheme = themeManager.getRandomTheme(listOfAlreadyUsedTheme)
+                    listOfAlreadyUsedTheme.add(currentTheme)
+                }
+
+                val remainingGifs = LIMIT.toInt() - i
+                val gifsToFetch =
+                    if (remainingGifs >= NB_GIFS_PER_FETCH) NB_GIFS_PER_FETCH else remainingGifs
+
+                val fetchedData = tenorApi.getTenorService().getRandomsGifs(
+                    context.getString(R.string.tenor_api_key),
+                    LANG,
+                    gifsToFetch.toString(),
+                    FILTER,
+                    MEDIA_FILTER,
+                    currentTheme
+                )
+
+                randomData.results.addAll(fetchedData?.results ?: emptyList())
+            }
+
+            for (j in 0 until NB_GIFS_PER_FETCH * 2) {
+                randomData.results.shuffle()
+            }
+
+            return randomData
+        }
+    }
+
+    suspend fun likeGif(gif : GifMap, type : String = "like") {
+
+        // Inserer le gif dans la base de données
+        database.insertGif(gif)
+
+        // Récuperer l'utilisateur connecté
+        var user : User
+        user = cache.getAuthUser() ?: User()
+
+        // Ajouter le gif à ses type de likes
+        var typeOfLikes = type.lowercase()
+
+        if (typeOfLikes == "like") {
+            database.likeGif(gif, user.idUsers!!, "likedGifs", "likes")
+        } else if (typeOfLikes == "dislike") {
+            database.likeGif(gif, user.idUsers!!, "dislikedGifs", "dislikes")
+        } else if (typeOfLikes == "star") {
+           database.likeGif(gif, user.idUsers!!, "starredGifs", "star")
+        }
     }
 }

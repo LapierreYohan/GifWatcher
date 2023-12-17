@@ -1,10 +1,12 @@
 package com.example.gifs_watcher.database
 
 import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.models.responses.UserResponse
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 object DistantDatabaseDatasource {
@@ -80,7 +82,29 @@ object DistantDatabaseDatasource {
         }
     }
 
-     suspend fun getAuthUser() : FirebaseUser? {
+    suspend fun getAuthUser() : FirebaseUser? {
         return DistantDatabase.authService.getAuthUser()
      }
+
+    suspend fun insertGif(gif : GifMap) {
+        DistantDatabase.FirestoreService.checkGifAvailability(gif.id!!).collect{
+            if (it) {
+                DistantDatabase.FirestoreService.insertGif(gif)
+            }
+        }
+    }
+    suspend fun likeGif(gif : GifMap, userId: String, userField : String, gifField: String) {
+
+        DistantDatabase.FirestoreService.checkLikedGifAvailable(gif.id!!, userId).collect{ used ->
+            if (!used) {
+                // On ajoute le gif dans la liste des gifs likés de l'utilisateur
+                DistantDatabase.FirestoreService.insertLikedGif(gif, userId, userField).collect{success ->
+                    if (success) {
+                        // On incrémente le nombre de like du gif dans la base de données
+                        DistantDatabase.FirestoreService.incrementGifLike(gif, gifField)
+                    }
+                }
+            }
+        }
+    }
 }

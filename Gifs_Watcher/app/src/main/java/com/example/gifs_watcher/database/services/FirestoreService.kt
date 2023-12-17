@@ -1,6 +1,8 @@
 package com.example.gifs_watcher.database.services
 
 import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.models.maps.models.GifMap
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,7 +13,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class FirestoreService {
 
-    private lateinit var firestore: FirebaseFirestore
+    private var firestore: FirebaseFirestore
     constructor(firestore: FirebaseFirestore) {
         this.firestore = firestore
     }
@@ -121,6 +123,99 @@ class FirestoreService {
             emit(result)
         } catch (e: Exception) {
             emit(null)
+        }
+    }
+
+    suspend fun checkGifAvailability(gifId: String): Flow<Boolean> = flow {
+        try {
+            val result = suspendCoroutine<Boolean> { cont ->
+                firestore.collection("gifs").document(gifId).get()
+                    .addOnSuccessListener { document ->
+                        cont.resume(document == null || !document.exists())
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore checkGifAvailability error with ID $gifId")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    fun insertGif(gif: GifMap) {
+        try {
+            firestore.collection("gifs").document(gif.id!!).set(gif)
+        } catch (e: Exception) {
+            Timber.e("Firestore createUser error with user $gif")
+            Timber.e(e)
+        }
+    }
+
+    fun checkLikedGifAvailable(gifId: String, userId: String): Flow<Boolean> = flow {
+        try {
+            val fields = listOf("likedGifs", "dislikedGifs", "starredGifs")
+
+            // Vérifier la présence dans chacun des champs
+            val result = fields.any { field ->
+                suspendCoroutine<Boolean> { cont ->
+                    firestore.collection("users")
+                        .document(userId)
+                        .collection(field)
+                        .document(gifId)
+                        .get()
+                        .addOnSuccessListener { documentSnapshot ->
+                            cont.resume(documentSnapshot.exists())
+                        }
+                        .addOnFailureListener { exception ->
+                            cont.resumeWithException(exception)
+                        }
+                }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore checkLikedGifAvailable error with gifId $gifId and userId $userId")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    fun insertLikedGif(gif: GifMap, userId: String, field : String) : Flow<Boolean> = flow {
+        try {
+            val result = suspendCoroutine<Boolean> { cont ->
+                firestore.collection("users")
+                    .document(userId)
+                    .collection(field)
+                    .document(gif.id!!)
+                    .set(mapOf("url" to gif.url))
+                    .addOnSuccessListener {
+                        cont.resume(true)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore insertLikedGif error with gif $gif and userId $userId with field $field")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    fun incrementGifLike(gif: GifMap, field : String) {
+        try {
+            firestore.collection("gifs")
+                .document(gif.id!!)
+                .update(field, FieldValue.increment(1))
+        } catch (e: Exception) {
+            Timber.e("Firestore incrementGifLike error with gif $gif with field $field")
+            Timber.e(e)
         }
     }
 }

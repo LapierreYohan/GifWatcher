@@ -85,7 +85,7 @@ class HomeFragment : Fragment() {
                 printedGif = it
 
                 val fullText = printedGif.contentDescription ?: ""
-                val maxLength = 50
+                val maxLength = 35
 
                 val minTextSize = 21f
                 val maxTextSize = 25f

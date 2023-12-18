@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,6 +17,8 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.utils.enums.Friend_PopUp_type
+import com.example.gifs_watcher.views.main.popUp.Friends_popup
 
 
 class PendingRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<PendingRequesteAdapter.ItemViewHolder>() {
@@ -43,10 +46,12 @@ class PendingRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapte
             Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
         }
         holder.actionValide.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: valide ${item?.username}", Toast.LENGTH_SHORT).show()
+            val showPopUp = Friends_popup(item!!, Friend_PopUp_type.accept_pending, "Accepter ${item?.username}", "Voulez vous vraiment accepter ${item?.username} ?")
+            showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.actionDelete.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: delete ${item?.username}", Toast.LENGTH_SHORT).show()
+            val showPopUp = Friends_popup(item!!, Friend_PopUp_type.refuse_pending, "Rejeter ${item?.username}", "Voulez vous vraiment rejeter la demande d'amis de ${item?.username} ?")
+            showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.textView.text = item?.displayname
         holder.descView.text = item?.username

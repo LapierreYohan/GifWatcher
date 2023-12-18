@@ -47,8 +47,7 @@ class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit
             callBack(item)
         }
         holder.action.setOnClickListener {
-            val showPopUp = Friends_popup(item!!, Friend_PopUp_type.delete_friend, "Supprimer", "Voulez vous vraiment supprimer ${item?.username} ?")
-
+            val showPopUp = Friends_popup(item!!, Friend_PopUp_type.delete_friend, "Supprimer ${item?.username}", "Voulez vous vraiment supprimer de vos amis ${item?.username} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
 

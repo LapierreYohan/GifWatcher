@@ -34,11 +34,81 @@ class Friends_popup(): DialogFragment() {
 
         titleTV.text = title
         descTV.text = desc
-        btnLeftTV.setOnClickListener {
-            Toast.makeText(context, "Clicked: left", Toast.LENGTH_SHORT).show()
-        }
-        btnRightTV.setOnClickListener {
-            Toast.makeText(context, "Clicked: right", Toast.LENGTH_SHORT).show()
+
+        when(type) {
+            Friend_PopUp_type.accept_pending -> {
+                btnLeftTV.text = "Annuler"
+                btnRightTV.text = "Accepter"
+
+                //btnRightTV.setBackgroundColor(context?.getColor(R.color.!!)
+                //btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_error)!!)
+
+                btnLeftTV.setOnClickListener {
+                    dismiss()                }
+                btnRightTV.setOnClickListener {
+                    Toast.makeText(context, "Clicked: Accepter", Toast.LENGTH_SHORT).show()
+                }
+            }
+            Friend_PopUp_type.refuse_pending -> {
+                btnLeftTV.text = "Annuler"
+                btnRightTV.text = "Rejeter"
+
+                btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_errorContainer)!!)
+                btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onErrorContainer)!!)
+
+                btnLeftTV.setOnClickListener {
+                    dismiss()                }
+                btnRightTV.setOnClickListener {
+                    Toast.makeText(context, "Clicked: Rejeter", Toast.LENGTH_SHORT).show()
+                }
+            }
+            Friend_PopUp_type.delete_friend -> {
+                btnLeftTV.text = "Annuler"
+                btnRightTV.text = "Supprimer"
+
+                btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_errorContainer)!!)
+                btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onErrorContainer)!!)
+
+                btnLeftTV.setOnClickListener {
+                    dismiss()                }
+                btnRightTV.setOnClickListener {
+                    Toast.makeText(context, "Clicked: Supprimer", Toast.LENGTH_SHORT).show()
+                }
+            }
+            Friend_PopUp_type.delete_sent -> {
+                btnLeftTV.text = "Annuler"
+                btnRightTV.text = "Supprimer"
+
+                btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_errorContainer)!!)
+                btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onErrorContainer)!!)
+
+                btnLeftTV.setOnClickListener {
+                    dismiss()
+                }
+                btnRightTV.setOnClickListener {
+                    Toast.makeText(context, "Clicked: Supprimer", Toast.LENGTH_SHORT).show()
+                }
+            }
+            Friend_PopUp_type.add_friend -> {
+                btnLeftTV.text = "Annuler"
+                btnRightTV.text = "Ajouter"
+
+                //btnRightTV.setBackgroundColor(context?.getColor(R.color.)!!)
+                //btnRightTV.setTextColor(context?.getColor(R.color.)!!)
+
+                btnLeftTV.setOnClickListener {
+                    Toast.makeText(context, "Clicked: Annuler", Toast.LENGTH_SHORT).show()
+                }
+                btnRightTV.setOnClickListener {
+                    Toast.makeText(context, "Clicked: Ajouter", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else -> {
+                Toast.makeText(context, "Problème de choix", Toast.LENGTH_SHORT).show()
+                dismiss()
+            }
+
+
         }
 
         return view

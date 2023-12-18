@@ -3,17 +3,15 @@ package com.example.gifs_watcher.views.main.home
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -24,11 +22,17 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.gifs_watcher.R
 import com.example.gifs_watcher.databinding.FragmentHomeBinding
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.views.main.MainViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import jp.wasabeef.glide.transformations.BlurTransformation
+import timber.log.Timber
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -42,13 +46,14 @@ class HomeFragment : Fragment() {
 
     private lateinit var  gifUi : ImageView
     private lateinit var  backgroundGifUi : ImageView
-    private lateinit var  gifTitle : TextView
     private lateinit var  searchBar : SearchView
 
     private lateinit var  likeGif : LottieAnimationView
     private lateinit var  dislikeGif : LottieAnimationView
     private lateinit var  starGif : LottieAnimationView
+
     private var isClicked : Boolean = false
+    private var areAdditionalInfoVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,35 +81,23 @@ class HomeFragment : Fragment() {
             }
         })
 
+        val moreInfoButton: FloatingActionButton = binding.moreInformationsFloatingActionButton
+
+        moreInfoButton.setOnClickListener {
+            areAdditionalInfoVisible = !areAdditionalInfoVisible
+            updateAdditionalInfoVisibility()
+            updateMoreInfoButtonIcon(moreInfoButton)
+        }
+
         this.gifUi = binding.Gif
         this.backgroundGifUi = binding.backgroundGif
-        this.gifTitle = binding.TitleGif
 
         mainViewModel.printedGifA.observe(viewLifecycleOwner) {
             if (it != null) {
                 printedGif = it
 
-                val fullText = printedGif.contentDescription ?: ""
-                val maxLength = 35
-
-                val minTextSize = 21f
-                val maxTextSize = 25f
-
-                val textSize = when {
-                    fullText.length > maxLength -> minTextSize
-                    fullText.length > maxLength - 10 -> ((maxTextSize - minTextSize) / 10 * (maxLength - 10 - fullText.length)) + minTextSize
-                    else -> maxTextSize
-                }
-
-                gifTitle.textSize = textSize
-
-                if (fullText.length > maxLength) {
-                    val truncatedText = "${fullText.substring(0, maxLength - 6)}..."
-
-                    gifTitle.text = truncatedText
-                } else {
-                    gifTitle.text = fullText
-                }
+                updateAdditionalInfoVisibility()
+                updateMoreInfoButtonIcon(moreInfoButton)
 
                 try {
                     Glide.with(this)
@@ -188,5 +181,95 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun updateAdditionalInfoVisibility() {
+        var componentsArray = arrayListOf(
+            binding.alineaPicture,
+            binding.iconPicture,
+            binding.pictureDims,
+
+            binding.alineaTaille,
+            binding.iconTaille,
+            binding.pictureTaille,
+
+            binding.alineaTemps,
+            binding.iconTemps,
+            binding.pictureTemps,
+
+            binding.iconDuration,
+            binding.pictureDuration,
+        )
+
+        val fullText = printedGif.contentDescription?.trim() ?: ""
+
+        var textSize = 24f
+        var maxLength = 50
+
+        if (areAdditionalInfoVisible) {
+            textSize = 16f
+            maxLength = 80
+        }
+
+        val minTextSize = 20f
+        val maxTextSize = 25f
+        textSize = textSize.coerceIn(minTextSize, maxTextSize)
+
+        binding.TitleGif.textSize = textSize
+
+        if (fullText.length > maxLength) {
+            val truncatedText = "${fullText.substring(0, maxLength - 6)}..."
+            binding.TitleGif.text = truncatedText
+        } else {
+            binding.TitleGif.text = fullText
+        }
+
+        val dimsText = StringBuilder().apply {
+            printedGif.media?.get(0)?.gif?.dims?.get(1)?.let { append(it) }
+            append("x")
+            printedGif.media?.get(0)?.gif?.dims?.get(0).let { append(it) }
+        }.toString()
+
+        binding.pictureDims.text = dimsText
+
+        val sizeText = StringBuilder().apply {
+            printedGif.media?.get(0)?.gif?.size?.let {
+                val sizeInKb = it / 1000
+                val formattedSize = NumberFormat.getNumberInstance(Locale.getDefault()).format(sizeInKb)
+                append(formattedSize)
+            }
+            append(" Kb")
+        }.toString()
+
+        binding.pictureTaille.text = sizeText
+
+        val dateText = StringBuilder().apply {
+            printedGif.created?.let {
+                val timestamp = it.toLong() * 1000 // Convertir en millisecondes
+                val date = Date(timestamp)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                append(dateFormat.format(date))
+            }
+        }.toString()
+
+        binding.pictureTemps.text = dateText
+
+        val durationText = StringBuilder().apply {
+            printedGif.media?.get(0)?.gif?.duration?.let {
+                append(it)
+                append("s")
+            }
+        }.toString()
+
+        binding.pictureDuration.text = durationText
+
+        for (component in componentsArray) {
+            component.visibility = if (areAdditionalInfoVisible) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun updateMoreInfoButtonIcon(button: FloatingActionButton) {
+        val iconResId = if (areAdditionalInfoVisible) R.drawable.up_arrow else R.drawable.down_arrow
+        button.setImageResource(iconResId)
     }
 }

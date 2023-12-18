@@ -1,5 +1,6 @@
 package com.example.gifs_watcher.models.maps
 
+import com.example.gifs_watcher.models.Gif
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.models.maps.models.GifMap
 

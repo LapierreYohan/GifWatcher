@@ -191,7 +191,7 @@ class FirestoreService {
                     .document(userId)
                     .collection(field)
                     .document(gif.id!!)
-                    .set(mapOf("url" to gif.url))
+                    .set(mapOf("url" to gif.url, "id" to gif.id))
                     .addOnSuccessListener {
                         cont.resume(true)
                     }

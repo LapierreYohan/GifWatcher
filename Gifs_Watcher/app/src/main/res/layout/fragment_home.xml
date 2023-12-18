@@ -25,7 +25,7 @@
         android:background="@drawable/round_shape"
         android:elevation="8dp"
         android:layout_marginStart="36dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -50,7 +50,7 @@
         android:backgroundTint="@color/md_theme_dark_surfaceVariant"
         android:background="@drawable/round_shape"
         android:elevation="8dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toBottomOf="@+id/backgroundGif"
         app:layout_constraintEnd_toStartOf="@+id/constraint_like_floatingActionButton"
         app:layout_constraintStart_toEndOf="@+id/constraint_delete_floatingActionButton"
@@ -75,7 +75,7 @@
         android:background="@drawable/round_shape"
         android:elevation="8dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -100,7 +100,7 @@
         android:layout_height="55dp"
         android:background="@android:color/transparent"
         android:foreground="@drawable/white_qrcode_rounded_button"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/CardDescription"
@@ -117,7 +117,7 @@
         android:queryHint="Entrez un thème de GIF"
         android:iconifiedByDefault="false"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
         app:layout_constraintHorizontal_bias="0.0"
@@ -135,7 +135,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/surface_container_low_round"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,7 +145,7 @@
         <ImageView
             android:id="@+id/Gif"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
@@ -159,7 +159,7 @@
             android:id="@+id/moreOptions_floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="-8dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="@color/md_theme_dark_onSecondary"
             app:tint="@color/md_theme_dark_onBackground"
@@ -181,16 +181,126 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="80dp"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="96dp"
                 android:text=""
                 android:textColor="@color/md_theme_dark_onSurface"
                 android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/moreInformations_floatingActionButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/alineaPicture"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/alinea"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="22dp"
+                app:layout_constraintStart_toStartOf="@+id/TitleGif"
+                app:layout_constraintTop_toBottomOf="@+id/TitleGif"
+                />
+
+            <ImageView
+                android:id="@+id/iconPicture"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="-2dp"
+                android:src="@drawable/picture"
+                app:layout_constraintStart_toEndOf="@+id/alineaPicture"
+                app:layout_constraintTop_toBottomOf="@+id/TitleGif" />
+
+            <TextView
+                android:id="@+id/pictureDims"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="430x550"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/moreInformations_floatingActionButton"
+                app:layout_constraintStart_toEndOf="@+id/iconPicture"
+                app:layout_constraintTop_toBottomOf="@+id/TitleGif" />
+
+
+
+            <ImageView
+                android:id="@+id/alineaTaille"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/alinea"
+                android:layout_marginTop="-8dp"
+                app:layout_constraintStart_toStartOf="@+id/alineaPicture"
+                app:layout_constraintTop_toBottomOf="@+id/alineaPicture"
+                />
+
+            <ImageView
+                android:id="@+id/iconTaille"
+                android:layout_width="14dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/database"
+                app:layout_constraintStart_toEndOf="@+id/alineaPicture"
+                app:layout_constraintStart_toStartOf="@+id/iconPicture"
+                app:layout_constraintTop_toTopOf="@+id/iconPicture" />
+
+            <TextView
+                android:id="@+id/pictureTaille"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="16dp"
+                android:text="4590KB"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/moreInformations_floatingActionButton"
+                app:layout_constraintStart_toEndOf="@+id/iconTaille"
+                app:layout_constraintStart_toStartOf="@+id/pictureDims"
+                app:layout_constraintTop_toBottomOf="@+id/alineaPicture" />
+
+
+
+            <ImageView
+                android:id="@+id/alineaTemps"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/alinea"
+                android:layout_marginTop="-8dp"
+                app:layout_constraintStart_toStartOf="@+id/alineaTaille"
+                app:layout_constraintTop_toBottomOf="@+id/alineaTaille"
+                />
+
+            <ImageView
+                android:id="@+id/iconTemps"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="34dp"
+                android:src="@drawable/downloads"
+                app:layout_constraintStart_toEndOf="@+id/alineaTemps"
+                app:layout_constraintStart_toStartOf="@+id/iconTaille"
+                app:layout_constraintTop_toTopOf="@+id/iconTaille" />
+
+            <TextView
+                android:id="@+id/pictureTemps"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="16dp"
+                android:text="4590KB"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/moreInformations_floatingActionButton"
+                app:layout_constraintStart_toEndOf="@+id/iconTemps"
+                app:layout_constraintStart_toStartOf="@+id/pictureTaille"
+                app:layout_constraintTop_toBottomOf="@+id/alineaTaille" />
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/moreInformations_floatingActionButton"
@@ -199,14 +309,13 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:src="@drawable/chevron"
                 android:backgroundTint="@color/md_theme_dark_onSecondary"
-                app:tint="@color/md_theme_dark_onBackground"
+                android:src="@drawable/up_arrow"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="@+id/pictureTaille"
+                app:tint="@color/md_theme_dark_onBackground" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

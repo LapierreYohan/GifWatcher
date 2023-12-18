@@ -37,6 +37,7 @@ object GifRepository {
              cache.switch(CacheMode.RANDOM)
          } else {
              cache.clear(CacheMode.RANDOM)
+             cache.clear(CacheMode.SEARCH)
              cache.switch(CacheMode.SEARCH)
          }
 

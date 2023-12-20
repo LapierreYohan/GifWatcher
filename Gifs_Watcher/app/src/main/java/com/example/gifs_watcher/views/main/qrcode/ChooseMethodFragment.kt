@@ -35,6 +35,10 @@ class ChooseMethodFragment : Fragment() {
             findNavController().navigate(R.id.navigation_home)
         }
 
+        binding.qrcodeOptionLayout.setOnClickListener {
+            findNavController().navigate(R.id.navigation_qrcode_scanner)
+        }
+
         val root: View = binding.root
         return root
     }

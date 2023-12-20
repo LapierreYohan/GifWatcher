@@ -66,9 +66,6 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("jp.wasabeef:picasso-transformations:2.4.0")
 
-    // Gif Drawable
-    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
-
     // Co Routine
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
@@ -78,7 +75,7 @@ dependencies {
     implementation("androidx.annotation:annotation:1.6.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
-    //Firebase
+    // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
@@ -86,7 +83,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
 
-    //Chiffrement
+    // Chiffrement
     implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
 
     // Glide
@@ -99,7 +96,7 @@ dependencies {
     implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.0")
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
 
-    //Scan QR Code
+    // Scan QR Code
     implementation("com.google.android.gms:play-services-vision:20.1.3")
 
     // CameraX library

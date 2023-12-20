@@ -24,4 +24,10 @@
         android:id="@+id/navigation_choose_method"
         android:name="com.example.gifs_watcher.views.main.qrcode.ChooseMethodFragment"
         tools:layout="@layout/fragment_choose_method" />
+
+    <fragment
+        android:id="@+id/navigation_qrcode_scanner"
+        android:name="com.example.gifs_watcher.views.main.qrcode.QrCodeScannerFragment"
+        tools:layout="@layout/fragment_qr_code_scanner" />
+
 </navigation>

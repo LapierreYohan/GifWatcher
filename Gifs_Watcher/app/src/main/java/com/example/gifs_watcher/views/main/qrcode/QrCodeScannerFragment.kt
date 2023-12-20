@@ -10,12 +10,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.databinding.FragmentChooseMethodBinding
+import com.example.gifs_watcher.databinding.FragmentQrCodeScannerBinding
 import com.example.gifs_watcher.views.main.MainViewModel
 
-class ChooseMethodFragment : Fragment() {
-
-    private var _binding: FragmentChooseMethodBinding? = null
+class QrCodeScannerFragment : Fragment() {
+    private var _binding: FragmentQrCodeScannerBinding? = null
 
     private val binding get() = _binding!!
     private val mainViewModel by activityViewModels<MainViewModel>()
@@ -25,14 +24,14 @@ class ChooseMethodFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.println(Log.INFO,"debug","on create Choosen method")
+        Log.println(Log.INFO,"debug","on create Qr code Scanner")
 
         val mainViewModel_ = ViewModelProvider(this).get(MainViewModel::class.java)
-        _binding = FragmentChooseMethodBinding.inflate(inflater, container, false)
+        _binding = FragmentQrCodeScannerBinding.inflate(inflater, container, false)
 
 
-        binding.backFromChooseToHome.setOnClickListener {
-            findNavController().navigate(R.id.navigation_home)
+        binding.backFromScannerToChoose.setOnClickListener {
+            findNavController().navigate(R.id.navigation_choose_method)
         }
 
         val root: View = binding.root
@@ -43,5 +42,4 @@ class ChooseMethodFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

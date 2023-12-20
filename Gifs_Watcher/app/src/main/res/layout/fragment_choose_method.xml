@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="26dp"
             android:text="Scan a QR Code"
             android:textColor="@color/md_theme_dark_onBackground"
             android:textSize="26dp"

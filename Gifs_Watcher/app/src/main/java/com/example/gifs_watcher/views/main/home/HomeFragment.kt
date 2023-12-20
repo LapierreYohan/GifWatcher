@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -26,6 +27,7 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.databinding.FragmentHomeBinding
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.views.main.MainViewModel
+import com.example.gifs_watcher.views.main.qrcode.ChooseMethodFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import jp.wasabeef.glide.transformations.BlurTransformation
 import timber.log.Timber
@@ -80,6 +82,11 @@ class HomeFragment : Fragment() {
                 return true
             }
         })
+
+        binding.floatingActionButton3.setOnClickListener {
+
+            findNavController().navigate(R.id.navigation_choose_method)
+        }
 
         val moreInfoButton: FloatingActionButton = binding.moreInformationsFloatingActionButton
 

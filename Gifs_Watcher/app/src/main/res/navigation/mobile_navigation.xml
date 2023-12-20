@@ -19,4 +19,9 @@
         android:id="@+id/navigation_profil"
         android:name="com.example.gifs_watcher.views.main.profil.ProfilFragment"
         tools:layout="@layout/fragment_profil" />
+
+    <fragment
+        android:id="@+id/navigation_choose_method"
+        android:name="com.example.gifs_watcher.views.main.qrcode.ChooseMethodFragment"
+        tools:layout="@layout/fragment_choose_method" />
 </navigation>

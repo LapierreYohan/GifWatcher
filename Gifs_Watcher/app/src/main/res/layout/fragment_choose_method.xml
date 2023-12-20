@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.main.qrcode.ChooseMethodFragment"
+    android:background="@color/md_theme_dark_background"
+    >
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backFromChooseToHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/md_theme_dark_surfaceVariant"
+        android:src="@drawable/back"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/md_theme_dark_onBackground" />
+
+    <TextView
+        android:id="@+id/choose_title_qr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="QR CODE"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        android:textColor="@color/md_theme_dark_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/choose_separator_view"
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/md_theme_dark_onSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_title_qr"
+        />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/qrcode_option_layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+
+        android:background="@drawable/on_surface_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_separator_view">
+
+        <TextView
+            android:id="@+id/qrcode_option_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="Scan a QR Code"
+            android:textColor="@color/md_theme_dark_onBackground"
+            android:textSize="26dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.254"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <View
+            android:id="@+id/qrcode_option_separator_view"
+            android:layout_width="185dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/md_theme_dark_onBackground"
+            app:layout_constraintEnd_toEndOf="@+id/qrcode_option_title"
+            app:layout_constraintStart_toStartOf="@+id/qrcode_option_title"
+            app:layout_constraintTop_toBottomOf="@+id/qrcode_option_title" />
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/qrcode_option_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/choose_title_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="330dp"
+        android:text="CODE"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        android:textColor="@color/md_theme_dark_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_title_qr" />
+
+    <View
+        android:id="@+id/choose_separator2_view"
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/md_theme_dark_onSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_title_code"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/qrcode_code_textinput_layout"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Gif Code"
+        android:textColorHint="@color/md_theme_dark_onSurface"
+        android:theme="@style/EditTextTheme"
+        app:hintTextAppearance="@style/EditTextThemeLayout"
+        app:startIconDrawable="@drawable/hashtag"
+        app:startIconMinSize="20dp"
+        app:startIconTint="@color/md_theme_dark_onSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_separator2_view">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/qrcode_code__textinput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/md_theme_dark_surfaceVariant"
+            android:textColorHint="@color/md_theme_dark_onSurfaceVariant"
+            android:textColor="@color/md_theme_dark_onSurface"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/choose_code_button"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:backgroundTint="@color/md_theme_dark_primaryContainer"
+        android:text="See the Gif"
+        android:textSize="17sp"
+        android:textColor="@color/md_theme_dark_onPrimaryContainer"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qrcode_code_textinput_layout"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

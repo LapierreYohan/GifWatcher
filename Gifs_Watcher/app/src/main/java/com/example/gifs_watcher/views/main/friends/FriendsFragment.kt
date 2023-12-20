@@ -41,7 +41,7 @@ class FriendsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         this.searchBar = this.binding.friendsSearchView
-        searchBar.queryHint = "Recherchez un utilisateur"
+        searchBar.queryHint = "Enter a username"
 
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

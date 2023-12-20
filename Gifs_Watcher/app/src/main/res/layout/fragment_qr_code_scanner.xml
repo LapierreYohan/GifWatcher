@@ -23,7 +23,7 @@
         app:tint="@color/md_theme_dark_onBackground" />
 
     <TextView
-        android:id="@+id/choose_title_qr"
+        android:id="@+id/scanner_title_qr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
@@ -35,16 +35,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/choose_separator_view"
+        android:id="@+id/scanner_separator_view"
         android:layout_width="300dp"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="@color/md_theme_dark_onSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choose_title_qr"
+        app:layout_constraintTop_toBottomOf="@+id/scanner_title_qr"
         />
 
+    <androidx.camera.view.PreviewView
+        android:id="@+id/cameraView"
+        android:layout_width="match_parent"
+        android:layout_marginTop="24dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scanner_separator_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

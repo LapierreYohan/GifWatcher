@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Gifs_Watcher</string>
-    <string name="title_friends">Amis</string>
-    <string name="title_menu">Accueil</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_menu">Home</string>
     <string name="title_profil">Profil</string>
     <string name="background_description">Une loutre</string>
 

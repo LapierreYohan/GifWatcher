@@ -116,7 +116,7 @@
         android:id="@+id/main_searchView"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:queryHint="Entrez un thème de GIF"
+        android:queryHint="Enter a Gif theme"
         android:iconifiedByDefault="false"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"

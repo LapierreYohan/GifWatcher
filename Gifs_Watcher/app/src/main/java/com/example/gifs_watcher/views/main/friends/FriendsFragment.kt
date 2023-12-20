@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,9 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gifs_watcher.databinding.FragmentFriendsBinding
 import com.example.gifs_watcher.views.main.MainViewModel
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.utils.enums.Friend_PopUp_type
 import com.example.gifs_watcher.views.main.friends.adapters.FriendsAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.PendingRequesteAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.SentRequesteAdapter
+import com.example.gifs_watcher.views.main.popUp.Add_friends_popup
+import com.example.gifs_watcher.views.main.popUp.Friends_popup
 
 class FriendsFragment : Fragment() {
 
@@ -30,6 +36,17 @@ class FriendsFragment : Fragment() {
     ): View {
         _binding = FragmentFriendsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val view = inflater.inflate(R.layout.fragment_friends, container, false)
+
+        val btAdd : Button = view.findViewById(R.id.add_friend_button)
+
+        btAdd.setOnClickListener {
+            Toast.makeText(context, "Clicked: add", Toast.LENGTH_SHORT).show()
+            val showPopUp = Add_friends_popup( "Ajouter un ami")
+            showPopUp.show((context as AppCompatActivity).supportFragmentManager, "Add_friends_popup")
+
+        }
 
         return root
     }

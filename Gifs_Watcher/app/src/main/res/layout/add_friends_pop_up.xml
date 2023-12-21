@@ -28,6 +28,7 @@
             android:text="Title"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/md_theme_dark_onBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -83,7 +84,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="nom de l'utilisateur"
+            android:hint="Enter a username"
+            android:textColorHint="@color/md_theme_dark_onBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_add_friends_popUp_title" />

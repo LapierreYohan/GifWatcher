@@ -1,4 +1,4 @@
-package com.example.gifs_watcher.views.main.popUp
+package com.example.gifs_watcher.views.main.friends.popUp
 
 import android.os.Bundle
 import android.view.LayoutInflater

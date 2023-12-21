@@ -52,7 +52,7 @@
             android:textColor="@color/md_theme_dark_onPrimaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/ti_add_friend" />
 
         <Button
             android:id="@+id/bt_add_friends_popup_right"
@@ -64,7 +64,7 @@
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/ti_add_friend" />
 
         <Space
             android:id="@+id/space"
@@ -77,13 +77,13 @@
             app:layout_constraintStart_toEndOf="@+id/bt_add_friends_popup_left" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText"
+            android:id="@+id/ti_add_friend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="hint"
+            android:hint="nom de l'utilisateur"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_add_friends_popUp_title" />

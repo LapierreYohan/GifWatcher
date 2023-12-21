@@ -18,7 +18,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.Friend_PopUp_type
-import com.example.gifs_watcher.views.main.popUp.Friends_popup
+import com.example.gifs_watcher.views.main.friends.popUp.Friends_popup
 
 
 class PendingRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<PendingRequesteAdapter.ItemViewHolder>() {

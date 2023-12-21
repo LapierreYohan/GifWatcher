@@ -37,6 +37,10 @@
     <string name="password_button">"Send Email"</string>
     <string name="password_invalid_email">Not a valid email</string>
     <string name="password_failed">"Register failed"</string>
+
+    <!-- Strings related to addFriendPopUp -->
+    <string name="addFriendPopUp_title">Username</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

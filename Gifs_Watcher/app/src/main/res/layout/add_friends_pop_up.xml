@@ -53,7 +53,7 @@
             android:textColor="@color/md_theme_dark_onPrimaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ti_add_friend" />
+            app:layout_constraintTop_toBottomOf="@+id/add_friend_textinput" />
 
         <Button
             android:id="@+id/bt_add_friends_popup_right"
@@ -65,7 +65,7 @@
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ti_add_friend" />
+            app:layout_constraintTop_toBottomOf="@+id/add_friend_textinput" />
 
         <Space
             android:id="@+id/space"
@@ -77,17 +77,34 @@
             app:layout_constraintEnd_toStartOf="@+id/bt_add_friends_popup_right"
             app:layout_constraintStart_toEndOf="@+id/bt_add_friends_popup_left" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ti_add_friend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="Enter a username"
-            android:textColorHint="@color/md_theme_dark_onBackground"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_friend_textinput"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/addFriendPopUp_title"
+            android:textColorHint="@color/md_theme_dark_onSurface"
+            android:theme="@style/EditTextTheme"
+            app:hintTextAppearance="@style/EditTextThemeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_add_friends_popUp_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_add_friends_popUp_title"
+            app:startIconDrawable="@drawable/identidiant_icon"
+            app:startIconMinSize="30dp"
+            app:startIconTint="@color/md_theme_dark_onSurface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_identifiant_textinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/md_theme_dark_surfaceVariant"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textColorHint="@color/md_theme_dark_onSurfaceVariant" />
+        </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

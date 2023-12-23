@@ -214,8 +214,8 @@ class HomeFragment : Fragment() {
         var maxLength = 50
 
         if (areAdditionalInfoVisible) {
-            textSize = 16f
-            maxLength = 80
+            textSize = 15f
+            maxLength = 70
         }
 
         val minTextSize = 20f

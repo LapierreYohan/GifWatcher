@@ -99,13 +99,13 @@
         android:id="@+id/choose_title_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="330dp"
+        android:layout_marginTop="56dp"
         android:text="CODE"
         android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
         android:textColor="@color/md_theme_dark_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choose_title_qr" />
+        app:layout_constraintTop_toBottomOf="@+id/qrcode_option_layout" />
 
     <View
         android:id="@+id/choose_separator2_view"

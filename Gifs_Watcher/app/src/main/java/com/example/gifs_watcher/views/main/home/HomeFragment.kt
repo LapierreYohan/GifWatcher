@@ -27,6 +27,7 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.databinding.FragmentHomeBinding
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.views.main.MainViewModel
+import com.example.gifs_watcher.views.main.home.menu.MoreOptionMenu
 import com.example.gifs_watcher.views.main.qrcode.ChooseMethodFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -84,7 +85,6 @@ class HomeFragment : Fragment() {
         })
 
         binding.floatingActionButton3.setOnClickListener {
-
             findNavController().navigate(R.id.navigation_choose_method)
         }
 
@@ -95,6 +95,10 @@ class HomeFragment : Fragment() {
             updateAdditionalInfoVisibility()
             updateMoreInfoButtonIcon(moreInfoButton)
         }
+
+        val moreOptionMenu = MoreOptionMenu(requireContext(), binding.moreOptionsFloatingActionButton)
+
+
 
         this.gifUi = binding.Gif
         this.backgroundGifUi = binding.backgroundGif

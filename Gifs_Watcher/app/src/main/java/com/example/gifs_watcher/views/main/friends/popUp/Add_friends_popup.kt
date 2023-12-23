@@ -36,8 +36,8 @@ class Add_friends_popup(): DialogFragment() {
         btnLeftTV.text = "Annuler"
         btnRightTV.text = "Ajouter"
 
-        //btnRightTV.setBackgroundColor(context?.getColor(R.color.!!)
-        //btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_error)!!)
+        btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_primaryContainer)!!)
+        btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onPrimaryContainer)!!)
 
         btnLeftTV.setOnClickListener {
             dismiss()                }
@@ -51,6 +51,11 @@ class Add_friends_popup(): DialogFragment() {
 
     constructor(title: String = "") : this(){
         this.title = title
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_FRAME, R.style.TransparentDialog)
     }
 
     fun setTitle(msg : String){

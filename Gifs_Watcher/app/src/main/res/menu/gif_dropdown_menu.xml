@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_share"
+        android:title="Partager"
+        />
+    <item
+        android:id="@+id/menu_download"
+        android:title="Télécharger"
+        />
+    <item
+        android:id="@+id/menu_copy_link"
+        android:title="Copier le lien"
+        />
+    <item
+        android:id="@+id/menu_set_avatar"
+        android:title="Mettre en Avatar"
+        />
+</menu>

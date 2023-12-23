@@ -12,6 +12,7 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.Friend_PopUp_type
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class Add_friends_popup(): DialogFragment() {
 
@@ -28,7 +29,7 @@ class Add_friends_popup(): DialogFragment() {
         val titleTV : TextView = view.findViewById(R.id.tv_add_friends_popUp_title)
         val btnLeftTV : Button = view.findViewById(R.id.bt_add_friends_popup_left)
         val btnRightTV : Button = view.findViewById(R.id.bt_add_friends_popup_right)
-        val inputText : TextInputEditText = view.findViewById(R.id.ti_add_friend)
+        val inputText : TextInputLayout = view.findViewById(R.id.add_friend_textinput)
 
         titleTV.text = title
 
@@ -41,7 +42,7 @@ class Add_friends_popup(): DialogFragment() {
         btnLeftTV.setOnClickListener {
             dismiss()                }
         btnRightTV.setOnClickListener {
-            Toast.makeText(context, "Clicked: add ${inputText.text}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Clicked: add ${inputText.getEditText()?.getText()}", Toast.LENGTH_SHORT).show()
         }
 
         return view

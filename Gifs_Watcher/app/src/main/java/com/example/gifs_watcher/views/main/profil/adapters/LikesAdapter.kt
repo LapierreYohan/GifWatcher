@@ -25,7 +25,7 @@ class LikesAdapter(val gifs: ArrayList<Results?>?, val callBack : (Results?)-> U
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.gif_card, parent, false)
+            .inflate(R.layout.profil_gif_card, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 
@@ -33,10 +33,9 @@ class LikesAdapter(val gifs: ArrayList<Results?>?, val callBack : (Results?)-> U
 
         val item = gifs?.get(position) // met dans item l'utilisateur
 
-        //set les valeurs de l'utilsateur dans les différents champs
         holder.title.text = item?.contentDescription
         Glide.with(holder.itemView.context)
-            .load(item?.media?.get(0)?.gif?.url)
+            .load(item?.media?.get(0)?.gif?.preview)
             .apply(
                 RequestOptions.bitmapTransform(
                     MultiTransformation(

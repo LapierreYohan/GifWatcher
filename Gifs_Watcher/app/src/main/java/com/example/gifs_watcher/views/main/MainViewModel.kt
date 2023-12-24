@@ -143,29 +143,13 @@ class MainViewModel : ViewModel() {
     }
 
     fun getLikesProfil(context: Context) {
+        likesGif.value?.clear()
         viewModelScope.launch {
             gifRepo.getRandomGif(context)
                 .collect {
                     addLikes(it)
                 }
         }
-
-
-        val d1 = ArrayList<Int>()
-        d1.add(1)
-        d1.add(1)
-        val g1 = Gif("1","https://media1.tenor.com/m/z2FuWLCu0MsAAAAC/merry-christmas.gif", d1, 1.1, 1)
-        val m1 = Media(g1, g1)
-        val lm1 = ArrayList<Media>()
-        lm1.add(m1)
-        val l1 = Results("1", "1", "1", lm1, "1", 1.1)
-        val l2 = Results("2", "2", "2", lm1, "1", 1.2)
-        addLikes(l2)
-        addLikes(l1)
-        viewModelScope.launch {
-            likesGif.postValue(likesGif.value)
-        }
-
     }
 
     fun addLikes(like : Results?) {

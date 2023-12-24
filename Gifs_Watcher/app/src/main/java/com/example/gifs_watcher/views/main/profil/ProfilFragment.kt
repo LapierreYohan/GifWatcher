@@ -23,6 +23,7 @@ import com.example.gifs_watcher.databinding.FragmentProfilBinding
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.views.main.profil.adapters.LikesAdapter
 import com.example.gifs_watcher.views.main.MainViewModel
+import com.example.gifs_watcher.views.main.profil.menu.ParameterMenu
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 class ProfilFragment : Fragment() {
@@ -32,11 +33,11 @@ class ProfilFragment : Fragment() {
     private val binding get() = _binding!!
     private val mainViewModel by activityViewModels<MainViewModel>()
 
-    private lateinit var  backgroundGif : ImageView
     private lateinit var  profilGif : ImageView
     private lateinit var  userName : TextView
-    private lateinit var  name : TextView
     private lateinit var  bio : TextView
+
+    private lateinit var  parameterMenu : ParameterMenu
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,29 +52,16 @@ class ProfilFragment : Fragment() {
 
         val ProfilUser: User? = mainViewModel.getProfil()
 
-        this.backgroundGif = binding.backgroundGifA
         this.profilGif = binding.profilPicture
         this.userName = binding.tvUserName
-        this.name = binding.tvName
         this.bio = binding.tvBio
 
         this.userName.setText(ProfilUser?.displayname)
-        this.name.setText(ProfilUser?.username)
         this.bio.setText(ProfilUser?.bio)
 
-        try {
-            Glide.with(this)
-                .load(ProfilUser?.profilPicture)
-                .apply(RequestOptions().centerCrop())
-                .transform(
-                    MultiTransformation(
-                        BlurTransformation(25, 4),
-                        CenterCrop(),
-                        FitCenter()
-                    )
-                )
-                .into(this.backgroundGif)
+        this.parameterMenu = ParameterMenu(requireContext(), binding.profilParameters, mainViewModel)
 
+        try {
             Glide.with(this)
                 .load(ProfilUser?.profilPicture)
                 .apply(RequestOptions().centerCrop())

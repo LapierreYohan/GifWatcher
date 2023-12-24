@@ -1,22 +1,22 @@
 package com.example.gifs_watcher.views.main.home.menu
 
 import android.content.Context
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.models.Results
+import com.example.gifs_watcher.views.main.MainViewModel
 
 
-class MoreOptionMenu(private var context: Context, anchorView: View) {
+class MoreOptionMenu(private var context: Context, anchorView: View, viewModel : MainViewModel) {
 
     private val popupMenu: PopupMenu
+    private var gifPrinted : Results? = null
+    private val mainViewModel = viewModel
 
     init {
         val wrapper: Context = ContextThemeWrapper(context, R.style.PopupMenuStyle)
@@ -38,11 +38,33 @@ class MoreOptionMenu(private var context: Context, anchorView: View) {
 
     private fun handleOptionSelection(item: MenuItem) {
 
+        if (gifPrinted == null) {
+            Toast.makeText(context, "Aucun gif sélectionné", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         when (item.itemId) {
             R.id.menu_share -> Toast.makeText(context, "Partager sélectionné", Toast.LENGTH_SHORT).show()
-            R.id.menu_download -> Toast.makeText(context, "Télécharger sélectionné", Toast.LENGTH_SHORT).show()
-            R.id.menu_copy_link -> Toast.makeText(context, "Copier le lien sélectionné", Toast.LENGTH_SHORT).show()
-            R.id.menu_set_avatar -> Toast.makeText(context, "Mettre en Avatar sélectionné", Toast.LENGTH_SHORT).show()
+
+            R.id.menu_download -> {
+                mainViewModel.downloadGif(context, gifPrinted!!)
+            }
+
+            R.id.menu_copy_link -> {
+                mainViewModel.copyLinkGif(context, gifPrinted!!)
+            }
+
+            R.id.menu_set_avatar -> {
+                mainViewModel.setAvatarGif(gifPrinted!!)
+            }
         }
+    }
+
+    fun setGifPrinted(gif : Results) {
+        gifPrinted = gif
+    }
+
+    fun getGifPrinted() : Results? {
+        return gifPrinted
     }
 }

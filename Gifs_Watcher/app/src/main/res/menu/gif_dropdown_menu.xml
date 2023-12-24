@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_share"
-        android:title="Partager"
+        android:title="Share"
         />
     <item
         android:id="@+id/menu_download"
-        android:title="Télécharger"
+        android:title="Download"
         />
     <item
         android:id="@+id/menu_copy_link"
-        android:title="Copier le lien"
+        android:title="Copy Link"
         />
     <item
         android:id="@+id/menu_set_avatar"
-        android:title="Mettre en Avatar"
+        android:title="Set as Avatar"
         />
 </menu>

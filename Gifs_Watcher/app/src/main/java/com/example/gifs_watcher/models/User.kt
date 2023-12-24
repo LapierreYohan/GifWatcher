@@ -17,4 +17,6 @@ data class User (
     val birthdate: String? = null,
 
     var profilPicture: String? = null,
+
+    var lowProfilPicture: String? = null,
 )

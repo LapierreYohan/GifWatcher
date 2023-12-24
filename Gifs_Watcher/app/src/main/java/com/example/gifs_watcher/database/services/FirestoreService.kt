@@ -218,4 +218,20 @@ class FirestoreService {
             Timber.e(e)
         }
     }
+
+    fun setAvatarGif(gif: GifMap,userId: String) {
+        try {
+            val updateData = mapOf(
+                "profilPicture" to gif.url,
+                "lowProfilPicture" to gif.tiny_url
+            )
+
+            firestore.collection("users")
+                .document(userId)
+                .update(updateData)
+        } catch (e: Exception) {
+            Timber.e("Firestore setAvatarGif error with gif $gif with userId $userId")
+            Timber.e(e)
+        }
+    }
 }

@@ -1,7 +1,12 @@
 package com.example.gifs_watcher.views.main
 
 
+import android.app.DownloadManager
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
+import android.net.Uri
+import android.os.Environment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -171,5 +176,49 @@ class MainViewModel : ViewModel() {
         return CacheDatasource.getAuthUser()
     }
 
+    fun downloadGif(context: Context, gif: Results?) {
 
+        var gifData = GifMapper.map(gif!!)
+
+        val maxCharCount = 30
+
+        val gifName: String = if ((gifData.content_description?.length ?: 0) > maxCharCount) {
+            gifData.content_description?.substring(0, maxCharCount) + ".gif"
+        } else {
+            gifData.content_description + ".gif"
+        }
+
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        val uri = Uri.parse(gifData.url)
+
+        val request = DownloadManager.Request(uri)
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, gifName)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+
+        downloadManager.enqueue(request)
+    }
+
+    fun shareGif(context: Context, gif: Results?) {
+
+    }
+
+    fun copyLinkGif(context: Context, gif: Results?) {
+
+        var gifData = GifMapper.map(gif!!)
+
+        gif.let {
+            val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(gifData.content_description, gifData.url)
+            clipboardManager.setPrimaryClip(clipData)
+        }
+    }
+
+    fun setAvatarGif(gif: Results) {
+        viewModelScope.launch {
+            gifRepo.setAvatarGif(
+                GifMapper.map(gif)
+            )
+        }
+    }
 }

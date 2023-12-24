@@ -107,4 +107,8 @@ object DistantDatabaseDatasource {
             }
         }
     }
+
+    suspend fun setAvatarGif(gif : GifMap, userId: String) {
+        DistantDatabase.FirestoreService.setAvatarGif(gif, userId)
+    }
 }

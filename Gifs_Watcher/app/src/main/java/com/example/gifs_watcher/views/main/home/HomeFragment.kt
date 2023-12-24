@@ -55,6 +55,8 @@ class HomeFragment : Fragment() {
     private lateinit var  dislikeGif : LottieAnimationView
     private lateinit var  starGif : LottieAnimationView
 
+    private lateinit var moreOptionMenu : MoreOptionMenu
+
     private var isClicked : Boolean = false
     private var areAdditionalInfoVisible = false
 
@@ -96,8 +98,7 @@ class HomeFragment : Fragment() {
             updateMoreInfoButtonIcon(moreInfoButton)
         }
 
-        val moreOptionMenu = MoreOptionMenu(requireContext(), binding.moreOptionsFloatingActionButton)
-
+        moreOptionMenu = MoreOptionMenu(requireContext(), binding.moreOptionsFloatingActionButton, mainViewModel)
 
 
         this.gifUi = binding.Gif
@@ -106,6 +107,7 @@ class HomeFragment : Fragment() {
         mainViewModel.printedGifA.observe(viewLifecycleOwner) {
             if (it != null) {
                 printedGif = it
+                moreOptionMenu.setGifPrinted(it)
 
                 updateAdditionalInfoVisibility()
                 updateMoreInfoButtonIcon(moreInfoButton)

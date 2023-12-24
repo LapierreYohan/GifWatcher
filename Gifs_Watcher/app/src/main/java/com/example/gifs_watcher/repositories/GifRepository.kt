@@ -145,4 +145,17 @@ object GifRepository {
            database.likeGif(gif, user.idUsers!!, "starredGifs", "star")
         }
     }
+
+    suspend fun setAvatarGif(gif : GifMap) {
+
+        var user : User
+        user = cache.getAuthUser() ?: User()
+
+        user.lowProfilPicture = gif.tiny_url
+        user.profilPicture = gif.url
+
+        cache.setAuthUser(user)
+
+        database.setAvatarGif(gif, user.idUsers!!)
+    }
 }

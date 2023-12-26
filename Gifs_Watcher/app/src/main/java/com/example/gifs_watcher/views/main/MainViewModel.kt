@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -65,6 +66,8 @@ class MainViewModel : ViewModel() {
 
     private val likesGif : MutableLiveData<ArrayList<Results?>> = MutableLiveData(arrayListOf())
     val likes : LiveData<ArrayList<Results?>> = likesGif
+
+    var seeGifTraitement : Boolean = false
 
     fun getRandomGif(context: Context, theme: String = "") {
         viewModelScope.launch {
@@ -260,5 +263,20 @@ class MainViewModel : ViewModel() {
         val clipData = ClipData.newPlainText("id", id)
         clipboardManager.setPrimaryClip(clipData)
         Toast.makeText(context, "ID copié", Toast.LENGTH_SHORT).show()
+    }
+
+    fun seeGif(gifId : String, navController: NavController) {
+        seeGifTraitement = true
+        viewModelScope.launch {
+            gifRepo.seeGif(gifId, printedGif).collect {
+                if (it != null) {
+                    Log.d("Gif", it.toString())
+                    printedGif = it
+                    printedGifLD.postValue(it)
+                    navController.navigate(R.id.navigation_home)
+                    seeGifTraitement = false
+                }
+            }
+        }
     }
 }

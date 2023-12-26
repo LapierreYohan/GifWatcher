@@ -15,13 +15,10 @@ import com.example.gifs_watcher.views.main.MainViewModel
 import pub.devrel.easypermissions.EasyPermissions
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import com.example.gifs_watcher.utils.managers.QrCodeManager
-import com.example.gifs_watcher.utils.managers.QrCodeView
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.PermissionRequest
 import java.util.concurrent.ExecutorService
@@ -32,7 +29,6 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private val CAMERA_REQUEST_CODE = 123
     private val CAMERA_PERMISSION = android.Manifest.permission.CAMERA
     private lateinit var cameraExecutor: ExecutorService
-    private lateinit var qrCodeView: QrCodeView
 
     private var _binding: FragmentQrCodeScannerBinding? = null
 
@@ -49,15 +45,11 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         val mainViewModel_ = ViewModelProvider(this).get(MainViewModel::class.java)
         _binding = FragmentQrCodeScannerBinding.inflate(inflater, container, false)
 
-
         binding.backFromScannerToChoose.setOnClickListener {
             findNavController().navigate(R.id.navigation_choose_method)
         }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
-        qrCodeView = QrCodeView(requireContext())
-
-        requireActivity().addContentView(qrCodeView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
 
         if (hasCameraPermission()) {
             startCamera()
@@ -93,9 +85,8 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                         cameraExecutor,
                         QrCodeManager(
                             requireContext(),
-                            qrCodeView,
-                            binding.cameraView.width.toFloat(),
-                            binding.cameraView.height.toFloat()
+                            findNavController(),
+                            mainViewModel
                         )
                     )
                 }

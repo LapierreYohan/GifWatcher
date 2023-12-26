@@ -1,6 +1,7 @@
 package com.example.gifs_watcher.models.maps
 
 import com.example.gifs_watcher.models.Gif
+import com.example.gifs_watcher.models.Media
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.models.maps.models.GifMap
 
@@ -23,6 +24,33 @@ object GifMapper {
 
             bgColor = gif.bgColor,
             created = gif.created,
+        )
+    }
+
+    fun reverseMap(gifMap: GifMap): Results {
+        return Results(
+            id = gifMap.id,
+            contentDescription = gifMap.content_description,
+            contentRating = gifMap.content_rating,
+
+            media = arrayListOf(
+                Media(
+                    gif = Gif(
+                        preview = gifMap.preview,
+                        url = gifMap.url,
+                        dims = arrayListOf(gifMap.width!!, gifMap.height!!),
+                        duration = gifMap.duration,
+                        size = gifMap.size
+                    ),
+                    tinygif = Gif(
+                        url = gifMap.tiny_url,
+                        preview = gifMap.tiny_preview
+                    )
+                )
+            ),
+
+            bgColor = gifMap.bgColor,
+            created = gifMap.created
         )
     }
 }

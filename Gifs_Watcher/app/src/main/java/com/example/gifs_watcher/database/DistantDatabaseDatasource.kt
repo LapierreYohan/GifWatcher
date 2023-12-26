@@ -111,4 +111,10 @@ object DistantDatabaseDatasource {
     suspend fun setAvatarGif(gif : GifMap, userId: String) {
         DistantDatabase.FirestoreService.setAvatarGif(gif, userId)
     }
+
+    suspend fun getGifById(gifId : String) : Flow<GifMap?> = flow {
+        DistantDatabase.FirestoreService.getGifById(gifId).collect{
+            emit(it)
+        }
+    }
 }

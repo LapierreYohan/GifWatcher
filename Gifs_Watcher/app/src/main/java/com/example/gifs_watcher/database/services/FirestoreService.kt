@@ -146,7 +146,7 @@ class FirestoreService {
         }
     }
 
-    fun insertGif(gif: GifMap) {
+    suspend fun insertGif(gif: GifMap) {
         try {
             firestore.collection("gifs").document(gif.id!!).set(gif)
         } catch (e: Exception) {
@@ -155,7 +155,7 @@ class FirestoreService {
         }
     }
 
-    fun checkLikedGifAvailable(gifId: String, userId: String): Flow<Boolean> = flow {
+    suspend fun checkLikedGifAvailable(gifId: String, userId: String): Flow<Boolean> = flow {
         try {
             val fields = listOf("likedGifs", "dislikedGifs", "starredGifs")
 
@@ -184,7 +184,7 @@ class FirestoreService {
         }
     }
 
-    fun insertLikedGif(gif: GifMap, userId: String, field : String) : Flow<Boolean> = flow {
+    suspend fun insertLikedGif(gif: GifMap, userId: String, field : String) : Flow<Boolean> = flow {
         try {
             val result = suspendCoroutine<Boolean> { cont ->
                 firestore.collection("users")
@@ -208,7 +208,7 @@ class FirestoreService {
         }
     }
 
-    fun incrementGifLike(gif: GifMap, field : String) {
+    suspend fun incrementGifLike(gif: GifMap, field : String) {
         try {
             firestore.collection("gifs")
                 .document(gif.id!!)
@@ -219,7 +219,7 @@ class FirestoreService {
         }
     }
 
-    fun setAvatarGif(gif: GifMap,userId: String) {
+    suspend fun setAvatarGif(gif: GifMap,userId: String) {
         try {
             val updateData = mapOf(
                 "profilPicture" to gif.url,
@@ -232,6 +232,29 @@ class FirestoreService {
         } catch (e: Exception) {
             Timber.e("Firestore setAvatarGif error with gif $gif with userId $userId")
             Timber.e(e)
+        }
+    }
+
+    suspend fun getGifById(gifId: String): Flow<GifMap?> = flow {
+        try {
+            val result = suspendCoroutine<GifMap?> { cont ->
+                firestore.collection("gifs")
+                    .document(gifId)
+                    .get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        val gif = documentSnapshot.toObject(GifMap::class.java)
+                        cont.resume(gif)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore getGifById error with gifId $gifId")
+            Timber.e(e)
+            emit(null)
         }
     }
 }

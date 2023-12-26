@@ -8,11 +8,13 @@ import com.example.gifs_watcher.networks.ApiDatasource
 import com.example.gifs_watcher.models.TenorData
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.models.maps.GifMapper
 import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.CacheMode
 import com.example.gifs_watcher.utils.managers.ThemeManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 
 object GifRepository {
 
@@ -40,6 +42,9 @@ object GifRepository {
              cache.clear(CacheMode.SEARCH)
              cache.switch(CacheMode.SEARCH)
          }
+
+        Timber.e("Cache size : " + cache.size().toString())
+        Timber.e("Cache mode : " + cache.getMode().toString())
 
          if (cache.size() < 1) {
              randomData = fetchGif(context, theme)
@@ -172,5 +177,26 @@ object GifRepository {
 
     fun getSharedGif() : Flow<Results?> = flow {
         emit(cache.getSharedGif())
+    }
+
+    fun seeGif(gifId : String, gifPrinted : Results?) : Flow<Results?> = flow {
+
+        Timber.e("Mode : " + cache.getMode().toString())
+        cache.switch(CacheMode.RANDOM)
+        var listOfGifs = cache.get()
+        listOfGifs.add(0, gifPrinted)
+        Timber.e("listOfGifs : " + listOfGifs.toString())
+        cache.replace(listOfGifs)
+
+        Timber.e("Cache size : " + cache.size().toString())
+        Timber.e("Cache mode : " + cache.getMode().toString())
+        Timber.e("Cache See : " + cache.get().toString())
+
+        database.getGifById(gifId).collect{ gif ->
+            if (gif != null) {
+                emit(GifMapper.reverseMap(gif))
+            }
+            emit(null)
+        }
     }
 }

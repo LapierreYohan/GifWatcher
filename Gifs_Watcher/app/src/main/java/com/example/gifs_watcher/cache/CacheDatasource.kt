@@ -24,11 +24,9 @@ object CacheDatasource {
 
     fun replace(tenorData : ArrayList<Results?>) : Unit {
         if (this.mode == CacheMode.RANDOM) {
-            this.randomData.clear()
-            this.randomData.addAll(tenorData)
+            this.randomData = tenorData
         } else if (this.mode == CacheMode.SEARCH) {
-            this.searchData.clear()
-            this.searchData.addAll(tenorData)
+            this.searchData = tenorData
         }
     }
 

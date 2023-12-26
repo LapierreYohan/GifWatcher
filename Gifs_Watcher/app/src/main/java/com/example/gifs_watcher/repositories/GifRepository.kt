@@ -28,7 +28,7 @@ object GifRepository {
 
     private val themeManager : ThemeManager = ThemeManager
 
-    fun getRandomGif(context: Context, theme: String = "") : Flow<Results?> = flow {
+    suspend fun getRandomGif(context: Context, theme: String = "") : Flow<Results?> = flow {
 
          var randomData : TenorData?
 
@@ -142,7 +142,9 @@ object GifRepository {
         } else if (typeOfLikes == "dislike") {
             database.likeGif(gif, user.idUsers!!, "dislikedGifs", "dislikes")
         } else if (typeOfLikes == "star") {
-           database.likeGif(gif, user.idUsers!!, "starredGifs", "star")
+           database.likeGif(gif, user.idUsers!!, "starredGifs", "stars")
+        } else if (typeOfLikes == "share") {
+            database.likeGif(gif, user.idUsers!!, "sharedGifs", "shares")
         }
     }
 
@@ -157,5 +159,18 @@ object GifRepository {
         cache.setAuthUser(user)
 
         database.setAvatarGif(gif, user.idUsers!!)
+    }
+
+    fun setSharedGif(gif : Results) : Flow<Boolean> = flow {
+        try {
+            cache.setSharedGif(gif)
+            emit(true)
+        } catch (error : Exception) {
+            emit(false)
+        }
+    }
+
+    fun getSharedGif() : Flow<Results?> = flow {
+        emit(cache.getSharedGif())
     }
 }

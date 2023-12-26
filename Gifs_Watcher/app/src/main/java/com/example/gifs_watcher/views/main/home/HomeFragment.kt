@@ -98,7 +98,7 @@ class HomeFragment : Fragment() {
             updateMoreInfoButtonIcon(moreInfoButton)
         }
 
-        moreOptionMenu = MoreOptionMenu(requireContext(), binding.moreOptionsFloatingActionButton, mainViewModel)
+        moreOptionMenu = MoreOptionMenu(requireContext(), binding.moreOptionsFloatingActionButton, mainViewModel, findNavController())
 
 
         this.gifUi = binding.Gif

@@ -7,16 +7,18 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.navigation.NavController
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.views.main.MainViewModel
 
 
-class MoreOptionMenu(private var context: Context, anchorView: View, viewModel : MainViewModel) {
+class MoreOptionMenu(private var context: Context, anchorView: View, viewModel : MainViewModel, navController: NavController) {
 
     private val popupMenu: PopupMenu
     private var gifPrinted : Results? = null
     private val mainViewModel = viewModel
+    private val navController = navController
 
     init {
         val wrapper: Context = ContextThemeWrapper(context, R.style.PopupMenuStyle)
@@ -44,7 +46,9 @@ class MoreOptionMenu(private var context: Context, anchorView: View, viewModel :
         }
 
         when (item.itemId) {
-            R.id.menu_share -> Toast.makeText(context, "Partager sélectionné", Toast.LENGTH_SHORT).show()
+            R.id.menu_share -> {
+                mainViewModel.shareGif(gifPrinted!!, navController)
+            }
 
             R.id.menu_download -> {
                 mainViewModel.downloadGif(context, gifPrinted!!)

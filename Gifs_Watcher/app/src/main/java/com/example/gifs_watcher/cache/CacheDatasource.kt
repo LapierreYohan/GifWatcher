@@ -10,6 +10,7 @@ object CacheDatasource {
     private var searchData : ArrayList<Results?> = arrayListOf()
     private var authUser : User? = null
     private var mode : CacheMode = CacheMode.RANDOM
+    private var sharedGif : Results? = null
 
     fun size() : Int {
         if (this.mode == CacheMode.RANDOM) {
@@ -83,5 +84,13 @@ object CacheDatasource {
                 this.searchData.clear()
             }
         }
+    }
+
+    fun setSharedGif(gif : Results?) {
+        this.sharedGif = gif
+    }
+
+    fun getSharedGif() : Results? {
+        return this.sharedGif
     }
 }

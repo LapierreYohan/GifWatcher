@@ -19,7 +19,7 @@ data class GifMap(
     var bgColor : String? = null,
     var created : Double? = null,
 
-    var star : Int = 0,
+    var stars : Int = 0,
     var likes : Int = 0,
     var dislikes : Int = 0,
     var comments : Int = 0,

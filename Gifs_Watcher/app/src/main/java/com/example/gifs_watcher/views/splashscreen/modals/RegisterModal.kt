@@ -176,10 +176,6 @@ object RegisterModal : BottomSheetDialogFragment() {
                 day
         )
 
-        // Changer le texte du bouton négatif de "Cancel" à "Annuler"
-        val negativeButton: Button? = datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE)
-        negativeButton?.text = "Annuler"
-
         // Personnalisez le DatePickerDialog pour ajouter un NumberPicker pour les années
         datePickerDialog.setOnShowListener { dialog ->
             val datePicker = (dialog as DatePickerDialog).datePicker

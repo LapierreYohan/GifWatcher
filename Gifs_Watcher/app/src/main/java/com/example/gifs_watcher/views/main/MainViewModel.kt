@@ -5,12 +5,17 @@ import android.app.DownloadManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.gifs_watcher.R
 import com.example.gifs_watcher.cache.CacheDatasource
 import com.example.gifs_watcher.models.Gif
 import com.example.gifs_watcher.models.Media
@@ -19,6 +24,9 @@ import com.example.gifs_watcher.repositories.GifRepository
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.maps.GifMapper
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class MainViewModel : ViewModel() {
 
@@ -39,6 +47,9 @@ class MainViewModel : ViewModel() {
     private val u11 = User("id11", "pedro", "Pedro", "pwd11", "user11@example.com", "Bio de l'utilisateur 11", "12/07/1998", "https://media1.tenor.com/m/z2FuWLCu0MsAAAAC/merry-christmas.gif")
     private val u12 = User("id12", "alex", "Alex", "pwd12", "user12@example.com", "Bio de l'utilisateur 12", "05/04/1982", "https://media.tenor.com/wz4mA2-SG8cAAAAC/luffy-one-piece.gif")
     private val u13 = User("id13", "gaetan", "Gaetan", "pwd13", "user13@example.com", "Bio de l'utilisateur 13", "22/11/1997", "https://media1.tenor.com/m/z2FuWLCu0MsAAAAC/merry-christmas.gif")
+
+    private val sharedGifLD: MutableLiveData<Results?> = MutableLiveData()
+    val sharedGif : LiveData<Results?> = sharedGifLD
 
     private val printedGifLD: MutableLiveData<Results?> = MutableLiveData()
     val printedGifA : LiveData<Results?> = printedGifLD
@@ -183,8 +194,25 @@ class MainViewModel : ViewModel() {
         downloadManager.enqueue(request)
     }
 
-    fun shareGif(context: Context, gif: Results?) {
+    fun shareGif(gif: Results, navController: NavController) {
+        viewModelScope.launch {
+            gifRepo.likeGif(GifMapper.map(gif), "share")
+            gifRepo.setSharedGif(gif).collect {
+                if (it) {
+                    navController.navigate(R.id.navigation_share_gif)
+                }
+            }
+        }
+    }
 
+    fun getShareGif() {
+        viewModelScope.launch {
+            gifRepo.getSharedGif().collect {
+                if (it != null) {
+                    sharedGifLD.postValue(it)
+                }
+            }
+        }
     }
 
     fun copyLinkGif(context: Context, gif: Results?) {
@@ -204,5 +232,33 @@ class MainViewModel : ViewModel() {
                 GifMapper.map(gif)
             )
         }
+    }
+
+    fun downloadQrCode(context: Context, bitmap: Bitmap, name : String = "qrcode_image.png") {
+        val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val image = File(imagesDir, name + ".png")
+
+        try {
+            FileOutputStream(image).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                out.flush()
+            }
+
+            val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+            mediaScanIntent.data = Uri.fromFile(image)
+            context.sendBroadcast(mediaScanIntent)
+
+            Toast.makeText(context, "Image enregistrée dans la galerie", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(context, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun copyIdGif(context: Context, id : String) {
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("id", id)
+        clipboardManager.setPrimaryClip(clipData)
+        Toast.makeText(context, "ID copié", Toast.LENGTH_SHORT).show()
     }
 }

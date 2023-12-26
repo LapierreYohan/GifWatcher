@@ -30,4 +30,9 @@
         android:name="com.example.gifs_watcher.views.main.qrcode.QrCodeScannerFragment"
         tools:layout="@layout/fragment_qr_code_scanner" />
 
+    <fragment
+        android:id="@+id/navigation_share_gif"
+        android:name="com.example.gifs_watcher.views.main.qrcode.ShareGifFragment"
+        tools:layout="@layout/fragment_share_gif" />
+
 </navigation>

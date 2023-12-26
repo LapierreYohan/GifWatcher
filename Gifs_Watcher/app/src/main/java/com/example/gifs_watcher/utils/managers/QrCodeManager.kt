@@ -15,7 +15,6 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
 class QrCodeManager (
-    private val context: Context,
     private val navController: NavController,
     private val mainViewModel: MainViewModel
 ): ImageAnalysis.Analyzer {
@@ -36,13 +35,13 @@ class QrCodeManager (
             val scanner = BarcodeScanning.getClient(options)
 
             scanner.process(inputImage)
-                .addOnSuccessListener { barcodes ->
-                    if (barcodes.isNotEmpty()) {
-                        for (barcode in barcodes) {
+                .addOnSuccessListener { qrcodes ->
+                    if (qrcodes.isNotEmpty()) {
+                        for (qrcode in qrcodes) {
                             if (mainViewModel.seeGifTraitement) {
                                 return@addOnSuccessListener
                             }
-                            val gifId = barcode.rawValue.toString()
+                            val gifId = qrcode.rawValue.toString()
                             mainViewModel.seeGif(gifId, navController)
                         }
                     }

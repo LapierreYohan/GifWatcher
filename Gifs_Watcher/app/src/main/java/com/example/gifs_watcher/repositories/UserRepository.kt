@@ -3,7 +3,7 @@ package com.example.gifs_watcher.repositories
 import com.example.gifs_watcher.cache.CacheDatasource
 import com.example.gifs_watcher.database.DistantDatabaseDatasource
 import com.example.gifs_watcher.models.User
-import com.example.gifs_watcher.models.responses.UserResponse
+import com.example.gifs_watcher.models.responses.Response
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -11,11 +11,11 @@ object UserRepository {
     private var cache : CacheDatasource = CacheDatasource
     private  var database : DistantDatabaseDatasource = DistantDatabaseDatasource
 
-    fun verifyConnectionData(id : String, password : String) : Flow<UserResponse> = flow {
+    fun verifyConnectionData(id : String, password : String) : Flow<Response<User>> = flow {
 
         database.login(id, password).collect {
             if (it.success()) {
-                cache.setAuthUser(it.user())
+                cache.setAuthUser(it.data())
             }
             emit(it)
         }
@@ -25,10 +25,10 @@ object UserRepository {
         return cache.getAuthUser()
     }
 
-    fun registerUser(userToInsert : User) : Flow<UserResponse> = flow {
+    fun registerUser(userToInsert : User) : Flow<Response<User>> = flow {
 
          database.register(userToInsert).collect {
-             cache.setAuthUser(it.user())
+             cache.setAuthUser(it.data())
              emit(it)
          }
     }

@@ -30,13 +30,31 @@ class ChooseMethodFragment : Fragment() {
         val mainViewModel_ = ViewModelProvider(this).get(MainViewModel::class.java)
         _binding = FragmentChooseMethodBinding.inflate(inflater, container, false)
 
-
         binding.backFromChooseToHome.setOnClickListener {
             findNavController().navigate(R.id.navigation_home)
         }
 
         binding.qrcodeOptionLayout.setOnClickListener {
             findNavController().navigate(R.id.navigation_qrcode_scanner)
+        }
+
+        binding.chooseCodeButton.setOnClickListener {
+            mainViewModel.seeGif(binding.qrcodeCodeTextinput.text.toString(), findNavController())
+        }
+
+        mainViewModel.gifResponse.observe(viewLifecycleOwner) {
+            if (it.failed()) {
+                binding.qrcodeCodeTextinput.setText("")
+                binding.qrcodeCodeTextinputLayout.error = null
+
+                it.error().forEach { gifError ->
+                    binding.qrcodeCodeTextinputLayout.error = gifError?.message
+                    binding.qrcodeCodeTextinput.setError(gifError?.message, null)
+                }
+            } else {
+                binding.qrcodeCodeTextinput.setText("")
+                binding.qrcodeCodeTextinputLayout.error = null
+            }
         }
 
         val root: View = binding.root

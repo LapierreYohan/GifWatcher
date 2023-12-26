@@ -9,9 +9,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.models.User
-import com.example.gifs_watcher.utils.enums.Friend_PopUp_type
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class Add_friends_popup(): DialogFragment() {

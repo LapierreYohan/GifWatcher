@@ -17,7 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
-import com.example.gifs_watcher.utils.enums.Friend_PopUp_type
+import com.example.gifs_watcher.utils.enums.FriendPopUpType
 import com.example.gifs_watcher.views.main.friends.popUp.Friends_popup
 
 
@@ -46,11 +46,11 @@ class PendingRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapte
             Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
         }
         holder.actionValide.setOnClickListener {
-            val showPopUp = Friends_popup(item!!, Friend_PopUp_type.accept_pending, "Accepter ${item?.username}", "Voulez vous vraiment accepter ${item?.username} ?")
+            val showPopUp = Friends_popup(item!!, FriendPopUpType.accept_pending, "Accepter ${item?.username}", "Voulez vous vraiment accepter ${item?.username} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.actionDelete.setOnClickListener {
-            val showPopUp = Friends_popup(item!!, Friend_PopUp_type.refuse_pending, "Rejeter ${item?.username}", "Voulez vous vraiment rejeter la demande d'amis de ${item?.username} ?")
+            val showPopUp = Friends_popup(item!!, FriendPopUpType.refuse_pending, "Rejeter ${item?.username}", "Voulez vous vraiment rejeter la demande d'amis de ${item?.username} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.textView.text = item?.displayname

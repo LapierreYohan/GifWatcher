@@ -18,12 +18,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.cache.CacheDatasource
-import com.example.gifs_watcher.models.Gif
-import com.example.gifs_watcher.models.Media
 import com.example.gifs_watcher.models.Results
+import com.example.gifs_watcher.models.responses.Response
 import com.example.gifs_watcher.repositories.GifRepository
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.maps.GifMapper
+import com.example.gifs_watcher.utils.enums.GifErrors
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -48,6 +48,9 @@ class MainViewModel : ViewModel() {
     private val u11 = User("id11", "pedro", "Pedro", "pwd11", "user11@example.com", "Bio de l'utilisateur 11", "12/07/1998", "https://media1.tenor.com/m/z2FuWLCu0MsAAAAC/merry-christmas.gif")
     private val u12 = User("id12", "alex", "Alex", "pwd12", "user12@example.com", "Bio de l'utilisateur 12", "05/04/1982", "https://media.tenor.com/wz4mA2-SG8cAAAAC/luffy-one-piece.gif")
     private val u13 = User("id13", "gaetan", "Gaetan", "pwd13", "user13@example.com", "Bio de l'utilisateur 13", "22/11/1997", "https://media1.tenor.com/m/z2FuWLCu0MsAAAAC/merry-christmas.gif")
+
+    private val gifResponseLD: MutableLiveData<Response<Results>> = MutableLiveData()
+    val gifResponse : LiveData<Response<Results>> = gifResponseLD
 
     private val sharedGifLD: MutableLiveData<Results?> = MutableLiveData()
     val sharedGif : LiveData<Results?> = sharedGifLD
@@ -267,13 +270,36 @@ class MainViewModel : ViewModel() {
 
     fun seeGif(gifId : String, navController: NavController) {
         seeGifTraitement = true
+
+        var response = Response<Results>()
+
+        if (gifId.isEmpty()) {
+            response.addError(GifErrors.GIF_IS_EMPTY)
+            gifResponseLD.postValue(response)
+            seeGifTraitement = false
+            return
+        }
+
+        if (!gifId.matches(Regex("[0-9]+"))) {
+            response.addError(GifErrors.GIF_CONTAINS_EXCEPTED_CHARACTERS)
+            gifResponseLD.postValue(response)
+            seeGifTraitement = false
+            return
+        }
+
         viewModelScope.launch {
             gifRepo.seeGif(gifId, printedGif).collect {
                 if (it != null) {
                     Log.d("Gif", it.toString())
                     printedGif = it
                     printedGifLD.postValue(it)
+                    response.addData(it)
+                    gifResponseLD.postValue(response)
                     navController.navigate(R.id.navigation_home)
+                    seeGifTraitement = false
+                } else {
+                    response.addError(GifErrors.GIF_NOT_FOUND)
+                    gifResponseLD.postValue(response)
                     seeGifTraitement = false
                 }
             }

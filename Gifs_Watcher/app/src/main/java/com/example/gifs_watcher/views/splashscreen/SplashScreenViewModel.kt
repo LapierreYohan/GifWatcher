@@ -5,16 +5,14 @@ import android.os.Build
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.repositories.UserRepository
 import com.example.gifs_watcher.utils.enums.UserErrors
-import com.example.gifs_watcher.models.responses.UserResponse
+import com.example.gifs_watcher.models.responses.Response
 import com.example.gifs_watcher.repositories.GifRepository
-import com.example.gifs_watcher.views.main.MainViewModel
 import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -26,11 +24,11 @@ class SplashScreenViewModel() : ViewModel() {
     private var userRepo : UserRepository = UserRepository
     private var gifRepo : GifRepository = GifRepository
 
-    private val _loggedLiveData: MutableLiveData<UserResponse> = MutableLiveData()
-    val loggedLiveData : LiveData<UserResponse> = _loggedLiveData
+    private val _loggedLiveData: MutableLiveData<Response<User>> = MutableLiveData()
+    val loggedLiveData : LiveData<Response<User>> = _loggedLiveData
 
-    private val _signinLiveData: MutableLiveData<UserResponse> = MutableLiveData()
-    val signinLiveData : LiveData<UserResponse> = _signinLiveData
+    private val _signinLiveData: MutableLiveData<Response<User>> = MutableLiveData()
+    val signinLiveData : LiveData<Response<User>> = _signinLiveData
 
     private fun isPasswordValid(password: String): Boolean {
         return password.length >= 6
@@ -38,7 +36,7 @@ class SplashScreenViewModel() : ViewModel() {
 
     fun login(id : String, password : String) : Unit {
 
-        var response = UserResponse()
+        var response = Response<User>()
 
         if (id.isBlank()) {
             response.addError(UserErrors.ID_EMPTY)
@@ -62,7 +60,7 @@ class SplashScreenViewModel() : ViewModel() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun register(username : String, password : String, confirmPassword : String, mail : String, birthdate : String) : Unit {
 
-        var response = UserResponse()
+        var response = Response<User>()
         var convertedBirthdate = convertDateFormat(birthdate)
 
         if (username.isBlank()) {

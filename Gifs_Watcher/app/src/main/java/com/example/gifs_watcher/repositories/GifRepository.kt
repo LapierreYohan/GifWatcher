@@ -18,7 +18,7 @@ import timber.log.Timber
 
 object GifRepository {
 
-    val LIMIT = "15"
+    val LIMIT = "20"
     val FILTER = "high"
     val LANG = "fr_FR"
     val MEDIA_FILTER = "minimal"

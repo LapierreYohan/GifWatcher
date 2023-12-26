@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -15,12 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gifs_watcher.databinding.FragmentFriendsBinding
 import com.example.gifs_watcher.views.main.MainViewModel
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.utils.enums.Friend_PopUp_type
 import com.example.gifs_watcher.views.main.friends.adapters.FriendsAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.PendingRequesteAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.SentRequesteAdapter
 import com.example.gifs_watcher.views.main.friends.popUp.Add_friends_popup
-import com.example.gifs_watcher.views.main.friends.popUp.Friends_popup
 
 class FriendsFragment : Fragment() {
 

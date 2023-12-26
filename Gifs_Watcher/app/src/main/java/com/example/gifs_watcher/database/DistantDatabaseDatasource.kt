@@ -3,22 +3,21 @@ package com.example.gifs_watcher.database
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.UserErrors
-import com.example.gifs_watcher.models.responses.UserResponse
+import com.example.gifs_watcher.models.responses.Response
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 object DistantDatabaseDatasource {
-    suspend fun login(id : String, password : String) : Flow<UserResponse> = flow {
+    suspend fun login(id : String, password : String) : Flow<Response<User>> = flow {
 
-        var response = UserResponse()
+        var response = Response<User>()
         try {
             DistantDatabase.FirestoreService.getUserByUsernameOrEmail(id).collect{
                 if (it != null) {
                     DistantDatabase.authService.login(it.mail!!, password).collect{ firebaseUser ->
                         if (firebaseUser != null) {
-                            response.addUser(it)
+                            response.addData(it)
                             emit(response)
                         } else {
                             response.addError(UserErrors.ID_OR_PASSWORD_INVALID)
@@ -37,9 +36,9 @@ object DistantDatabaseDatasource {
 
     }
 
-    suspend fun register(userToInsert : User) : Flow<UserResponse> = flow {
+    suspend fun register(userToInsert : User) : Flow<Response<User>> = flow {
 
-        var response = UserResponse()
+        var response = Response<User>()
         var uid: String? = null
 
         try {
@@ -53,7 +52,7 @@ object DistantDatabaseDatasource {
                     return@collect
                 }
 
-                response.addUser(userToInsert)
+                response.addData(userToInsert)
 
                 DistantDatabase.FirestoreService.createUser(userToInsert).collect{ storeInsert ->
                     if (storeInsert) {

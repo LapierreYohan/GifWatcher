@@ -75,7 +75,6 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
                 }
 
-
             // Configurer l'analyseur de QR Code
             val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
@@ -84,7 +83,6 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                     it.setAnalyzer(
                         cameraExecutor,
                         QrCodeManager(
-                            requireContext(),
                             findNavController(),
                             mainViewModel
                         )

@@ -10,12 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
-import com.example.gifs_watcher.utils.enums.Friend_PopUp_type
+import com.example.gifs_watcher.utils.enums.FriendPopUpType
 
 class Friends_popup(): DialogFragment() {
 
     private lateinit var user : User
-    private lateinit var type : Friend_PopUp_type
+    private lateinit var type : FriendPopUpType
     private lateinit var title : String
     private lateinit var desc : String
 
@@ -36,7 +36,7 @@ class Friends_popup(): DialogFragment() {
         descTV.text = desc
 
         when(type) {
-            Friend_PopUp_type.accept_pending -> {
+            FriendPopUpType.accept_pending -> {
                 btnLeftTV.text = "Annuler"
                 btnRightTV.text = "Accepter"
 
@@ -49,7 +49,7 @@ class Friends_popup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Accepter", Toast.LENGTH_SHORT).show()
                 }
             }
-            Friend_PopUp_type.refuse_pending -> {
+            FriendPopUpType.refuse_pending -> {
                 btnLeftTV.text = "Annuler"
                 btnRightTV.text = "Rejeter"
 
@@ -62,7 +62,7 @@ class Friends_popup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Rejeter", Toast.LENGTH_SHORT).show()
                 }
             }
-            Friend_PopUp_type.delete_friend -> {
+            FriendPopUpType.delete_friend -> {
                 btnLeftTV.text = "Annuler"
                 btnRightTV.text = "Supprimer"
 
@@ -75,7 +75,7 @@ class Friends_popup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Supprimer", Toast.LENGTH_SHORT).show()
                 }
             }
-            Friend_PopUp_type.delete_sent -> {
+            FriendPopUpType.delete_sent -> {
                 btnLeftTV.text = "Annuler"
                 btnRightTV.text = "Supprimer"
 
@@ -89,7 +89,7 @@ class Friends_popup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Supprimer", Toast.LENGTH_SHORT).show()
                 }
             }
-            Friend_PopUp_type.add_friend -> {
+            FriendPopUpType.add_friend -> {
                 btnLeftTV.text = "Annuler"
                 btnRightTV.text = "Ajouter"
 
@@ -115,7 +115,7 @@ class Friends_popup(): DialogFragment() {
 
     }
 
-    constructor(user : User, type: Friend_PopUp_type, title: String = "", desc: String = "") : this(){
+    constructor(user : User, type: FriendPopUpType, title: String = "", desc: String = "") : this(){
         this.user = user
         this.type = type
         this.title = title
@@ -135,7 +135,7 @@ class Friends_popup(): DialogFragment() {
         this.desc = msg
     }
 
-    fun setType(type : Friend_PopUp_type){
+    fun setType(type : FriendPopUpType){
         this.type = type
     }
 

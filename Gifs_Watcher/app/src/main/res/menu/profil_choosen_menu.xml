@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/menu_likes"
+            android:title="Likes" />
+        <item
+            android:id="@+id/menu_stars"
+            android:title="Stars"/>
+        <item
+            android:id="@+id/menu_shares"
+            android:title="Shares" />
+    </menu>

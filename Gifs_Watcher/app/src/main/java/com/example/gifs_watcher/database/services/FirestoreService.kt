@@ -191,7 +191,7 @@ class FirestoreService {
                     .document(userId)
                     .collection(field)
                     .document(gif.id!!)
-                    .set(mapOf("url" to gif.url, "id" to gif.id))
+                    .set(mapOf("id" to gif.id, "content_description" to gif.content_description, "preview" to gif.preview))
                     .addOnSuccessListener {
                         cont.resume(true)
                     }
@@ -255,6 +255,34 @@ class FirestoreService {
             Timber.e("Firestore getGifById error with gifId $gifId")
             Timber.e(e)
             emit(null)
+        }
+    }
+
+    suspend fun getLikedGifs(userId: String, type: String): Flow<List<GifMap>> = flow {
+        try {
+            val result = suspendCoroutine<List<GifMap>> { cont ->
+                firestore.collection("users")
+                    .document(userId)
+                    .collection(type)
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        val gifList = mutableListOf<GifMap>()
+                        for (document in querySnapshot.documents) {
+                            val gif = document.toObject(GifMap::class.java)
+                            gif?.let { gifList.add(it) }
+                        }
+                        cont.resume(gifList)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore getLikedGifs error with userId $userId")
+            Timber.e(e)
+            emit(emptyList())
         }
     }
 }

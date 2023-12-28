@@ -43,9 +43,6 @@ object GifRepository {
              cache.switch(CacheMode.SEARCH)
          }
 
-        Timber.e("Cache size : " + cache.size().toString())
-        Timber.e("Cache mode : " + cache.getMode().toString())
-
          if (cache.size() < 1) {
              randomData = fetchGif(context, theme)
 
@@ -130,7 +127,11 @@ object GifRepository {
         }
     }
 
-    suspend fun likeGif(gif : GifMap, type : String = "like") {
+    suspend fun likeGif(gif : GifMap?, type : String = "like") {
+
+        if (gif == null) {
+            return
+        }
 
         // Inserer le gif dans la base de données
         database.insertGif(gif)
@@ -153,7 +154,11 @@ object GifRepository {
         }
     }
 
-    suspend fun setAvatarGif(gif : GifMap) {
+    suspend fun setAvatarGif(gif : GifMap?) {
+
+        if (gif == null) {
+            return
+        }
 
         var user : User
         user = cache.getAuthUser() ?: User()
@@ -181,22 +186,29 @@ object GifRepository {
 
     fun seeGif(gifId : String, gifPrinted : Results?) : Flow<Results?> = flow {
 
-        Timber.e("Mode : " + cache.getMode().toString())
         cache.switch(CacheMode.RANDOM)
         var listOfGifs = cache.get()
         listOfGifs.add(0, gifPrinted)
-        Timber.e("listOfGifs : " + listOfGifs.toString())
         cache.replace(listOfGifs)
-
-        Timber.e("Cache size : " + cache.size().toString())
-        Timber.e("Cache mode : " + cache.getMode().toString())
-        Timber.e("Cache See : " + cache.get().toString())
 
         database.getGifById(gifId).collect{ gif ->
             if (gif != null) {
                 emit(GifMapper.reverseMap(gif))
             }
             emit(null)
+        }
+    }
+
+    fun getLikedGifs(type: String) : Flow<ArrayList<GifMap>> = flow {
+        var listOfGifs = arrayListOf<GifMap>()
+        var user : User
+        user = cache.getAuthUser() ?: User()
+
+        database.getLikedGifs(user.idUsers!!, type).collect{ likedGifs ->
+            for (gif in likedGifs) {
+                listOfGifs.add(gif)
+            }
+            emit(listOfGifs)
         }
     }
 }

@@ -116,4 +116,10 @@ object DistantDatabaseDatasource {
             emit(it)
         }
     }
+
+    suspend fun getLikedGifs(userId : String, type : String) : Flow<List<GifMap>> = flow {
+        DistantDatabase.FirestoreService.getLikedGifs(userId, type).collect{
+            emit(it)
+        }
+    }
 }

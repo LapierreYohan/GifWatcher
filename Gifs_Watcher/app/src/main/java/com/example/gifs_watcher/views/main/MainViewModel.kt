@@ -23,6 +23,7 @@ import com.example.gifs_watcher.models.responses.Response
 import com.example.gifs_watcher.repositories.GifRepository
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.maps.GifMapper
+import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.GifErrors
 import kotlinx.coroutines.launch
 import java.io.File
@@ -67,8 +68,14 @@ class MainViewModel : ViewModel() {
     private val sentFriends : MutableLiveData<ArrayList<User?>> = MutableLiveData(arrayListOf())
     val sents : LiveData<ArrayList<User?>> = sentFriends
 
-    private val likesGif : MutableLiveData<ArrayList<Results?>> = MutableLiveData(arrayListOf())
-    val likes : LiveData<ArrayList<Results?>> = likesGif
+    private val likesGif : MutableLiveData<ArrayList<GifMap?>> = MutableLiveData(arrayListOf())
+    val likes : LiveData<ArrayList<GifMap?>> = likesGif
+
+    private val starsGif : MutableLiveData<ArrayList<GifMap?>> = MutableLiveData(arrayListOf())
+    val stars : LiveData<ArrayList<GifMap?>> = starsGif
+
+    private val sharesGif : MutableLiveData<ArrayList<GifMap?>> = MutableLiveData(arrayListOf())
+    val shares : LiveData<ArrayList<GifMap?>> = sharesGif
 
     var seeGifTraitement : Boolean = false
 
@@ -85,6 +92,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun likeGif() {
+        if (printedGif == null) {
+            return
+        }
+
         viewModelScope.launch {
             gifRepo.likeGif(
                 GifMapper.map(printedGif!!),
@@ -159,18 +170,37 @@ class MainViewModel : ViewModel() {
         sentFriends.value?.add(user)
     }
 
-    fun getLikesProfil(context: Context) {
+    fun getLikesProfil() {
         likesGif.value?.clear()
         viewModelScope.launch {
-            gifRepo.getRandomGif(context)
-                .collect {
-                    addLikes(it)
-                }
+            gifRepo.getLikedGifs("likedGifs").collect {
+                likesGif.value?.clear()
+                likesGif.value?.addAll(it)
+                likesGif.postValue(likesGif.value)
+            }
         }
     }
 
-    fun addLikes(like : Results?) {
-        likesGif.value?.add(like)
+    fun getStarsProfil() {
+        starsGif.value?.clear()
+        viewModelScope.launch {
+            gifRepo.getLikedGifs("starredGifs").collect {
+                starsGif.value?.clear()
+                starsGif.value?.addAll(it)
+                starsGif.postValue(starsGif.value)
+            }
+        }
+    }
+
+    fun getSharesProfil() {
+        sharesGif.value?.clear()
+        viewModelScope.launch {
+            gifRepo.getLikedGifs("sharedGifs").collect {
+                sharesGif.value?.clear()
+                sharesGif.value?.addAll(it)
+                sharesGif.postValue(sharesGif.value)
+            }
+        }
     }
 
     fun getProfil() : User? {
@@ -179,7 +209,7 @@ class MainViewModel : ViewModel() {
 
     fun downloadGif(context: Context, gif: Results?) {
 
-        var gifData = GifMapper.map(gif!!)
+        var gifData = GifMapper.map(gif!!) ?: return
 
         val maxCharCount = 30
 
@@ -223,7 +253,7 @@ class MainViewModel : ViewModel() {
 
     fun copyLinkGif(context: Context, gif: Results?) {
 
-        var gifData = GifMapper.map(gif!!)
+        val gifData = GifMapper.map(gif!!) ?: return
 
         gif.let {
             val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -290,7 +320,6 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             gifRepo.seeGif(gifId, printedGif).collect {
                 if (it != null) {
-                    Log.d("Gif", it.toString())
                     printedGif = it
                     printedGifLD.postValue(it)
                     response.addData(it)

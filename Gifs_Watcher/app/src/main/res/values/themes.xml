@@ -88,4 +88,8 @@
         <item name="android:textColor">@color/md_theme_dark_onSurface</item>
     </style>
 
+    <style name="BottomNavigationTextStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

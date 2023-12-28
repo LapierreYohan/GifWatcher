@@ -1,11 +1,16 @@
 package com.example.gifs_watcher.views.main.profil.menu
 
 import android.content.Context
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.views.main.MainViewModel
@@ -33,11 +38,15 @@ class ParameterMenu(private var context: Context, anchorView: View, viewModel : 
     }
 
     private fun handleOptionSelection(item: MenuItem) {
-
         when (item.itemId) {
-            R.id.menu_parameters -> Toast.makeText(context, "Paramètres sélectionné", Toast.LENGTH_SHORT).show()
-            R.id.menu_picture -> Toast.makeText(context, "Changer la photo de profil", Toast.LENGTH_SHORT).show()
-            R.id.menu_profil -> Toast.makeText(context, "Changer le nom d'utilisateur", Toast.LENGTH_SHORT).show()
+            R.id.menu_parameters -> showToast("Paramètres sélectionné")
+            R.id.menu_picture -> showToast("Changer la photo de profil")
+            R.id.menu_profil -> showToast("Changer le nom d'utilisateur")
+            R.id.menu_sign_out -> showToast("Sign out")
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

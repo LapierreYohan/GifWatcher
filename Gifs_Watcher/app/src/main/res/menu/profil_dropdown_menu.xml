@@ -12,4 +12,9 @@
         android:id="@+id/menu_profil"
         android:title="Modify profil"
         />
+    <item
+        android:id="@+id/menu_sign_out"
+        android:title="Sign out"
+        android:checked="true"
+    />
 </menu>

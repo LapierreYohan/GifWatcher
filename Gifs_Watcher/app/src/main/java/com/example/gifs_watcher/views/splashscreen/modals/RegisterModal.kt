@@ -199,14 +199,26 @@ object RegisterModal : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // Définir un background transparent
-        var dialog : BottomSheetDialog
-        dialog = context?.let {
+        val dialog = context?.let {
             BottomSheetDialog(
                 it,
                 R.style.MyTransparentBottomSheetDialogTheme
             )
-        }!!
+        } ?: super.onCreateDialog(savedInstanceState)
+
+        // Animation lors du show
+        dialog.setOnShowListener { dialogInterface ->
+            val bottomSheetDialog = dialogInterface as BottomSheetDialog
+            val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+            bottomSheet?.let {
+                val behavior = BottomSheetBehavior.from(it)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior.peekHeight = 0
+                it.translationY = 1500f // ajustez la valeur selon votre besoin
+                it.animate().translationY(0f).setDuration(500).start()
+            }
+        }
 
         return dialog
     }

@@ -107,8 +107,9 @@ dependencies {
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
 
-    // LottieAnimation
+    // Animations
     implementation ("com.airbnb.android:lottie:3.4.0")
+    implementation("com.daimajia.androidanimations:library:2.3@aar")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

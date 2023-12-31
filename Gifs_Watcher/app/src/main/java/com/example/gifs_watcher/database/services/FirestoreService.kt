@@ -4,6 +4,7 @@ import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.maps.models.GifMap
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
@@ -191,7 +192,7 @@ class FirestoreService {
                     .document(userId)
                     .collection(field)
                     .document(gif.id!!)
-                    .set(mapOf("id" to gif.id, "content_description" to gif.content_description, "preview" to gif.preview))
+                    .set(mapOf("id" to gif.id, "content_description" to gif.content_description, "preview" to gif.preview, "timestamp" to FieldValue.serverTimestamp()))
                     .addOnSuccessListener {
                         cont.resume(true)
                     }
@@ -264,6 +265,7 @@ class FirestoreService {
                 firestore.collection("users")
                     .document(userId)
                     .collection(type)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .addOnSuccessListener { querySnapshot ->
                         val gifList = mutableListOf<GifMap>()

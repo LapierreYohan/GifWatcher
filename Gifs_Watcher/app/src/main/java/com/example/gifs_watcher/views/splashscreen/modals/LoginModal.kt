@@ -1,9 +1,12 @@
 package com.example.gifs_watcher.views.splashscreen.modals
 
+
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +15,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.views.splashscreen.SplashScreenViewModel
@@ -22,7 +27,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-
+@SuppressLint("StaticFieldLeak")
 object LoginModal : BottomSheetDialogFragment() {
 
     const val TAG = "ModalLogin"
@@ -33,8 +38,23 @@ object LoginModal : BottomSheetDialogFragment() {
     private lateinit var idInputLayout : TextInputLayout
     private lateinit var passwordInputLayout : TextInputLayout
 
+    private lateinit var googleSignInButton : ImageView
+    private lateinit var facebookSignInButton : ImageView
+    private lateinit var appleSignInButton : ImageView
+
+    private lateinit var title : TextView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.modal_fragment_login ,container,false)
+
+        googleSignInButton = view.findViewById(R.id.login_google_signin)
+        facebookSignInButton = view.findViewById(R.id.login_facebook_signin)
+        appleSignInButton = view.findViewById(R.id.login_apple_signin)
+        title = view.findViewById(R.id.login_title)
+
+        googleSignInButton.visibility = View.INVISIBLE
+        facebookSignInButton.visibility = View.INVISIBLE
+        appleSignInButton.visibility = View.INVISIBLE
 
         // Ajout d'un moyen de register un compte
         val register : TextView = view.findViewById(R.id.login_register)
@@ -113,14 +133,30 @@ object LoginModal : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // Définir un background transparent
-        var dialog : BottomSheetDialog
-        dialog = context?.let {
-           BottomSheetDialog(
+        val dialog = context?.let {
+            BottomSheetDialog(
                 it,
                 R.style.MyTransparentBottomSheetDialogTheme
             )
-        }!!
+        } ?: super.onCreateDialog(savedInstanceState)
+
+        // Animation lors du show
+        dialog.setOnShowListener { dialogInterface ->
+            val bottomSheetDialog = dialogInterface as BottomSheetDialog
+            val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+            bottomSheet?.let {
+                val behavior = BottomSheetBehavior.from(it)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior.peekHeight = 0
+                it.translationY = 1500f // ajustez la valeur selon votre besoin
+                it.animate().translationY(0f).setDuration(500).start()
+
+                Handler().postDelayed({
+                    animateSignInButtons(it)
+                }, 500)
+            }
+        }
 
         return dialog
     }
@@ -185,5 +221,39 @@ object LoginModal : BottomSheetDialogFragment() {
         this.dismiss()
         startActivity(intent)
         activity?.finish()
+    }
+
+    private fun animateSignInButtons(view: View) {
+
+        val delayBetweenAnimations = 200L
+
+        YoYo.with(Techniques.Tada)
+            .duration(1000)
+            .playOn(title)
+
+        YoYo.with(Techniques.SlideInUp)
+            .duration(500)
+            .onStart {
+                googleSignInButton.visibility = View.VISIBLE
+            }
+            .playOn(googleSignInButton)
+
+        Handler().postDelayed({
+            YoYo.with(Techniques.SlideInUp)
+                .duration(500)
+                .onStart {
+                    facebookSignInButton.visibility = View.VISIBLE
+                }
+                .playOn(facebookSignInButton)
+        }, delayBetweenAnimations)
+
+        Handler().postDelayed({
+            YoYo.with(Techniques.SlideInUp)
+                .duration(500)
+                .onStart {
+                    appleSignInButton.visibility = View.VISIBLE
+                }
+                .playOn(appleSignInButton)
+        }, delayBetweenAnimations * 2)
     }
 }

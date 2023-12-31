@@ -208,8 +208,6 @@ object GifRepository {
             for (gif in likedGifs) {
                 listOfGifs.add(gif)
             }
-
-            listOfGifs.reverse()
             emit(listOfGifs)
         }
     }

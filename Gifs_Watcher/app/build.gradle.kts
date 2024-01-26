@@ -16,7 +16,12 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        setProperty("archivesBaseName", "GifsWatcher-v$versionName")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildFeatures {
+            buildConfig = true
+        }
     }
 
     buildTypes {
@@ -26,6 +31,25 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+
+        debug {
+            isDebuggable = true
+        }
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("develop") {
+            dimension = "environment"
+            versionNameSuffix = "-dev"
+            buildConfigField("String", "TENOR_API_KEY", "\"AIzaSyB-2TBQ-nEu3fCtMpo9EN9mfqjb9P9A3OA\"")
+        }
+
+        create("production") {
+            dimension = "environment"
+            versionNameSuffix = "-prod"
+            buildConfigField("String", "TENOR_API_KEY", "\"AIzaSyB-2TBQ-nEu3fCtMpo9EN9mfqjb9P9A3OA\"")
         }
     }
 

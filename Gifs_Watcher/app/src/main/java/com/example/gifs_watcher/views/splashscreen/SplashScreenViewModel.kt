@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Locale
 
-class SplashScreenViewModel() : ViewModel() {
+class SplashScreenViewModel : ViewModel() {
 
     private var userRepo : UserRepository = UserRepository
     private var gifRepo : GifRepository = GifRepository
@@ -34,9 +34,9 @@ class SplashScreenViewModel() : ViewModel() {
         return password.length >= 6
     }
 
-    fun login(id : String, password : String) : Unit {
+    fun login(id : String, password : String) {
 
-        var response = Response<User>()
+        val response = Response<User>()
 
         if (id.isBlank()) {
             response.addError(UserErrors.ID_EMPTY)
@@ -58,10 +58,10 @@ class SplashScreenViewModel() : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun register(username : String, password : String, confirmPassword : String, mail : String, birthdate : String) : Unit {
+    fun register(username : String, password : String, confirmPassword : String, mail : String, birthdate : String) {
 
-        var response = Response<User>()
-        var convertedBirthdate = convertDateFormat(birthdate)
+        val response = Response<User>()
+        val convertedBirthdate = convertDateFormat(birthdate)
 
         if (username.isBlank()) {
             response.addError(UserErrors.USERNAME_IS_EMPTY)
@@ -106,12 +106,12 @@ class SplashScreenViewModel() : ViewModel() {
             response.addError(UserErrors.BIRTHDATE_NOT_VALID)
         }
 
-        var usernameRegex = Regex("^[a-zA-ZÀ-ÿ0-9_]{3,}\$")
+        val usernameRegex = Regex("^[a-zA-ZÀ-ÿ0-9_]{3,}\$")
         if (!username.matches(usernameRegex)) {
             response.addError(UserErrors.USERNAME_CONTAINS_EXCEPTED_CHARACTERS)
         }
 
-        var emailRegex = Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$")
+        val emailRegex = Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$")
         if (!mail.matches(emailRegex)) {
             response.addError(UserErrors.EMAIL_CONTAINS_EXCEPTED_CHARACTERS)
         }
@@ -157,7 +157,7 @@ class SplashScreenViewModel() : ViewModel() {
         }
     }
 
-    fun convertDateFormat(inputDate: String): String {
+    private fun convertDateFormat(inputDate: String): String {
         val inputDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val outputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 

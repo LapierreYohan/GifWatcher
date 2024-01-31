@@ -5,14 +5,12 @@ class Response<T> {
     private var error: ArrayList<BaseError?> = arrayListOf()
     private var data: T? = null
 
-    constructor() {}
-
     fun success(): Boolean {
         return error.isEmpty() && data != null
     }
 
     fun failed(): Boolean {
-        return !error.isEmpty()
+        return error.isNotEmpty()
     }
 
     fun error(): ArrayList<BaseError?> {

@@ -12,7 +12,7 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.FriendPopUpType
 
-class Friends_popup(): DialogFragment() {
+class FriendsPopup(): DialogFragment() {
 
     private lateinit var user : User
     private lateinit var type : FriendPopUpType
@@ -36,9 +36,9 @@ class Friends_popup(): DialogFragment() {
         descTV.text = desc
 
         when(type) {
-            FriendPopUpType.accept_pending -> {
-                btnLeftTV.text = "Annuler"
-                btnRightTV.text = "Accepter"
+            FriendPopUpType.ACCEPT_PENDING -> {
+                btnLeftTV.text = getString(R.string.cancel)
+                btnRightTV.text = getString(R.string.accept)
 
                 btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_primaryContainer)!!)
                 btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onPrimaryContainer)!!)
@@ -49,9 +49,9 @@ class Friends_popup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Accepter", Toast.LENGTH_SHORT).show()
                 }
             }
-            FriendPopUpType.refuse_pending -> {
-                btnLeftTV.text = "Annuler"
-                btnRightTV.text = "Rejeter"
+            FriendPopUpType.REFUSE_PENDING -> {
+                btnLeftTV.text = getString(R.string.cancel)
+                btnRightTV.text = getString(R.string.reject)
 
                 btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_errorContainer)!!)
                 btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onErrorContainer)!!)
@@ -62,9 +62,9 @@ class Friends_popup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Rejeter", Toast.LENGTH_SHORT).show()
                 }
             }
-            FriendPopUpType.delete_friend -> {
-                btnLeftTV.text = "Annuler"
-                btnRightTV.text = "Supprimer"
+            FriendPopUpType.DELETE_FRIEND -> {
+                btnLeftTV.text = getString(R.string.cancel)
+                btnRightTV.text = getString(R.string.remove)
 
                 btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_errorContainer)!!)
                 btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onErrorContainer)!!)
@@ -75,9 +75,9 @@ class Friends_popup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Supprimer", Toast.LENGTH_SHORT).show()
                 }
             }
-            FriendPopUpType.delete_sent -> {
-                btnLeftTV.text = "Annuler"
-                btnRightTV.text = "Supprimer"
+            FriendPopUpType.DELETE_SENT -> {
+                btnLeftTV.text = getString(R.string.cancel)
+                btnRightTV.text = getString(R.string.remove)
 
                 btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_errorContainer)!!)
                 btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onErrorContainer)!!)
@@ -89,9 +89,9 @@ class Friends_popup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Supprimer", Toast.LENGTH_SHORT).show()
                 }
             }
-            FriendPopUpType.add_friend -> {
-                btnLeftTV.text = "Annuler"
-                btnRightTV.text = "Ajouter"
+            FriendPopUpType.ADD_FRIEND -> {
+                btnLeftTV.text = getString(R.string.cancel)
+                btnRightTV.text = getString(R.string.add)
 
                 btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_primaryContainer)!!)
                 btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onPrimaryContainer)!!)
@@ -102,10 +102,6 @@ class Friends_popup(): DialogFragment() {
                 btnRightTV.setOnClickListener {
                     Toast.makeText(context, "Clicked: Ajouter", Toast.LENGTH_SHORT).show()
                 }
-            }
-            else -> {
-                Toast.makeText(context, "Problème de choix", Toast.LENGTH_SHORT).show()
-                dismiss()
             }
 
 
@@ -126,17 +122,4 @@ class Friends_popup(): DialogFragment() {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.TransparentDialog)
     }
-
-    fun setTitle(msg : String){
-        this.title = msg
-    }
-
-    fun setDescription(msg : String){
-        this.desc = msg
-    }
-
-    fun setType(type : FriendPopUpType){
-        this.type = type
-    }
-
 }

@@ -79,13 +79,13 @@ object ThemeManager {
 
     fun getRandomTheme(excludes : ArrayList<String>? = null): String {
 
-        if (excludes == null || excludes?.size == 0) {
+        return if (excludes == null || excludes.size == 0) {
             val randomIndex = Random.nextInt(SEARCH_TERMS.size)
-            return SEARCH_TERMS[randomIndex]
+            SEARCH_TERMS[randomIndex]
         } else {
-            val filteredSearchTerms = SEARCH_TERMS.filterNot  { it in excludes!! }
+            val filteredSearchTerms = SEARCH_TERMS.filterNot  { it in excludes }
             val randomIndex = Random.nextInt(filteredSearchTerms.size)
-            return filteredSearchTerms[randomIndex]
+            filteredSearchTerms[randomIndex]
         }
     }
 }

@@ -25,9 +25,9 @@ class ChooseMethodFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.println(Log.INFO,"debug","on create Choosen method")
+        Log.println(Log.INFO, "debug", "on create Choosen method")
 
-        val mainViewModel_ = ViewModelProvider(this).get(MainViewModel::class.java)
+        ViewModelProvider(this)[MainViewModel::class.java]
         _binding = FragmentChooseMethodBinding.inflate(inflater, container, false)
 
         binding.backFromChooseToHome.setOnClickListener {
@@ -57,8 +57,7 @@ class ChooseMethodFragment : Fragment() {
             }
         }
 
-        val root: View = binding.root
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {

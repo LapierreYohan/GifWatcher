@@ -4,13 +4,15 @@ package com.example.gifs_watcher.views.main
 import android.app.DownloadManager
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
-import android.util.Log
+import android.provider.MediaStore
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,8 +28,6 @@ import com.example.gifs_watcher.models.maps.GifMapper
 import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.GifErrors
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 
 class MainViewModel : ViewModel() {
@@ -133,7 +133,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun addFriendsUser(user : User) {
+    private fun addFriendsUser(user : User) {
         listFriend.value?.add(user)
     }
 
@@ -149,7 +149,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun addPendingFriendsUser(user : User) {
+    private fun addPendingFriendsUser(user : User) {
         pendingFriends.value?.add(user)
     }
 
@@ -166,7 +166,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun addSentFriendsUser(user : User) {
+    private fun addSentFriendsUser(user : User) {
         sentFriends.value?.add(user)
     }
 
@@ -209,14 +209,14 @@ class MainViewModel : ViewModel() {
 
     fun downloadGif(context: Context, gif: Results?) {
 
-        var gifData = GifMapper.map(gif!!) ?: return
+        val gifData = GifMapper.map(gif!!) ?: return
 
         val maxCharCount = 30
 
-        val gifName: String = if ((gifData.content_description?.length ?: 0) > maxCharCount) {
-            gifData.content_description?.substring(0, maxCharCount) + ".gif"
+        val gifName: String = if ((gifData.contentDescription?.length ?: 0) > maxCharCount) {
+            gifData.contentDescription?.substring(0, maxCharCount) + ".gif"
         } else {
-            gifData.content_description + ".gif"
+            gifData.contentDescription + ".gif"
         }
 
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
@@ -257,7 +257,7 @@ class MainViewModel : ViewModel() {
 
         gif.let {
             val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(gifData.content_description, gifData.url)
+            val clipData = ClipData.newPlainText(gifData.contentDescription, gifData.url)
             clipboardManager.setPrimaryClip(clipData)
         }
     }
@@ -270,26 +270,43 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun downloadQrCode(context: Context, bitmap: Bitmap, name : String = "qrcode_image.png") {
-        val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val image = File(imagesDir, name + ".png")
-
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun downloadQrCode(context: Context, bitmap: Bitmap, name: String = "qrcode_image.png") {
         try {
-            FileOutputStream(image).use { out ->
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-                out.flush()
+            val values = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, name)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                put(MediaStore.Images.Media.IS_PENDING, 1)
             }
 
-            val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-            mediaScanIntent.data = Uri.fromFile(image)
-            context.sendBroadcast(mediaScanIntent)
+            val resolver = context.contentResolver
+            val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
 
-            Toast.makeText(context, "Image enregistrée dans la galerie", Toast.LENGTH_SHORT).show()
+            val imageUri = resolver.insert(collection, values)
+
+            if (imageUri != null) {
+                resolver.openOutputStream(imageUri).use { out ->
+                    if (out != null) {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                    }
+                    out?.flush()
+                }
+
+                values.clear()
+                values.put(MediaStore.Images.Media.IS_PENDING, 0)
+                resolver.update(imageUri, values, null, null)
+
+                Toast.makeText(context, "Image enregistrée dans la galerie", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_SHORT).show()
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             Toast.makeText(context, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     fun copyIdGif(context: Context, id : String) {
         val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -301,7 +318,7 @@ class MainViewModel : ViewModel() {
     fun seeGif(gifId : String, navController: NavController) {
         seeGifTraitement = true
 
-        var response = Response<Results>()
+        val response = Response<Results>()
 
         if (gifId.isEmpty()) {
             response.addError(GifErrors.GIF_IS_EMPTY)

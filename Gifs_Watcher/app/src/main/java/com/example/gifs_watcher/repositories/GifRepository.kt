@@ -14,15 +14,14 @@ import com.example.gifs_watcher.utils.enums.CacheMode
 import com.example.gifs_watcher.utils.managers.ThemeManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 
 object GifRepository {
 
-    val LIMIT = "20"
-    val FILTER = "high"
-    val LANG = "fr_FR"
-    val MEDIA_FILTER = "minimal"
-    val NB_GIFS_PER_FETCH = 3
+    private const val LIMIT = "20"
+    private const val FILTER = "high"
+    private const val LANG = "fr_FR"
+    private const val MEDIA_FILTER = "minimal"
+    private const val NB_GIFS_PER_FETCH = 3
 
     private val tenorApi : ApiDatasource = ApiDatasource
     private val cache : CacheDatasource = CacheDatasource
@@ -32,7 +31,7 @@ object GifRepository {
 
     suspend fun getRandomGif(context: Context, theme: String = "") : Flow<Results?> = flow {
 
-         var randomData : TenorData?
+         val randomData : TenorData?
 
          if (theme == "") {
              cache.clear(CacheMode.SEARCH)
@@ -46,15 +45,15 @@ object GifRepository {
          if (cache.size() < 1) {
              randomData = fetchGif(context, theme)
 
-             cache.add(randomData?.results ?: arrayListOf())
+             cache.add(randomData.results)
 
          } else {
              randomData = TenorData()
              randomData.results.addAll(cache.get())
          }
         try {
-             var resultData : Results? = randomData?.results?.removeAt(0)
-             cache.replace(randomData?.results ?: arrayListOf())
+             val resultData : Results? = randomData.results.removeAt(0)
+             cache.replace(randomData.results)
 
              emit(resultData)
         } catch (error : Exception) {
@@ -62,9 +61,9 @@ object GifRepository {
         }
     }
 
-    suspend fun prepareGifs(context: Context) : Unit {
+    suspend fun prepareGifs(context: Context) {
 
-        var randomData : TenorData?
+        val randomData : TenorData?
 
         if (cache.getMode() != CacheMode.RANDOM) {
             cache.switch(CacheMode.RANDOM)
@@ -72,15 +71,15 @@ object GifRepository {
 
         if (cache.size() < 1) {
             randomData = fetchGif(context, "")
-            cache.add(randomData?.results ?: arrayListOf())
+            cache.add(randomData.results)
         }
     }
 
-    private suspend fun fetchGif(context: Context, theme: String): TenorData? {
+    private suspend fun fetchGif(context: Context, theme: String): TenorData {
 
         val randomData = TenorData()
         var currentTheme: String = theme
-        var listOfAlreadyUsedTheme = arrayListOf<String>()
+        val listOfAlreadyUsedTheme = arrayListOf<String>()
 
         if (theme != "") {
             val fetchedData = tenorApi.getTenorService().getRandomsGifs(
@@ -98,7 +97,7 @@ object GifRepository {
 
             for (i in 0 until LIMIT.toInt()) {
 
-                if (i % NB_GIFS_PER_FETCH == 0 && theme == "") {
+                if (i % NB_GIFS_PER_FETCH == 0 && theme.isBlank()) {
                     currentTheme = themeManager.getRandomTheme(listOfAlreadyUsedTheme)
                     listOfAlreadyUsedTheme.add(currentTheme)
                 }
@@ -137,20 +136,14 @@ object GifRepository {
         database.insertGif(gif)
 
         // Récuperer l'utilisateur connecté
-        var user : User
-        user = cache.getAuthUser() ?: User()
+        val user : User = cache.getAuthUser() ?: User()
 
         // Ajouter le gif à ses type de likes
-        var typeOfLikes = type.lowercase()
-
-        if (typeOfLikes == "like") {
-            database.likeGif(gif, user.idUsers!!, "likedGifs", "likes")
-        } else if (typeOfLikes == "dislike") {
-            database.likeGif(gif, user.idUsers!!, "dislikedGifs", "dislikes")
-        } else if (typeOfLikes == "star") {
-           database.likeGif(gif, user.idUsers!!, "starredGifs", "stars")
-        } else if (typeOfLikes == "share") {
-            database.likeGif(gif, user.idUsers!!, "sharedGifs", "shares")
+        when (type.lowercase()) {
+            "like" -> database.likeGif(gif, user.idUsers!!, "likedGifs", "likes")
+            "dislike" -> database.likeGif(gif, user.idUsers!!, "dislikedGifs", "dislikes")
+            "star" -> database.likeGif(gif, user.idUsers!!, "starredGifs", "stars")
+            "share" -> database.likeGif(gif, user.idUsers!!, "sharedGifs", "shares")
         }
     }
 
@@ -160,10 +153,9 @@ object GifRepository {
             return
         }
 
-        var user : User
-        user = cache.getAuthUser() ?: User()
+        val user : User = cache.getAuthUser() ?: User()
 
-        user.lowProfilPicture = gif.tiny_url
+        user.lowProfilPicture = gif.tinyUrl
         user.profilPicture = gif.url
 
         cache.setAuthUser(user)
@@ -187,7 +179,7 @@ object GifRepository {
     fun seeGif(gifId : String, gifPrinted : Results?) : Flow<Results?> = flow {
 
         cache.switch(CacheMode.RANDOM)
-        var listOfGifs = cache.get()
+        val listOfGifs = cache.get()
         listOfGifs.add(0, gifPrinted)
         cache.replace(listOfGifs)
 
@@ -200,9 +192,8 @@ object GifRepository {
     }
 
     fun getLikedGifs(type: String) : Flow<ArrayList<GifMap>> = flow {
-        var listOfGifs = arrayListOf<GifMap>()
-        var user : User
-        user = cache.getAuthUser() ?: User()
+        val listOfGifs = arrayListOf<GifMap>()
+        val user : User = cache.getAuthUser() ?: User()
 
         database.getLikedGifs(user.idUsers!!, type).collect{ likedGifs ->
             for (gif in likedGifs) {

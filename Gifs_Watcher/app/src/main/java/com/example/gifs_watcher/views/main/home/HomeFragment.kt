@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SearchView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -28,10 +26,8 @@ import com.example.gifs_watcher.databinding.FragmentHomeBinding
 import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.views.main.MainViewModel
 import com.example.gifs_watcher.views.main.home.menu.MoreOptionMenu
-import com.example.gifs_watcher.views.main.qrcode.ChooseMethodFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import jp.wasabeef.glide.transformations.BlurTransformation
-import timber.log.Timber
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -65,9 +61,9 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.println(Log.INFO,"debug","on create home")
+        Log.println(Log.INFO, "debug", "on create home")
 
-        val mainViewModel_ = ViewModelProvider(this).get(MainViewModel::class.java)
+        ViewModelProvider(this)[MainViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         this.searchBar = binding.mainSearchView
@@ -98,7 +94,12 @@ class HomeFragment : Fragment() {
             updateMoreInfoButtonIcon(moreInfoButton)
         }
 
-        moreOptionMenu = MoreOptionMenu(requireContext(), binding.moreOptionsFloatingActionButton, mainViewModel, findNavController())
+        moreOptionMenu = MoreOptionMenu(
+            requireContext(),
+            binding.moreOptionsFloatingActionButton,
+            mainViewModel,
+            findNavController()
+        )
 
 
         this.gifUi = binding.Gif
@@ -115,24 +116,35 @@ class HomeFragment : Fragment() {
                 try {
                     Glide.with(this)
                         .load(printedGif.media?.get(0)?.tinygif?.url)
-                        .transform(MultiTransformation(CenterCrop(), FitCenter(), RoundedCorners(45)))
+                        .transform(
+                            MultiTransformation(
+                                CenterCrop(),
+                                FitCenter(),
+                                RoundedCorners(45)
+                            )
+                        )
                         .into(this.gifUi)
 
                     Glide.with(this)
                         .load(printedGif.media?.get(0)?.gif?.url)
                         .apply(RequestOptions().centerCrop())
-                        .transform(MultiTransformation(BlurTransformation(25, 4), CenterCrop(), FitCenter()))
+                        .transform(
+                            MultiTransformation(
+                                BlurTransformation(25, 4),
+                                CenterCrop(),
+                                FitCenter()
+                            )
+                        )
                         .into(this.backgroundGifUi)
                 } catch (e: Exception) {
-                    Log.println(Log.ERROR,"debug","Gif create error : " + e.message)
+                    Log.println(Log.ERROR, "debug", "Gif create error : " + e.message)
                 }
             }
         }
 
         initializeButtons()
 
-        val root: View = binding.root
-        return root
+        return binding.root
     }
 
     private fun initializeButtons() {
@@ -197,7 +209,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateAdditionalInfoVisibility() {
-        var componentsArray = arrayListOf(
+        val componentsArray = arrayListOf(
             binding.alineaPicture,
             binding.iconPicture,
             binding.pictureDims,

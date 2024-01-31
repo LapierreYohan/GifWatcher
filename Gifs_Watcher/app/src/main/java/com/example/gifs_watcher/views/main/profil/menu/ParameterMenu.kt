@@ -1,23 +1,17 @@
 package com.example.gifs_watcher.views.main.profil.menu
 
 import android.content.Context
-import android.graphics.Color
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.TextView
 import android.widget.Toast
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.views.main.MainViewModel
-class ParameterMenu(private var context: Context, anchorView: View, viewModel : MainViewModel) {
+
+class ParameterMenu(private var context: Context, anchorView: View) {
 
     private val popupMenu: PopupMenu
-    private val mainViewModel = viewModel
 
     init {
         val wrapper: Context = ContextThemeWrapper(context, R.style.PopupMenuStyle)

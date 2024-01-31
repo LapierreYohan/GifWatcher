@@ -12,12 +12,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class FirestoreService {
-
-    private var firestore: FirebaseFirestore
-    constructor(firestore: FirebaseFirestore) {
-        this.firestore = firestore
-    }
+class FirestoreService(private var firestore: FirebaseFirestore) {
 
     suspend fun createUser(user: User) : Flow<Boolean> = flow {
 
@@ -29,7 +24,7 @@ class FirestoreService {
             // Image de profil par défaut
             user.profilPicture = "https://media.tenor.com/Gn82P94Ap5wAAAAd/beluga-cat.gif"
 
-            val result = suspendCoroutine<Boolean> { cont ->
+            val result = suspendCoroutine { cont ->
                 firestore.collection("users").document(user.idUsers!!).set(user)
                     .addOnSuccessListener {
                         cont.resume(true)
@@ -50,7 +45,7 @@ class FirestoreService {
     suspend fun checkUsernameAvailability(username: String): Flow<Boolean> = flow {
 
         try {
-            val result = suspendCoroutine<Boolean> { cont ->
+            val result = suspendCoroutine { cont ->
                 firestore.collection("users").whereEqualTo("username", username.lowercase()).get()
                     .addOnSuccessListener { documents ->
                         cont.resume(documents.isEmpty)
@@ -71,7 +66,7 @@ class FirestoreService {
     suspend fun checkEmailAvailability(email: String): Flow<Boolean> = flow {
 
         try {
-            val result = suspendCoroutine<Boolean> { cont ->
+            val result = suspendCoroutine { cont ->
                 firestore.collection("users").whereEqualTo("mail", email.lowercase()).get()
                     .addOnSuccessListener { documents ->
                         cont.resume(documents.isEmpty)
@@ -92,7 +87,7 @@ class FirestoreService {
     suspend fun getUserByUsernameOrEmail(id: String): Flow<User?> = flow {
         try {
             val lowerCaseId = id.lowercase()
-            val result = suspendCoroutine<User?> { cont ->
+            val result = suspendCoroutine { cont ->
                 // Vérifier si l'id correspond à un nom d'utilisateur
                 firestore.collection("users").whereEqualTo("username", lowerCaseId).get()
                     .addOnSuccessListener { documents ->
@@ -129,7 +124,7 @@ class FirestoreService {
 
     suspend fun checkGifAvailability(gifId: String): Flow<Boolean> = flow {
         try {
-            val result = suspendCoroutine<Boolean> { cont ->
+            val result = suspendCoroutine { cont ->
                 firestore.collection("gifs").document(gifId).get()
                     .addOnSuccessListener { document ->
                         cont.resume(document == null || !document.exists())
@@ -147,7 +142,7 @@ class FirestoreService {
         }
     }
 
-    suspend fun insertGif(gif: GifMap) {
+    fun insertGif(gif: GifMap) {
         try {
             firestore.collection("gifs").document(gif.id!!).set(gif)
         } catch (e: Exception) {
@@ -162,7 +157,7 @@ class FirestoreService {
 
             // Vérifier la présence dans chacun des champs
             val result = fields.any { field ->
-                suspendCoroutine<Boolean> { cont ->
+                suspendCoroutine { cont ->
                     firestore.collection("users")
                         .document(userId)
                         .collection(field)
@@ -187,12 +182,12 @@ class FirestoreService {
 
     suspend fun insertLikedGif(gif: GifMap, userId: String, field : String) : Flow<Boolean> = flow {
         try {
-            val result = suspendCoroutine<Boolean> { cont ->
+            val result = suspendCoroutine { cont ->
                 firestore.collection("users")
                     .document(userId)
                     .collection(field)
                     .document(gif.id!!)
-                    .set(mapOf("id" to gif.id, "content_description" to gif.content_description, "preview" to gif.preview, "timestamp" to FieldValue.serverTimestamp()))
+                    .set(mapOf("id" to gif.id, "content_description" to gif.contentDescription, "preview" to gif.preview, "timestamp" to FieldValue.serverTimestamp()))
                     .addOnSuccessListener {
                         cont.resume(true)
                     }
@@ -209,7 +204,7 @@ class FirestoreService {
         }
     }
 
-    suspend fun incrementGifLike(gif: GifMap, field : String) {
+    fun incrementGifLike(gif: GifMap, field : String) {
         try {
             firestore.collection("gifs")
                 .document(gif.id!!)
@@ -220,11 +215,11 @@ class FirestoreService {
         }
     }
 
-    suspend fun setAvatarGif(gif: GifMap,userId: String) {
+    fun setAvatarGif(gif: GifMap,userId: String) {
         try {
             val updateData = mapOf(
                 "profilPicture" to gif.url,
-                "lowProfilPicture" to gif.tiny_url
+                "lowProfilPicture" to gif.tinyUrl
             )
 
             firestore.collection("users")
@@ -238,7 +233,7 @@ class FirestoreService {
 
     suspend fun getGifById(gifId: String): Flow<GifMap?> = flow {
         try {
-            val result = suspendCoroutine<GifMap?> { cont ->
+            val result = suspendCoroutine { cont ->
                 firestore.collection("gifs")
                     .document(gifId)
                     .get()

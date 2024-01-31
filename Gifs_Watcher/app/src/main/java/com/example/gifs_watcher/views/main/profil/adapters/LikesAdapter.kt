@@ -12,11 +12,10 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.models.maps.models.GifMap
 
 
-class LikesAdapter(val gifs: ArrayList<GifMap?>?, val callBack : (GifMap?)-> Unit) : RecyclerView.Adapter<LikesAdapter.ItemViewHolder>() {
+class LikesAdapter(private val gifs: ArrayList<GifMap?>?) : RecyclerView.Adapter<LikesAdapter.ItemViewHolder>() {
 
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,7 +33,7 @@ class LikesAdapter(val gifs: ArrayList<GifMap?>?, val callBack : (GifMap?)-> Uni
 
         val item = gifs?.get(position)
 
-        holder.title.text = item?.content_description
+        holder.title.text = item?.contentDescription
         Glide.with(holder.itemView.context)
             .load(item?.preview)
             .apply(
@@ -49,7 +48,7 @@ class LikesAdapter(val gifs: ArrayList<GifMap?>?, val callBack : (GifMap?)-> Uni
     }
 
     override fun getItemId(p0: Int): Long {
-        TODO("Not yet implemented")
+        return p0.toLong()
     }
 
     override fun getItemCount(): Int {

@@ -3,8 +3,8 @@ package com.example.gifs_watcher.models.maps.models
 
 data class GifMap(
     var id : String? = null,
-    var content_description : String? = null,
-    var content_rating : String? = null,
+    var contentDescription : String? = null,
+    var contentRating : String? = null,
 
     var preview : String? = null,
     var url : String? = null,
@@ -13,8 +13,8 @@ data class GifMap(
     var duration: Double? = null,
     var size : Int? = null,
 
-    var tiny_url : String? = null,
-    var tiny_preview : String? = null,
+    var tinyUrl : String? = null,
+    var tinyPreview : String? = null,
 
     var bgColor : String? = null,
     var created : Double? = null,

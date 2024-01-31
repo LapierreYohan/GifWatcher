@@ -18,10 +18,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.FriendPopUpType
-import com.example.gifs_watcher.views.main.friends.popUp.Friends_popup
+import com.example.gifs_watcher.views.main.friends.popUp.FriendsPopup
 
 
-class PendingRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<PendingRequesteAdapter.ItemViewHolder>() {
+class PendingRequesteAdapter(private val users: ArrayList<User?>?) : RecyclerView.Adapter<PendingRequesteAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
@@ -41,16 +41,16 @@ class PendingRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         Log.println(Log.INFO,"debug","onBindViewHolder open" )
         val item = users?.get(position)
-        Log.println(Log.INFO,"debug","onBindViewHolder item : " + item )
+        Log.println(Log.INFO,"debug", "onBindViewHolder item : $item")
         holder.itemView.setOnClickListener {
             Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
         }
         holder.actionValide.setOnClickListener {
-            val showPopUp = Friends_popup(item!!, FriendPopUpType.accept_pending, "Accepter ${item?.username}", "Voulez vous vraiment accepter ${item?.username} ?")
+            val showPopUp = FriendsPopup(item!!, FriendPopUpType.ACCEPT_PENDING, "Accepter ${item.username}", "Voulez vous vraiment accepter ${item.username} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.actionDelete.setOnClickListener {
-            val showPopUp = Friends_popup(item!!, FriendPopUpType.refuse_pending, "Rejeter ${item?.username}", "Voulez vous vraiment rejeter la demande d'amis de ${item?.username} ?")
+            val showPopUp = FriendsPopup(item!!, FriendPopUpType.REFUSE_PENDING, "Rejeter ${item.username}", "Voulez vous vraiment rejeter la demande d'amis de ${item.username} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.textView.text = item?.displayname

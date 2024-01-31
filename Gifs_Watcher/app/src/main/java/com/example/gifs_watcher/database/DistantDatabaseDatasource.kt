@@ -4,16 +4,15 @@ import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.models.responses.Response
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 object DistantDatabaseDatasource {
     suspend fun login(id : String, password : String) : Flow<Response<User>> = flow {
 
-        var response = Response<User>()
+        val response = Response<User>()
         try {
-            DistantDatabase.FirestoreService.getUserByUsernameOrEmail(id).collect{
+            DistantDatabase.firestoreService.getUserByUsernameOrEmail(id).collect{
                 if (it != null) {
                     DistantDatabase.authService.login(it.mail!!, password).collect{ firebaseUser ->
                         if (firebaseUser != null) {
@@ -38,8 +37,8 @@ object DistantDatabaseDatasource {
 
     suspend fun register(userToInsert : User) : Flow<Response<User>> = flow {
 
-        var response = Response<User>()
-        var uid: String? = null
+        val response = Response<User>()
+        var uid: String?
 
         try {
             DistantDatabase.authService.register(userToInsert.mail!!, userToInsert.password!!).collect{
@@ -54,7 +53,7 @@ object DistantDatabaseDatasource {
 
                 response.addData(userToInsert)
 
-                DistantDatabase.FirestoreService.createUser(userToInsert).collect{ storeInsert ->
+                DistantDatabase.firestoreService.createUser(userToInsert).collect{ storeInsert ->
                     if (storeInsert) {
                         emit(response)
                     } else {
@@ -70,37 +69,33 @@ object DistantDatabaseDatasource {
     }
 
     suspend fun checkUsernameAvailability(username : String) : Flow<Boolean> = flow {
-        DistantDatabase.FirestoreService.checkUsernameAvailability(username).collect{
+        DistantDatabase.firestoreService.checkUsernameAvailability(username).collect{
             emit(it)
         }
     }
 
     suspend fun checkMailAvailability(mail : String) : Flow<Boolean> = flow {
-        DistantDatabase.FirestoreService.checkEmailAvailability(mail).collect{
+        DistantDatabase.firestoreService.checkEmailAvailability(mail).collect{
             emit(it)
         }
     }
 
-    suspend fun getAuthUser() : FirebaseUser? {
-        return DistantDatabase.authService.getAuthUser()
-     }
-
     suspend fun insertGif(gif : GifMap) {
-        DistantDatabase.FirestoreService.checkGifAvailability(gif.id!!).collect{
+        DistantDatabase.firestoreService.checkGifAvailability(gif.id!!).collect{
             if (it) {
-                DistantDatabase.FirestoreService.insertGif(gif)
+                DistantDatabase.firestoreService.insertGif(gif)
             }
         }
     }
     suspend fun likeGif(gif : GifMap, userId: String, userField : String, gifField: String) {
 
-        DistantDatabase.FirestoreService.checkLikedGifAvailable(gif.id!!, userId).collect{ used ->
+        DistantDatabase.firestoreService.checkLikedGifAvailable(gif.id!!, userId).collect{ used ->
             if (!used) {
                 // On ajoute le gif dans la liste des gifs likés de l'utilisateur
-                DistantDatabase.FirestoreService.insertLikedGif(gif, userId, userField).collect{success ->
+                DistantDatabase.firestoreService.insertLikedGif(gif, userId, userField).collect{ success ->
                     if (success) {
                         // On incrémente le nombre de like du gif dans la base de données
-                        DistantDatabase.FirestoreService.incrementGifLike(gif, gifField)
+                        DistantDatabase.firestoreService.incrementGifLike(gif, gifField)
                     }
                 }
             }
@@ -108,17 +103,17 @@ object DistantDatabaseDatasource {
     }
 
     suspend fun setAvatarGif(gif : GifMap, userId: String) {
-        DistantDatabase.FirestoreService.setAvatarGif(gif, userId)
+        DistantDatabase.firestoreService.setAvatarGif(gif, userId)
     }
 
     suspend fun getGifById(gifId : String) : Flow<GifMap?> = flow {
-        DistantDatabase.FirestoreService.getGifById(gifId).collect{
+        DistantDatabase.firestoreService.getGifById(gifId).collect{
             emit(it)
         }
     }
 
     suspend fun getLikedGifs(userId : String, type : String) : Flow<List<GifMap>> = flow {
-        DistantDatabase.FirestoreService.getLikedGifs(userId, type).collect{
+        DistantDatabase.firestoreService.getLikedGifs(userId, type).collect{
             emit(it)
         }
     }

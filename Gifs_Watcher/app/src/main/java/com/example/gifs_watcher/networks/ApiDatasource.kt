@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiDatasource {
-    val BASE_URL = "https://g.tenor.com/"
+    private const val BASE_URL = "https://g.tenor.com/"
     private lateinit var tenorService: TenorService
 
     init {

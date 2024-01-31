@@ -21,24 +21,12 @@ object UserRepository {
         }
     }
 
-    fun getAuthUser() : User? {
-        return cache.getAuthUser()
-    }
-
     fun registerUser(userToInsert : User) : Flow<Response<User>> = flow {
 
          database.register(userToInsert).collect {
              cache.setAuthUser(it.data())
              emit(it)
          }
-    }
-
-    fun logout() {
-        cache.setAuthUser(null)
-    }
-
-    fun isLogged() : Boolean {
-        return cache.getAuthUser() != null
     }
 
     fun isUsernameUsed(username : String) : Flow<Boolean> = flow {

@@ -18,10 +18,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.FriendPopUpType
-import com.example.gifs_watcher.views.main.friends.popUp.Friends_popup
+import com.example.gifs_watcher.views.main.friends.popUp.FriendsPopup
 
 
-class SentRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<SentRequesteAdapter.ItemViewHolder>() {
+class SentRequesteAdapter(private val users: ArrayList<User?>?) : RecyclerView.Adapter<SentRequesteAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
@@ -40,12 +40,12 @@ class SentRequesteAdapter(val users: ArrayList<User?>?) : RecyclerView.Adapter<S
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         Log.println(Log.INFO,"debug","onBindViewHolder open" )
         val item = users?.get(position)
-        Log.println(Log.INFO,"debug","onBindViewHolder item : " + item )
+        Log.println(Log.INFO,"debug", "onBindViewHolder item : $item")
         holder.itemView.setOnClickListener {
             Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
         }
         holder.action.setOnClickListener {
-            val showPopUp = Friends_popup(item!!, FriendPopUpType.delete_sent, "Annuler votre demande", "Voulez vous vraiment annuler votre demande d'amis envers ${item?.username} ?")
+            val showPopUp = FriendsPopup(item!!, FriendPopUpType.DELETE_SENT, "Annuler votre demande", "Voulez vous vraiment annuler votre demande d'amis envers ${item.username} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.textView.text = item?.displayname

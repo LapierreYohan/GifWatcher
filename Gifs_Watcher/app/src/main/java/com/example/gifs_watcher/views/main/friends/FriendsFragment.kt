@@ -17,7 +17,7 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.views.main.friends.adapters.FriendsAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.PendingRequesteAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.SentRequesteAdapter
-import com.example.gifs_watcher.views.main.friends.popUp.Add_friends_popup
+import com.example.gifs_watcher.views.main.friends.popUp.AddFriendsPopup
 
 class FriendsFragment : Fragment() {
 
@@ -39,7 +39,7 @@ class FriendsFragment : Fragment() {
 
         binding.addFriendButton.setOnClickListener {
             Toast.makeText(context, "Clicked: add", Toast.LENGTH_SHORT).show()
-            val showPopUp = Add_friends_popup( "Ajouter un ami")
+            val showPopUp = AddFriendsPopup( "Ajouter un ami")
             showPopUp.show((context as AppCompatActivity).supportFragmentManager, "Add_friends_popup")
 
         }
@@ -70,7 +70,7 @@ class FriendsFragment : Fragment() {
 
     }
 
-    fun setupFriendsAdapterForPendingRequest(view: View){
+    private fun setupFriendsAdapterForPendingRequest(view: View){
         val rv = view.findViewById(R.id.rv_pending_request) as RecyclerView
         mainViewModel.getPendingFriendsUsers()
         mainViewModel.pendings.observe(viewLifecycleOwner) { response ->
@@ -82,7 +82,7 @@ class FriendsFragment : Fragment() {
         }
     }
 
-    fun setupFriendsAdapterForFriendsList(view: View){
+    private fun setupFriendsAdapterForFriendsList(view: View){
         val rv = view.findViewById(R.id.rv_friends) as RecyclerView
         mainViewModel.getFriendsUsers()
         mainViewModel.friends.observe(viewLifecycleOwner) { response ->
@@ -96,7 +96,7 @@ class FriendsFragment : Fragment() {
         }
     }
 
-    fun setupFriendsAdapterForSentRequest(view: View){
+    private fun setupFriendsAdapterForSentRequest(view: View){
         val rv = view.findViewById(R.id.rv_sent_request) as RecyclerView
         mainViewModel.getSentFriendsUsers()
         mainViewModel.sents.observe(viewLifecycleOwner) { response ->

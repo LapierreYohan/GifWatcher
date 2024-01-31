@@ -9,17 +9,11 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class AuthService {
-
-    private var auth: FirebaseAuth
-
-    constructor(auth: FirebaseAuth) {
-        this.auth = auth
-    }
+class AuthService(private var auth: FirebaseAuth) {
 
     suspend fun login(email : String, password : String) : Flow<FirebaseUser?> = flow {
         try {
-            val result = suspendCoroutine<FirebaseUser?> { cont ->
+            val result = suspendCoroutine { cont ->
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnSuccessListener { authResult ->
                         cont.resume(authResult.user)
@@ -36,7 +30,7 @@ class AuthService {
     }
     suspend fun register(email : String, password : String) : Flow<String?> = flow {
         try {
-            val result = suspendCoroutine<String?> { cont ->
+            val result = suspendCoroutine { cont ->
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnSuccessListener { authResult ->
                         cont.resume(authResult.user?.uid)
@@ -50,9 +44,5 @@ class AuthService {
         } catch (e: Exception) {
             throw e
         }
-    }
-
-    suspend fun getAuthUser() : FirebaseUser? {
-        return FirebaseAuth.getInstance().currentUser
     }
 }

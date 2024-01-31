@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.gifs_watcher.R
 import com.google.android.material.textfield.TextInputLayout
 
-class Add_friends_popup(): DialogFragment() {
+class AddFriendsPopup(): DialogFragment() {
 
     private lateinit var title : String
 
@@ -30,8 +30,8 @@ class Add_friends_popup(): DialogFragment() {
 
         titleTV.text = title
 
-        btnLeftTV.text = "Annuler"
-        btnRightTV.text = "Ajouter"
+        btnLeftTV.text = getString(R.string.cancel)
+        btnRightTV.text = getString(R.string.add)
 
         btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_primaryContainer)!!)
         btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onPrimaryContainer)!!)
@@ -39,7 +39,7 @@ class Add_friends_popup(): DialogFragment() {
         btnLeftTV.setOnClickListener {
             dismiss()                }
         btnRightTV.setOnClickListener {
-            Toast.makeText(context, "Clicked: add ${inputText.getEditText()?.getText()}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Clicked: add ${inputText.editText?.text}", Toast.LENGTH_SHORT).show()
         }
 
         return view
@@ -53,10 +53,6 @@ class Add_friends_popup(): DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.TransparentDialog)
-    }
-
-    fun setTitle(msg : String){
-        this.title = msg
     }
 
 }

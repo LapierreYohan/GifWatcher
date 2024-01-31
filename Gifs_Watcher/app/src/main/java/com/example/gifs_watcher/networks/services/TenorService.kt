@@ -10,8 +10,8 @@ interface TenorService {
         @Query("key") key: String?,
         @Query("locale") locale: String?,
         @Query("limit") limit: String?,
-        @Query("contentfilter") contentfilter: String?,
-        @Query("media_filter") media_filter: String?,
+        @Query("contentfilter") contentFilter: String?,
+        @Query("media_filter") mediaFilter: String?,
         @Query("q") q: String?
     ): TenorData?
 }

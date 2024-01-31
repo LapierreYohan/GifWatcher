@@ -10,8 +10,8 @@ object GifMapper {
         try {
             return GifMap(
                 id = gif.id,
-                content_description = gif.contentDescription,
-                content_rating = gif.contentRating,
+                contentDescription = gif.contentDescription,
+                contentRating = gif.contentRating,
 
                 preview = gif.media?.get(0)?.gif?.preview,
                 url = gif.media?.get(0)?.gif?.url,
@@ -20,8 +20,8 @@ object GifMapper {
                 duration = gif.media?.get(0)?.gif?.duration,
                 size = gif.media?.get(0)?.gif?.size,
 
-                tiny_url = gif.media?.get(0)?.tinygif?.url,
-                tiny_preview = gif.media?.get(0)?.tinygif?.preview,
+                tinyUrl = gif.media?.get(0)?.tinygif?.url,
+                tinyPreview = gif.media?.get(0)?.tinygif?.preview,
 
                 bgColor = gif.bgColor,
                 created = gif.created,
@@ -34,8 +34,8 @@ object GifMapper {
     fun reverseMap(gifMap: GifMap): Results {
         return Results(
             id = gifMap.id,
-            contentDescription = gifMap.content_description,
-            contentRating = gifMap.content_rating,
+            contentDescription = gifMap.contentDescription,
+            contentRating = gifMap.contentRating,
 
             media = arrayListOf(
                 Media(
@@ -47,8 +47,8 @@ object GifMapper {
                         size = gifMap.size
                     ),
                     tinygif = Gif(
-                        url = gifMap.tiny_url,
-                        preview = gifMap.tiny_preview
+                        url = gifMap.tinyUrl,
+                        preview = gifMap.tinyPreview
                     )
                 )
             ),

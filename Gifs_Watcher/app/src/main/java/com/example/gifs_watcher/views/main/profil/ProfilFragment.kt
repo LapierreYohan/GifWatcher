@@ -12,21 +12,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.request.RequestOptions
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.cache.CacheDatasource
 import com.example.gifs_watcher.databinding.FragmentProfilBinding
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.views.main.profil.adapters.LikesAdapter
 import com.example.gifs_watcher.views.main.MainViewModel
 import com.example.gifs_watcher.views.main.profil.menu.ParameterMenu
-import jp.wasabeef.glide.transformations.BlurTransformation
-import timber.log.Timber
 
 class ProfilFragment : Fragment() {
 
@@ -56,31 +52,30 @@ class ProfilFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val mainViewModel_ =
-            ViewModelProvider(this).get(MainViewModel::class.java)
+        ViewModelProvider(this)[MainViewModel::class.java]
 
         _binding = FragmentProfilBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val ProfilUser: User? = mainViewModel.getProfil()
+        val profilUser: User? = mainViewModel.getProfil()
 
         this.profilGif = binding.profilPicture
         this.userName = binding.tvUserName
         this.bio = binding.tvBio
 
-        this.userName.setText(ProfilUser?.displayname)
+        this.userName.text = profilUser?.displayname
 
-        if (ProfilUser?.bio == null || ProfilUser.bio?.trim() == "") {
-            this.bio.setText("Pas de biographie.")
+        if (profilUser?.bio == null || profilUser.bio?.trim() == "") {
+            this.bio.text = getString(R.string.no_biography)
         } else {
-            this.bio.setText(ProfilUser.bio)
+            this.bio.text = profilUser.bio
         }
 
-        this.parameterMenu = ParameterMenu(requireContext(), binding.profilParameters, mainViewModel)
+        this.parameterMenu = ParameterMenu(requireContext(), binding.profilParameters)
 
         try {
             Glide.with(this)
-                .load(ProfilUser?.profilPicture)
+                .load(profilUser?.profilPicture)
                 .apply(RequestOptions().centerCrop())
                 .transform(
                     MultiTransformation(CenterCrop(), FitCenter())
@@ -137,9 +132,7 @@ class ProfilFragment : Fragment() {
         mainViewModel.getLikesProfil()
         mainViewModel.likes.observe(viewLifecycleOwner) { response ->
             response?.let {
-                val adapter = LikesAdapter(it){
-
-                }
+                val adapter = LikesAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }
@@ -152,9 +145,7 @@ class ProfilFragment : Fragment() {
         mainViewModel.getStarsProfil()
         mainViewModel.stars.observe(viewLifecycleOwner) { response ->
             response?.let {
-                val adapter = LikesAdapter(it){
-
-                }
+                val adapter = LikesAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }
@@ -167,9 +158,7 @@ class ProfilFragment : Fragment() {
         mainViewModel.getSharesProfil()
         mainViewModel.shares.observe(viewLifecycleOwner) { response ->
             response?.let {
-                val adapter = LikesAdapter(it){
-
-                }
+                val adapter = LikesAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }

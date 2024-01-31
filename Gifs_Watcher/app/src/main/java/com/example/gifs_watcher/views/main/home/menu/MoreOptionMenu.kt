@@ -13,12 +13,13 @@ import com.example.gifs_watcher.models.Results
 import com.example.gifs_watcher.views.main.MainViewModel
 
 
-class MoreOptionMenu(private var context: Context, anchorView: View, viewModel : MainViewModel, navController: NavController) {
+class MoreOptionMenu(private var context: Context, anchorView: View, viewModel : MainViewModel,
+                     private val navController: NavController
+) {
 
     private val popupMenu: PopupMenu
     private var gifPrinted : Results? = null
     private val mainViewModel = viewModel
-    private val navController = navController
 
     init {
         val wrapper: Context = ContextThemeWrapper(context, R.style.PopupMenuStyle)
@@ -66,9 +67,5 @@ class MoreOptionMenu(private var context: Context, anchorView: View, viewModel :
 
     fun setGifPrinted(gif : Results) {
         gifPrinted = gif
-    }
-
-    fun getGifPrinted() : Results? {
-        return gifPrinted
     }
 }

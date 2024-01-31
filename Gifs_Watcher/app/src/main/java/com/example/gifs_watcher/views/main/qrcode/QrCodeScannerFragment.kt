@@ -24,10 +24,11 @@ import pub.devrel.easypermissions.PermissionRequest
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+@Suppress("DEPRECATION")
 class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
-    private val CAMERA_REQUEST_CODE = 123
-    private val CAMERA_PERMISSION = android.Manifest.permission.CAMERA
+    private val cameraRequestCode = 123
+    private val cameraPermission = android.Manifest.permission.CAMERA
     private lateinit var cameraExecutor: ExecutorService
 
     private var _binding: FragmentQrCodeScannerBinding? = null
@@ -40,9 +41,9 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.println(Log.INFO,"debug","on create Qr code Scanner")
+        Log.println(Log.INFO, "debug", "on create Qr code Scanner")
 
-        val mainViewModel_ = ViewModelProvider(this).get(MainViewModel::class.java)
+        ViewModelProvider(this)[MainViewModel::class.java]
         _binding = FragmentQrCodeScannerBinding.inflate(inflater, container, false)
 
         binding.backFromScannerToChoose.setOnClickListener {
@@ -57,8 +58,7 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             requestCameraPermission()
         }
 
-        val root: View = binding.root
-        return root
+        return binding.root
     }
 
     private fun startCamera() {
@@ -110,12 +110,12 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
 
     private fun hasCameraPermission(): Boolean {
-        return EasyPermissions.hasPermissions(requireContext(), CAMERA_PERMISSION)
+        return EasyPermissions.hasPermissions(requireContext(), cameraPermission)
     }
 
     private fun requestCameraPermission() {
         EasyPermissions.requestPermissions(
-            PermissionRequest.Builder(this, CAMERA_REQUEST_CODE, CAMERA_PERMISSION)
+            PermissionRequest.Builder(this, cameraRequestCode, cameraPermission)
                 .setRationale("L'autorisation de la caméra est nécessaire pour scanner les QR codes.")
                 .setPositiveButtonText("Autoriser")
                 .setNegativeButtonText("Refuser")

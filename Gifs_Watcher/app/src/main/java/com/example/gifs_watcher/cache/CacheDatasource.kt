@@ -14,15 +14,15 @@ object CacheDatasource {
 
     fun size() : Int {
         if (this.mode == CacheMode.RANDOM) {
-            return this.randomData.size;
+            return this.randomData.size
         } else if (this.mode == CacheMode.SEARCH) {
-            return this.searchData.size;
+            return this.searchData.size
         }
 
-        return -1;
+        return -1
     }
 
-    fun replace(tenorData : ArrayList<Results?>) : Unit {
+    fun replace(tenorData : ArrayList<Results?>) {
         if (this.mode == CacheMode.RANDOM) {
             this.randomData = tenorData
         } else if (this.mode == CacheMode.SEARCH) {
@@ -30,7 +30,7 @@ object CacheDatasource {
         }
     }
 
-    fun add(tenorData : ArrayList<Results?>) : Unit {
+    fun add(tenorData : ArrayList<Results?>) {
         if (this.mode == CacheMode.RANDOM) {
             this.randomData.addAll(tenorData)
         } else if (this.mode == CacheMode.SEARCH) {

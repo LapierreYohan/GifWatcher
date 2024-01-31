@@ -18,10 +18,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.FriendPopUpType
-import com.example.gifs_watcher.views.main.friends.popUp.Friends_popup
+import com.example.gifs_watcher.views.main.friends.popUp.FriendsPopup
 
 
-class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
+class FriendsAdapter(private val users: ArrayList<User?>?, val callBack : (User?)-> Unit) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
 
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -47,7 +47,7 @@ class FriendsAdapter(val users: ArrayList<User?>?, val callBack : (User?)-> Unit
             callBack(item)
         }
         holder.action.setOnClickListener {
-            val showPopUp = Friends_popup(item!!, FriendPopUpType.delete_friend, "Supprimer ${item?.username}", "Voulez vous vraiment supprimer de vos amis ${item?.username} ?")
+            val showPopUp = FriendsPopup(item!!, FriendPopUpType.DELETE_FRIEND, "Supprimer ${item.username}", "Voulez vous vraiment supprimer de vos amis ${item.username} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
 

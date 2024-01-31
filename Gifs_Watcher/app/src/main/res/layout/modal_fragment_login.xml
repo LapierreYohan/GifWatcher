@@ -11,6 +11,7 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     app:behavior_hideable="true"
     app:layout_constraintBottom_toBottomOf="parent"
+    android:visibility="invisible"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout

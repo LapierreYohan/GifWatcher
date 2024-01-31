@@ -7,12 +7,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
 import com.daimajia.androidanimations.library.Techniques
@@ -33,6 +35,8 @@ object LoginModal : BottomSheetDialogFragment() {
     const val TAG = "ModalLogin"
     private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
 
+    private lateinit var modal : ConstraintLayout
+
     private lateinit var idInput : TextInputEditText
     private lateinit var passwordInput : TextInputEditText
     private lateinit var idInputLayout : TextInputLayout
@@ -44,22 +48,24 @@ object LoginModal : BottomSheetDialogFragment() {
 
     private lateinit var title : TextView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.modal_fragment_login ,container,false)
 
-        googleSignInButton = view.findViewById(R.id.login_google_signin)
-        facebookSignInButton = view.findViewById(R.id.login_facebook_signin)
-        appleSignInButton = view.findViewById(R.id.login_apple_signin)
-        title = view.findViewById(R.id.login_title)
+        this.googleSignInButton = view.findViewById(R.id.login_google_signin)
+        this.facebookSignInButton = view.findViewById(R.id.login_facebook_signin)
+        this.appleSignInButton = view.findViewById(R.id.login_apple_signin)
+        this.title = view.findViewById(R.id.login_title)
+        this.modal = view.findViewById(R.id.modal_fragment_log)
 
-        googleSignInButton.visibility = View.INVISIBLE
-        facebookSignInButton.visibility = View.INVISIBLE
-        appleSignInButton.visibility = View.INVISIBLE
+        this.googleSignInButton.visibility = View.INVISIBLE
+        this.facebookSignInButton.visibility = View.INVISIBLE
+        this.appleSignInButton.visibility = View.INVISIBLE
 
         // Ajout d'un moyen de register un compte
         val register : TextView = view.findViewById(R.id.login_register)
         register.setOnClickListener {
             this.dismiss()
+            this.modal.visibility = View.INVISIBLE
             val registerMenu: RegisterModal = RegisterModal
             registerMenu.show(parentFragmentManager, registerMenu.TAG)
         }
@@ -68,24 +74,23 @@ object LoginModal : BottomSheetDialogFragment() {
         val forgotPassword : TextView = view.findViewById(R.id.login_forgot_password)
         forgotPassword.setOnClickListener {
             this.dismiss()
-            val passwordMenu: PasswordModal = PasswordModal
+            this.modal.visibility = View.INVISIBLE
+            val passwordMenu = PasswordModal
             passwordMenu.show(parentFragmentManager, passwordMenu.TAG)
         }
 
         // Autorisé la connection à la main activity
-        //? Pas de vérification utilisateur
         this.setUpLoginListeners(view)
 
         // Empêche de quitter le modal
-        dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
 
         this.idInput = view?.findViewById(R.id.login_identifiant_textinput)!!
         this.passwordInput = view.findViewById(R.id.login_password_textinput)!!
 
         //TODO : DEV ONLY
-        idInput.setText("galtrips")
-        passwordInput.setText("azerty")
+        this.idInput.setText("galtrips")
+        this.passwordInput.setText("azerty")
 
         this.idInputLayout = view.findViewById(R.id.login_identifiant_textinput_layout)!!
         this.passwordInputLayout = view.findViewById(R.id.login_password_textinput_layout)!!
@@ -97,30 +102,30 @@ object LoginModal : BottomSheetDialogFragment() {
             if (it.success()) {
                 this.startActivity()
             } else if (it.failed()) {
-                idInput.setText("")
-                passwordInput.setText("")
+                this.idInput.setText("")
+                this.passwordInput.setText("")
 
                 //reset des errors
-                idInputLayout.error = null
-                passwordInputLayout.error = null
+                this.idInputLayout.error = null
+                this.passwordInputLayout.error = null
 
                 it.error().forEach { userError ->
                     when (userError) {
                         UserErrors.ID_EMPTY -> {
-                            idInputLayout.error = userError.message
-                            idInput.setError(userError.message, null)
+                            this.idInputLayout.error = userError.message
+                            this.idInput.setError(userError.message, null)
                         }
 
                         UserErrors.PASSWORD_IS_EMPTY -> {
-                            passwordInputLayout.error = userError.message
-                            passwordInput.setError(userError.message, null)
+                            this.passwordInputLayout.error = userError.message
+                            this.passwordInput.setError(userError.message, null)
                         }
 
                         UserErrors.ID_OR_PASSWORD_INVALID -> {
-                            passwordInputLayout.error = userError.message
-                            passwordInput.setError(userError.message, null)
-                            idInputLayout.error = userError.message
-                            idInput.setError(userError.message, null)
+                            this.passwordInputLayout.error = userError.message
+                            this.passwordInput.setError(userError.message, null)
+                            this.idInputLayout.error = userError.message
+                            this.idInput.setError(userError.message, null)
                         }
 
                         else -> {}
@@ -146,14 +151,15 @@ object LoginModal : BottomSheetDialogFragment() {
             val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
 
             bottomSheet?.let {
+                this.modal.visibility = View.VISIBLE
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 behavior.peekHeight = 0
-                it.translationY = 1500f // ajustez la valeur selon votre besoin
+                it.translationY = 1500f
                 it.animate().translationY(0f).setDuration(500).start()
 
-                Handler().postDelayed({
-                    animateSignInButtons(it)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    animateSignInButtons()
                 }, 500)
             }
         }
@@ -161,26 +167,25 @@ object LoginModal : BottomSheetDialogFragment() {
         return dialog
     }
 
-    override fun onStart() : Unit {
+    override fun onStart() {
         super.onStart();
-        // Adapter la fenêtre à la taille de la modal
-        var dialog : Dialog? = getDialog();
+        val dialog : Dialog? = this.dialog;
 
         if (dialog != null) {
-            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment_log)
-            bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+            val bottomSheet : View = dialog.findViewById(R.id.modal_fragment_log)
+            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-            var view : View? = getView();
+            val view : View? = view;
 
-            val post = view?.post {
+            view?.post {
 
-                var parent : View = view.getParent() as View
-                var params : CoordinatorLayout.LayoutParams = (parent).getLayoutParams() as CoordinatorLayout.LayoutParams
-                var behavior = params.getBehavior();
-                var bottomSheetBehavior = behavior as BottomSheetBehavior;
-                bottomSheetBehavior.setPeekHeight(view.getMeasuredHeight());
+                val parent : View = view.parent as View
+                val params : CoordinatorLayout.LayoutParams = (parent).layoutParams as CoordinatorLayout.LayoutParams
+                val behavior = params.behavior;
+                val bottomSheetBehavior = behavior as BottomSheetBehavior;
+                bottomSheetBehavior.peekHeight = view.measuredHeight;
 
-                (bottomSheet.getParent() as View).setBackgroundColor(Color.TRANSPARENT)
+                (bottomSheet.parent as View).setBackgroundColor(Color.TRANSPARENT)
             }
         }
     }
@@ -189,7 +194,7 @@ object LoginModal : BottomSheetDialogFragment() {
         // Bouton de Connexion
         val connectButton : Button = view.findViewById(R.id.login_signin_button)
         connectButton.setOnClickListener {
-            this.splashScreenViewModel.login(idInput.text.toString().trim(), passwordInput.text.toString().trim())
+            this.splashScreenViewModel.login(this.idInput.text.toString().trim(), this.passwordInput.text.toString().trim())
         }
 
         // Bouton de Connexion avec Google
@@ -211,49 +216,49 @@ object LoginModal : BottomSheetDialogFragment() {
         }
     }
 
-    private fun login() : Unit {
+    private fun login() {
 
     }
 
-    private fun startActivity() : Unit {
-        val intent : Intent = Intent(context, MainActivity::class.java)
+    private fun startActivity() {
+        val intent = Intent(this.context, MainActivity::class.java)
 
         this.dismiss()
         startActivity(intent)
-        activity?.finish()
+        this.activity?.finish()
     }
 
-    private fun animateSignInButtons(view: View) {
+    private fun animateSignInButtons() {
 
         val delayBetweenAnimations = 200L
 
         YoYo.with(Techniques.Tada)
             .duration(1000)
-            .playOn(title)
+            .playOn(this.title)
 
         YoYo.with(Techniques.SlideInUp)
             .duration(500)
             .onStart {
-                googleSignInButton.visibility = View.VISIBLE
+                this.googleSignInButton.visibility = View.VISIBLE
             }
-            .playOn(googleSignInButton)
+            .playOn(this.googleSignInButton)
 
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             YoYo.with(Techniques.SlideInUp)
                 .duration(500)
                 .onStart {
-                    facebookSignInButton.visibility = View.VISIBLE
+                    this.facebookSignInButton.visibility = View.VISIBLE
                 }
-                .playOn(facebookSignInButton)
+                .playOn(this.facebookSignInButton)
         }, delayBetweenAnimations)
 
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             YoYo.with(Techniques.SlideInUp)
                 .duration(500)
                 .onStart {
-                    appleSignInButton.visibility = View.VISIBLE
+                    this.appleSignInButton.visibility = View.VISIBLE
                 }
-                .playOn(appleSignInButton)
+                .playOn(this.appleSignInButton)
         }, delayBetweenAnimations * 2)
     }
 }

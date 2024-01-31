@@ -66,8 +66,8 @@ object LoginModal : BottomSheetDialogFragment() {
         register.setOnClickListener {
             this.dismiss()
             this.modal.visibility = View.INVISIBLE
-            val registerMenu: RegisterModal = RegisterModal
-            registerMenu.show(parentFragmentManager, registerMenu.TAG)
+            val registerMenu = RegisterModal
+            registerMenu.show(this.parentFragmentManager, registerMenu.TAG)
         }
 
         // Ajout d'un moyen de reset son mot de passe
@@ -83,14 +83,10 @@ object LoginModal : BottomSheetDialogFragment() {
         this.setUpLoginListeners(view)
 
         // Empêche de quitter le modal
-        dialog?.setCancelable(false)
+        this.dialog?.setCancelable(false)
 
         this.idInput = view?.findViewById(R.id.login_identifiant_textinput)!!
         this.passwordInput = view.findViewById(R.id.login_password_textinput)!!
-
-        //TODO : DEV ONLY
-        this.idInput.setText("galtrips")
-        this.passwordInput.setText("azerty")
 
         this.idInputLayout = view.findViewById(R.id.login_identifiant_textinput_layout)!!
         this.passwordInputLayout = view.findViewById(R.id.login_password_textinput_layout)!!
@@ -168,29 +164,29 @@ object LoginModal : BottomSheetDialogFragment() {
     }
 
     override fun onStart() {
-        super.onStart();
-        val dialog : Dialog? = this.dialog;
+        super.onStart()
+        val dialog : Dialog? = this.dialog
 
         if (dialog != null) {
             val bottomSheet : View = dialog.findViewById(R.id.modal_fragment_log)
-            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
 
-            val view : View? = view;
+            val view : View? = view
 
             view?.post {
 
                 val parent : View = view.parent as View
                 val params : CoordinatorLayout.LayoutParams = (parent).layoutParams as CoordinatorLayout.LayoutParams
-                val behavior = params.behavior;
-                val bottomSheetBehavior = behavior as BottomSheetBehavior;
-                bottomSheetBehavior.peekHeight = view.measuredHeight;
+                val behavior = params.behavior
+                val bottomSheetBehavior = behavior as BottomSheetBehavior
+                bottomSheetBehavior.peekHeight = view.measuredHeight
 
                 (bottomSheet.parent as View).setBackgroundColor(Color.TRANSPARENT)
             }
         }
     }
 
-    private fun setUpLoginListeners(view: View) : Unit {
+    private fun setUpLoginListeners(view: View) {
         // Bouton de Connexion
         val connectButton : Button = view.findViewById(R.id.login_signin_button)
         connectButton.setOnClickListener {

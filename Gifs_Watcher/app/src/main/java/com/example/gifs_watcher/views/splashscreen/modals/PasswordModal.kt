@@ -1,5 +1,6 @@
 package com.example.gifs_watcher.views.splashscreen.modals
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
@@ -7,31 +8,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.fragment.app.activityViewModels
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.views.splashscreen.SplashScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
+@SuppressLint("StaticFieldLeak")
 object PasswordModal : BottomSheetDialogFragment() {
+
     const val TAG = "ModalPassword"
-    private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+    private lateinit var modal : ConstraintLayout
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.modal_fragment_password ,container,false)
+
+        this.modal = view.findViewById(R.id.modal_fragment_pass)
 
         // Ajout d'un moyen de retour sur login
         val login : TextView = view.findViewById(R.id.password_login)
         login.setOnClickListener {
             this.dismiss()
-            val loginMenu: LoginModal = LoginModal
-            loginMenu.show(parentFragmentManager, loginMenu.TAG)
+            this.modal.visibility = View.INVISIBLE
+            val loginMenu = LoginModal
+            loginMenu.show(this.parentFragmentManager, loginMenu.TAG)
         }
 
-        // Empêche de quitter le modal
-        dialog?.setCanceledOnTouchOutside(false)
-        dialog?.setCancelable(false)
+        this.dialog?.setCancelable(false)
 
         return view
     }
@@ -50,10 +55,11 @@ object PasswordModal : BottomSheetDialogFragment() {
             val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
 
             bottomSheet?.let {
+                this.modal.visibility = View.VISIBLE
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 behavior.peekHeight = 0
-                it.translationY = 1500f // ajustez la valeur selon votre besoin
+                it.translationY = 1500f
                 it.animate().translationY(0f).setDuration(500).start()
             }
         }
@@ -61,27 +67,25 @@ object PasswordModal : BottomSheetDialogFragment() {
         return dialog
     }
 
-    override fun onStart() : Unit {
-        super.onStart();
+    override fun onStart() {
+        super.onStart()
         // Adapter la fenêtre à la taille de la modal
-        var dialog : Dialog? = PasswordModal.getDialog();
+        val dialog : Dialog? = PasswordModal.dialog
 
         if (dialog != null) {
-            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment_pass)
-            bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+            val bottomSheet : View = dialog.findViewById(R.id.modal_fragment_pass)
+            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
 
-            var view : View? = PasswordModal.getView();
+            val view : View? = PasswordModal.view
 
-            val post = view?.post {
+            view?.post {
+                val parent : View = view.parent as View
+                val params : CoordinatorLayout.LayoutParams = (parent).layoutParams as CoordinatorLayout.LayoutParams
+                val behavior = params.behavior
+                val bottomSheetBehavior = behavior as BottomSheetBehavior
+                bottomSheetBehavior.peekHeight = view.measuredHeight
 
-                var parent : View = view.getParent() as View
-                var params : CoordinatorLayout.LayoutParams = (parent).getLayoutParams() as CoordinatorLayout.LayoutParams
-                var behavior = params.getBehavior();
-                var bottomSheetBehavior = behavior as BottomSheetBehavior;
-                bottomSheetBehavior.setPeekHeight(view.getMeasuredHeight());
-
-                (bottomSheet.getParent() as View).setBackgroundColor(Color.TRANSPARENT)
-
+                (bottomSheet.parent as View).setBackgroundColor(Color.TRANSPARENT)
             }
         }
     }

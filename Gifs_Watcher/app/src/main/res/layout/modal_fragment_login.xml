@@ -154,6 +154,7 @@
             android:backgroundTint="@android:color/transparent"
             android:src="@drawable/google_button"
             android:layout_marginTop="30dp"
+            android:contentDescription="@string/google_signin"
             app:layout_constraintEnd_toEndOf="@id/login_facebook_signin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_separator_view2"
@@ -166,6 +167,7 @@
             android:backgroundTint="@android:color/transparent"
             android:src="@drawable/facebook_button"
             android:layout_marginTop="30dp"
+            android:contentDescription="@string/facebook_signin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_separator_view2"
@@ -178,6 +180,7 @@
             android:backgroundTint="@android:color/transparent"
             android:src="@drawable/apple_button"
             android:layout_marginTop="30dp"
+            android:contentDescription="@string/apple_signin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/login_facebook_signin"
             app:layout_constraintTop_toBottomOf="@+id/login_separator_view2"
@@ -200,17 +203,13 @@
         <View
             android:id="@+id/login_separator_view3"
             android:layout_width="300dp"
-            android:layout_height="0.1px"
+            android:layout_height="1dp"
+            android:visibility="invisible"
             android:layout_marginTop="20dp"
             android:background="@color/md_theme_dark_onSurfaceVariant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_register"
             />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

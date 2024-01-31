@@ -210,7 +210,8 @@
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_birthday_textinput_layout"/>
+            app:layout_constraintTop_toBottomOf="@+id/register_birthday_textinput_layout"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
         <View
             android:id="@+id/register_separator_view2"
@@ -238,15 +239,12 @@
         <View
             android:id="@+id/register_separator_view3"
             android:layout_width="300dp"
-            android:layout_height="0.1px"
+            android:layout_height="1dp"
+            android:visibility="invisible"
             android:layout_marginTop="20dp"
             android:background="@color/md_theme_dark_onSurfaceVariant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/register_login" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

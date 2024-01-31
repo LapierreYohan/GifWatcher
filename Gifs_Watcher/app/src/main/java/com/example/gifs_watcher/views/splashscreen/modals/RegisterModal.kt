@@ -1,5 +1,6 @@
 package com.example.gifs_watcher.views.splashscreen.modals
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
 import com.example.gifs_watcher.R
@@ -29,9 +31,12 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.util.Locale
 
+@SuppressLint("StaticFieldLeak")
 object RegisterModal : BottomSheetDialogFragment() {
     const val TAG = "ModalRegister"
     private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
+
+    private lateinit var modal : ConstraintLayout
 
     private lateinit var userInput : TextInputEditText
     private lateinit var passwordInput : TextInputEditText
@@ -45,21 +50,23 @@ object RegisterModal : BottomSheetDialogFragment() {
     private lateinit var confirmPasswordInputLayout : TextInputLayout
     private lateinit var birthdayInputLayout : TextInputLayout
 
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.modal_fragment_register ,container,false)
+
+        this.modal = view.findViewById(R.id.modal_fragment_sign)
 
         // Ajout d'un moyen de retour sur login
         val login : TextView = view.findViewById(R.id.register_login)
         login.setOnClickListener {
             this.dismiss()
-            val loginMenu: LoginModal = LoginModal
-            loginMenu.show(parentFragmentManager, loginMenu.TAG)
+            this.modal.visibility = View.INVISIBLE
+            val loginMenu = LoginModal
+            loginMenu.show(this.parentFragmentManager, loginMenu.TAG)
         }
 
-        // Empêche de quitter le modal
-        dialog?.setCanceledOnTouchOutside(false)
-        dialog?.setCancelable(false)
+        this.dialog?.setCancelable(false)
 
         this.userInput = view?.findViewById(R.id.register_username_textinput)!!
         this.passwordInput = view.findViewById(R.id.register_password_textinput)!!
@@ -80,7 +87,6 @@ object RegisterModal : BottomSheetDialogFragment() {
         this.birthdayInputLayout.error = null
 
         this.splashScreenViewModel.signinLiveData.observe(this) {
-            println(it)
             if (it.success()) {
                 this.startActivity()
             } else if (it.failed()) {
@@ -111,7 +117,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.PASSWORD_INVALID -> {
                             if (this.passwordInputLayout.error == null) {
                                 this.passwordInputLayout.error = userError.message
-                                passwordInput.setError(userError.message, null)
+                                this.passwordInput.setError(userError.message, null)
                             }
                         }
 
@@ -122,7 +128,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                                 this.confirmPasswordInputLayout.error = userError.message
                                 confirmPasswordInput.setError(userError.message, null)
                                 this.passwordInputLayout.error = userError.message
-                                passwordInput.setError(userError.message, null)
+                                this.passwordInput.setError(userError.message, null)
 
                             }
                         }
@@ -133,7 +139,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.EMAIL_CONTAINS_EXCEPTED_CHARACTERS -> {
                             if (this.emailInputLayout.error == null) {
                                 this.emailInputLayout.error = userError.message
-                                emailInput.setError(userError.message, null)
+                                this.emailInput.setError(userError.message, null)
                             }
                         }
 
@@ -142,7 +148,7 @@ object RegisterModal : BottomSheetDialogFragment() {
                         UserErrors.BIRTHDATE_TOO_YOUNG -> {
                             if (this.birthdayInputLayout.error == null) {
                                 this.birthdayInputLayout.error = userError.message
-                                birthdayInput.setError(userError.message, null)
+                                this.birthdayInput.setError(userError.message, null)
                             }
                         }
 
@@ -166,9 +172,9 @@ object RegisterModal : BottomSheetDialogFragment() {
         val datePickerDialog = DatePickerDialog(
                 requireContext(),
                 R.style.CustomDatePickerDialog,
-                { _, year, monthOfYear, dayOfMonth ->
-                    val month = monthOfYear + 1
-                    val formattedDate = String.format("%02d/%02d/%04d", dayOfMonth, month, year)
+                { _, yearGlobal, monthOfYear, dayOfMonth ->
+                    val monthGlobal = monthOfYear + 1
+                    val formattedDate = String.format("%02d/%02d/%04d", dayOfMonth, monthGlobal, yearGlobal)
                     birthdayInput.setText(formattedDate)
                 },
                 year - 15,
@@ -189,6 +195,7 @@ object RegisterModal : BottomSheetDialogFragment() {
         birthdayInput.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 datePickerDialog.show()
+                birthdayInput.performClick()
             }
             true
         }
@@ -212,6 +219,7 @@ object RegisterModal : BottomSheetDialogFragment() {
             val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
 
             bottomSheet?.let {
+                this.modal.visibility = View.VISIBLE
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 behavior.peekHeight = 0
@@ -223,32 +231,32 @@ object RegisterModal : BottomSheetDialogFragment() {
         return dialog
     }
 
-    override fun onStart() : Unit {
-        super.onStart();
+    override fun onStart() {
+        super.onStart()
         // Adapter la fenêtre à la taille de la modal
-        var dialog : Dialog? = RegisterModal.getDialog();
+        val dialog : Dialog? = RegisterModal.dialog
 
         if (dialog != null) {
-            var bottomSheet : View = dialog.findViewById(R.id.modal_fragment_sign)
-            bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+            val bottomSheet : View = dialog.findViewById(R.id.modal_fragment_sign)
+            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
 
-            var view : View? = RegisterModal.getView();
+            val view : View? = RegisterModal.view
 
-            val post = view?.post {
+            view?.post {
 
-                var parent : View = view.getParent() as View
-                var params : CoordinatorLayout.LayoutParams = (parent).getLayoutParams() as CoordinatorLayout.LayoutParams
-                var behavior = params.getBehavior();
-                var bottomSheetBehavior = behavior as BottomSheetBehavior;
-                bottomSheetBehavior.setPeekHeight(view.getMeasuredHeight());
+                val parent : View = view.parent as View
+                val params : CoordinatorLayout.LayoutParams = (parent).layoutParams as CoordinatorLayout.LayoutParams
+                val behavior = params.behavior
+                val bottomSheetBehavior = behavior as BottomSheetBehavior
+                bottomSheetBehavior.peekHeight = view.measuredHeight
 
-                (bottomSheet.getParent() as View).setBackgroundColor(Color.TRANSPARENT)
+                (bottomSheet.parent as View).setBackgroundColor(Color.TRANSPARENT)
 
             }
         }
     }
 
-    private fun setUpRegisterListeners(view: View) : Unit {
+    private fun setUpRegisterListeners(view: View) {
         // Bouton de Connexion
         val registerButton : Button = view.findViewById(R.id.register_signin_button)
 
@@ -264,8 +272,8 @@ object RegisterModal : BottomSheetDialogFragment() {
             }
         }
     }
-    private fun startActivity() : Unit {
-        val intent : Intent = Intent(context, MainActivity::class.java)
+    private fun startActivity() {
+        val intent = Intent(context, MainActivity::class.java)
 
         this.dismiss()
         startActivity(intent)

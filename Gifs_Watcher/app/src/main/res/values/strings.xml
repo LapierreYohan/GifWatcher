@@ -52,4 +52,7 @@
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="remove">Remove</string>
+    <string name="qr_code">QR CODE</string>
+    <string name="code">CODE</string>
+    <string name="save_the_qr_code">Save the QR Code</string>
 </resources>

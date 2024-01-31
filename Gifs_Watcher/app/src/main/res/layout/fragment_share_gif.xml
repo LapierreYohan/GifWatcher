@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/SharedScrollView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="QR CODE"
+            android:text="@string/qr_code"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             android:textColor="@color/md_theme_dark_primary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="CODE"
+            android:text="@string/code"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             android:textColor="@color/md_theme_dark_primary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:backgroundTint="@color/md_theme_dark_primaryContainer"
-            android:text="Save the QR Code"
+            android:text="@string/save_the_qr_code"
             android:textSize="17sp"
             android:textColor="@color/md_theme_dark_onPrimaryContainer"
             android:layout_marginTop="24dp"

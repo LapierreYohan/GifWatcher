@@ -187,7 +187,7 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
                     .document(userId)
                     .collection(field)
                     .document(gif.id!!)
-                    .set(mapOf("id" to gif.id, "content_description" to gif.contentDescription, "preview" to gif.preview, "timestamp" to FieldValue.serverTimestamp()))
+                    .set(mapOf("id" to gif.id, "contentDescription" to gif.contentDescription, "preview" to gif.preview, "timestamp" to FieldValue.serverTimestamp()))
                     .addOnSuccessListener {
                         cont.resume(true)
                     }

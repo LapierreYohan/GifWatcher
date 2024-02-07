@@ -180,7 +180,7 @@ class HomeFragment : Fragment() {
         animator.addUpdateListener { animation ->
             val progress = animation.animatedValue as Float
             if (progress >= endFraction && isClicked) {
-                mainViewModel.getRandomGif(requireContext(), searchTheme)
+                mainViewModel.getRandomGif(searchTheme)
                 isClicked = false
             }
         }

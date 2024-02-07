@@ -1,6 +1,7 @@
 package com.example.gifs_watcher.repositories
 
 import android.content.Context
+import com.example.gifs_watcher.BuildConfig
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.cache.CacheDatasource
 import com.example.gifs_watcher.database.DistantDatabaseDatasource
@@ -29,7 +30,7 @@ object GifRepository {
 
     private val themeManager : ThemeManager = ThemeManager
 
-    suspend fun getRandomGif(context: Context, theme: String = "") : Flow<Results?> = flow {
+    suspend fun getRandomGif(theme: String = "") : Flow<Results?> = flow {
 
          val randomData : TenorData?
 
@@ -43,7 +44,7 @@ object GifRepository {
          }
 
          if (cache.size() < 1) {
-             randomData = fetchGif(context, theme)
+             randomData = fetchGif(theme)
 
              cache.add(randomData.results)
 
@@ -61,7 +62,7 @@ object GifRepository {
         }
     }
 
-    suspend fun prepareGifs(context: Context) {
+    suspend fun prepareGifs() {
 
         val randomData : TenorData?
 
@@ -70,12 +71,12 @@ object GifRepository {
         }
 
         if (cache.size() < 1) {
-            randomData = fetchGif(context, "")
+            randomData = fetchGif("")
             cache.add(randomData.results)
         }
     }
 
-    private suspend fun fetchGif(context: Context, theme: String): TenorData {
+    private suspend fun fetchGif(theme: String): TenorData {
 
         val randomData = TenorData()
         var currentTheme: String = theme
@@ -83,7 +84,7 @@ object GifRepository {
 
         if (theme != "") {
             val fetchedData = tenorApi.getTenorService().getRandomsGifs(
-                context.getString(R.string.tenor_api_key),
+                BuildConfig.TENOR_API_KEY,
                 LANG,
                 LIMIT,
                 FILTER,
@@ -107,7 +108,7 @@ object GifRepository {
                     if (remainingGifs >= NB_GIFS_PER_FETCH) NB_GIFS_PER_FETCH else remainingGifs
 
                 val fetchedData = tenorApi.getTenorService().getRandomsGifs(
-                    context.getString(R.string.tenor_api_key),
+                    BuildConfig.TENOR_API_KEY,
                     LANG,
                     gifsToFetch.toString(),
                     FILTER,

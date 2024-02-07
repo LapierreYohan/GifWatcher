@@ -171,9 +171,9 @@ class SplashScreenViewModel : ViewModel() {
         return inputDate
     }
 
-    fun prepareGifs(context: Context) {
+    fun prepareGifs() {
         viewModelScope.launch {
-            gifRepo.prepareGifs(context)
+            gifRepo.prepareGifs()
         }
     }
 }

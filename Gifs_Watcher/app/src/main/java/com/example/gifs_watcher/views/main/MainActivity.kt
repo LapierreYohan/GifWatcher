@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        mainViewModel.getRandomGif(applicationContext)
+        mainViewModel.getRandomGif()
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

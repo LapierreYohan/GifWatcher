@@ -79,9 +79,9 @@ class MainViewModel : ViewModel() {
 
     var seeGifTraitement : Boolean = false
 
-    fun getRandomGif(context: Context, theme: String = "") {
+    fun getRandomGif(theme: String = "") {
         viewModelScope.launch {
-            gifRepo.getRandomGif(context, theme)
+            gifRepo.getRandomGif(theme)
                 .collect {
                     it?.let { tenorData ->
                         printedGif = tenorData

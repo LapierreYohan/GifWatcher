@@ -43,11 +43,11 @@ class FriendsAdapter(private val users: ArrayList<User?>?, val callBack : (User?
         val item = users?.get(position) // met dans item l'utilisateur
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(holder.card.context, "Clicked: ${item?.displayname}", Toast.LENGTH_SHORT).show()
             callBack(item)
         }
         holder.action.setOnClickListener {
-            val showPopUp = FriendsPopup(item!!, FriendPopUpType.DELETE_FRIEND, "Supprimer ${item.username}", "Voulez vous vraiment supprimer de vos amis ${item.username} ?")
+            val showPopUp = FriendsPopup(item!!, FriendPopUpType.DELETE_FRIEND, "Supprimer ${item.displayname}", "Voulez vous vraiment supprimer de vos amis ${item.displayname} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
 

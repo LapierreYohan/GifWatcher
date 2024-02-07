@@ -47,6 +47,7 @@ class QrCodeScannerFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         _binding = FragmentQrCodeScannerBinding.inflate(inflater, container, false)
 
         binding.backFromScannerToChoose.setOnClickListener {
+            findNavController().popBackStack(R.id.navigation_choose_method, false)
             findNavController().navigate(R.id.navigation_choose_method)
         }
 

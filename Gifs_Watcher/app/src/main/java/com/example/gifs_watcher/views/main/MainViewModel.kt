@@ -28,6 +28,7 @@ import com.example.gifs_watcher.models.maps.GifMapper
 import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.GifErrors
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.IOException
 
 class MainViewModel : ViewModel() {
@@ -336,11 +337,14 @@ class MainViewModel : ViewModel() {
 
         viewModelScope.launch {
             gifRepo.seeGif(gifId, printedGif).collect {
+                Timber.d("Gif : $it")
                 if (it != null) {
                     printedGif = it
                     printedGifLD.postValue(it)
                     response.addData(it)
+                    response.error().clear()
                     gifResponseLD.postValue(response)
+                    navController.popBackStack(R.id.navigation_home, false)
                     navController.navigate(R.id.navigation_home)
                     seeGifTraitement = false
                 } else {

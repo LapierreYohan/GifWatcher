@@ -42,10 +42,10 @@ class SentRequesteAdapter(private val users: ArrayList<User?>?) : RecyclerView.A
         val item = users?.get(position)
         Log.println(Log.INFO,"debug", "onBindViewHolder item : $item")
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(holder.card.context, "Clicked: ${item?.displayname}", Toast.LENGTH_SHORT).show()
         }
         holder.action.setOnClickListener {
-            val showPopUp = FriendsPopup(item!!, FriendPopUpType.DELETE_SENT, "Annuler votre demande", "Voulez vous vraiment annuler votre demande d'amis envers ${item.username} ?")
+            val showPopUp = FriendsPopup(item!!, FriendPopUpType.DELETE_SENT, "Annuler votre demande", "Voulez vous vraiment annuler votre demande d'amis envers ${item.displayname} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.textView.text = item?.displayname

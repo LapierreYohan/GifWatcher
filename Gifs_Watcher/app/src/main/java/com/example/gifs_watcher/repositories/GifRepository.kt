@@ -187,8 +187,9 @@ object GifRepository {
         database.getGifById(gifId).collect{ gif ->
             if (gif != null) {
                 emit(GifMapper.reverseMap(gif))
+            } else {
+                emit(null)
             }
-            emit(null)
         }
     }
 

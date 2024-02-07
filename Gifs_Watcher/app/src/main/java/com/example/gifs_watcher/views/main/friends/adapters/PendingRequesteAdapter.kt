@@ -43,14 +43,14 @@ class PendingRequesteAdapter(private val users: ArrayList<User?>?) : RecyclerVie
         val item = users?.get(position)
         Log.println(Log.INFO,"debug", "onBindViewHolder item : $item")
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: ${item?.username}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(holder.card.context, "Clicked: ${item?.displayname}", Toast.LENGTH_SHORT).show()
         }
         holder.actionValide.setOnClickListener {
-            val showPopUp = FriendsPopup(item!!, FriendPopUpType.ACCEPT_PENDING, "Accepter ${item.username}", "Voulez vous vraiment accepter ${item.username} ?")
+            val showPopUp = FriendsPopup(item!!, FriendPopUpType.ACCEPT_PENDING, "Accepter ${item.displayname}", "Voulez vous vraiment accepter ${item.displayname} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.actionDelete.setOnClickListener {
-            val showPopUp = FriendsPopup(item!!, FriendPopUpType.REFUSE_PENDING, "Rejeter ${item.username}", "Voulez vous vraiment rejeter la demande d'amis de ${item.username} ?")
+            val showPopUp = FriendsPopup(item!!, FriendPopUpType.REFUSE_PENDING, "Rejeter ${item.displayname}", "Voulez vous vraiment rejeter la demande d'amis de ${item.displayname} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.textView.text = item?.displayname

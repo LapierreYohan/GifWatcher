@@ -43,6 +43,7 @@ class ShareGifFragment : Fragment() {
         _binding = FragmentShareGifBinding.inflate(inflater, container, false)
 
         binding.backFromShareToHome.setOnClickListener {
+            findNavController().popBackStack(R.id.navigation_home, false)
             findNavController().navigate(R.id.navigation_home)
         }
 
@@ -69,6 +70,7 @@ class ShareGifFragment : Fragment() {
                 bitmapComponent,
                 binding.shareCodeTextinput.text.toString()
             )
+            findNavController().popBackStack(R.id.navigation_home, false)
             findNavController().navigate(R.id.navigation_home)
         }
 

@@ -98,7 +98,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_identifiant_textinput"
+                android:id="@+id/add_friend_textinput_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_theme_dark_surfaceVariant"
@@ -109,7 +109,5 @@
                 android:singleLine="true"
                 />
         </com.google.android.material.textfield.TextInputLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

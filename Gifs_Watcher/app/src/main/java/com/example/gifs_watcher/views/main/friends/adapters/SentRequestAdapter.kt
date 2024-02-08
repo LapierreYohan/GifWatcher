@@ -20,6 +20,9 @@ import com.example.gifs_watcher.R
 import com.example.gifs_watcher.models.FriendRequest
 import com.example.gifs_watcher.utils.enums.FriendPopUpType
 import com.example.gifs_watcher.views.main.friends.popUp.FriendsPopup
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class SentRequestAdapter(private val users: ArrayList<FriendRequest>, private val title : TextView) : RecyclerView.Adapter<SentRequestAdapter.ItemViewHolder>() {
@@ -39,6 +42,7 @@ class SentRequestAdapter(private val users: ArrayList<FriendRequest>, private va
         return ItemViewHolder(adapterLayout)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         Log.println(Log.INFO,"debug","onBindViewHolder open" )
         val item = users[position]
@@ -53,7 +57,12 @@ class SentRequestAdapter(private val users: ArrayList<FriendRequest>, private va
         }
 
         holder.textView.text = item.displayDest
-        holder.descView.text = item.dest
+
+        val date: Date = item.timestamp?.toDate() ?: Date()
+        val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formattedDate: String = dateFormatter.format(date)
+
+        holder.descView.text = item.dest + " - " + formattedDate
         try {
             // Loading main gif
             Glide.with(holder.itemView.context)

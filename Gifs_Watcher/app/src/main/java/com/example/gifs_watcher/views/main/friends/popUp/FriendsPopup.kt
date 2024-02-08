@@ -8,13 +8,17 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.models.FriendRequest
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.FriendPopUpType
+import retrofit2.Response
 
 class FriendsPopup(): DialogFragment() {
 
-    private lateinit var user : User
+    private lateinit var user : FriendRequest
     private lateinit var type : FriendPopUpType
     private lateinit var title : String
     private lateinit var desc : String
@@ -111,7 +115,7 @@ class FriendsPopup(): DialogFragment() {
 
     }
 
-    constructor(user : User, type: FriendPopUpType, title: String = "", desc: String = "") : this(){
+    constructor(user : FriendRequest, type: FriendPopUpType, title: String = "", desc: String = "") : this(){
         this.user = user
         this.type = type
         this.title = title

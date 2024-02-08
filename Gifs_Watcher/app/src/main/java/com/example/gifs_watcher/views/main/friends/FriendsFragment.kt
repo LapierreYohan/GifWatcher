@@ -1,10 +1,12 @@
 package com.example.gifs_watcher.views.main.friends
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -16,8 +18,9 @@ import com.example.gifs_watcher.views.main.MainViewModel
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.views.main.friends.adapters.FriendsAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.PendingRequesteAdapter
-import com.example.gifs_watcher.views.main.friends.adapters.SentRequesteAdapter
+import com.example.gifs_watcher.views.main.friends.adapters.SentRequestAdapter
 import com.example.gifs_watcher.views.main.friends.popUp.AddFriendsPopup
+import timber.log.Timber
 
 class FriendsFragment : Fragment() {
 
@@ -37,12 +40,27 @@ class FriendsFragment : Fragment() {
         _binding = FragmentFriendsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.addFriendButton.setOnClickListener {
-            Toast.makeText(context, "Clicked: add", Toast.LENGTH_SHORT).show()
-            val showPopUp = AddFriendsPopup( "Ajouter un ami")
-            showPopUp.show((context as AppCompatActivity).supportFragmentManager, "Add_friends_popup")
+        val showPopUp = AddFriendsPopup( "Ajouter un ami")
 
+        showPopUp.addedFriend.observe(viewLifecycleOwner) { response ->
+            response?.let {
+                mainViewModel.requestFriend(it)
+            }
         }
+
+        mainViewModel.addedFriendResponse.observe(viewLifecycleOwner) { response ->
+            response?.let {
+                showPopUp.addedFriendResponse.postValue(it)
+            }
+        }
+
+        binding.addFriendButton.setOnClickListener {
+            showPopUp.show((context as AppCompatActivity).supportFragmentManager, "Add_friends_popup")
+        }
+
+        setupFriendsAdapterForPendingRequest(root)
+        setupFriendsAdapterForFriendsList(root)
+        setupFriendsAdapterForSentRequest(root)
 
         return root
     }
@@ -63,49 +81,63 @@ class FriendsFragment : Fragment() {
                 return true
             }
         })
-
-        setupFriendsAdapterForPendingRequest(view)
-        setupFriendsAdapterForFriendsList(view)
-        setupFriendsAdapterForSentRequest(view)
-
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupFriendsAdapterForPendingRequest(view: View){
+
         val rv = view.findViewById(R.id.rv_pending_request) as RecyclerView
-        mainViewModel.getPendingFriendsUsers()
+        val pendingTitle = view.findViewById<TextView>(R.id.pending_request_txt)
+
         mainViewModel.pendings.observe(viewLifecycleOwner) { response ->
+            Timber.e("pendings: $response")
             response?.let {
-                val adapter = PendingRequesteAdapter(it)
+                pendingTitle.text = "Pending Request - ${it.size}"
+                val adapter = PendingRequesteAdapter(it, pendingTitle)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }
         }
+
+        mainViewModel.getPendingFriendsUsers()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupFriendsAdapterForFriendsList(view: View){
-        val rv = view.findViewById(R.id.rv_friends) as RecyclerView
-        mainViewModel.getFriendsUsers()
-        mainViewModel.friends.observe(viewLifecycleOwner) { response ->
-            response?.let {
-                val adapter = FriendsAdapter(it) {
 
-                }
+        val rv = view.findViewById(R.id.rv_friends) as RecyclerView
+        val friendTitle = view.findViewById<TextView>(R.id.friends_txt)
+
+        mainViewModel.friends.observe(viewLifecycleOwner) { response ->
+            Timber.e("friends: $response")
+            response?.let {
+                friendTitle.text = "Friends - ${it.size}"
+                val adapter = FriendsAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }
         }
+
+        mainViewModel.getFriendsUsers()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupFriendsAdapterForSentRequest(view: View){
+
         val rv = view.findViewById(R.id.rv_sent_request) as RecyclerView
-        mainViewModel.getSentFriendsUsers()
+        val entTitle = view.findViewById<TextView>(R.id.sent_request_txt)
+
         mainViewModel.sents.observe(viewLifecycleOwner) { response ->
+            Timber.e("sents: $response")
             response?.let {
-                val adapter = SentRequesteAdapter(it)
+                entTitle.text = "Request Sent - ${it.size}"
+                val adapter = SentRequestAdapter(it, entTitle)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
             }
         }
+
+        mainViewModel.getSentFriendsUsers()
     }
 
     override fun onDestroyView() {

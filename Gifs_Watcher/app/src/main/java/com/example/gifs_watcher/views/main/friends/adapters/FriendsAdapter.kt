@@ -1,5 +1,6 @@
 package com.example.gifs_watcher.views.main.friends.adapters
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,13 +17,14 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.models.FriendRequest
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.utils.enums.FriendPopUpType
 import com.example.gifs_watcher.views.main.friends.popUp.FriendsPopup
+import timber.log.Timber
 
 
-class FriendsAdapter(private val users: ArrayList<User?>?, val callBack : (User?)-> Unit) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
-
+class FriendsAdapter(private val users: ArrayList<FriendRequest>) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
@@ -35,29 +37,29 @@ class FriendsAdapter(private val users: ArrayList<User?>?, val callBack : (User?
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.friends_card_list, parent, false)
+
         return ItemViewHolder(adapterLayout)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
-        val item = users?.get(position) // met dans item l'utilisateur
+        val item = users[position] // met dans item l'utilisateur
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: ${item?.displayname}", Toast.LENGTH_SHORT).show()
-            callBack(item)
+            Toast.makeText(holder.card.context, "Clicked: ${item.displayDest}", Toast.LENGTH_SHORT).show()
         }
         holder.action.setOnClickListener {
-            val showPopUp = FriendsPopup(item!!, FriendPopUpType.DELETE_FRIEND, "Supprimer ${item.displayname}", "Voulez vous vraiment supprimer de vos amis ${item.displayname} ?")
+            val showPopUp = FriendsPopup(item, FriendPopUpType.DELETE_FRIEND, "Supprimer ${item.displayDest}", "Voulez vous vraiment supprimer de vos amis ${item.displayDest} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
 
         //set les valeurs de l'utilsateur dans les différents champs
-        holder.textView.text = item?.displayname
-        holder.descView.text = item?.username
+        holder.textView.text = item.displayDest
+        holder.descView.text = item.dest
         try {
             // Loading main gif
             Glide.with(holder.itemView.context)
-                .load(item?.profilPicture)
+                .load(item.displayDestAvatar)
                 .transform(MultiTransformation(CenterCrop(), FitCenter(), RoundedCorners(90)))
                 .into(holder.gif)
 
@@ -71,7 +73,7 @@ class FriendsAdapter(private val users: ArrayList<User?>?, val callBack : (User?
     }
 
     override fun getItemCount(): Int {
-        return users!!.size  // vraiment pas sur de ca
+        return users.size  // vraiment pas sur de ca
     }
 
 }

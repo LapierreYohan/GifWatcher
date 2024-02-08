@@ -1,7 +1,12 @@
 package com.example.gifs_watcher.database.services
 
+import com.example.gifs_watcher.models.FriendRequest
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.maps.models.GifMap
+import com.example.gifs_watcher.models.responses.Response
+import com.example.gifs_watcher.utils.enums.FriendError
+import com.example.gifs_watcher.utils.enums.FriendRequestType
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -23,6 +28,8 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
 
             // Image de profil par défaut
             user.profilPicture = "https://media.tenor.com/Gn82P94Ap5wAAAAd/beluga-cat.gif"
+            user.lowProfilPicture = "https://tenor.com/fr/view/random-xd-beluga-idk-zzz-bored-gif-25806498"
+            user.staticProfilPicture = "https://tenor.com/fr/view/random-xd-beluga-idk-zzz-bored-gif-25806498"
 
             val result = suspendCoroutine { cont ->
                 firestore.collection("users").document(user.idUsers!!).set(user)
@@ -219,7 +226,8 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
         try {
             val updateData = mapOf(
                 "profilPicture" to gif.url,
-                "lowProfilPicture" to gif.tinyUrl
+                "lowProfilPicture" to gif.tinyUrl,
+                "staticProfilPicture" to gif.preview
             )
 
             firestore.collection("users")
@@ -278,6 +286,331 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
             emit(result)
         } catch (e: Exception) {
             Timber.e("Firestore getLikedGifs error with userId $userId")
+            Timber.e(e)
+            emit(emptyList())
+        }
+    }
+
+    fun getUserByUsername(username: String) : Flow<User?> = flow {
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore.collection("users").whereEqualTo("username", username.lowercase()).get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            val user = documents.documents[0].toObject(User::class.java)
+                            cont.resume(user)
+                        } else {
+                            cont.resume(null)
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore getUserByUsername error with username $username")
+            Timber.e(e)
+            emit(null)
+        }
+    }
+
+    suspend fun sendFriendRequest(user: User, auth : User, request: FriendRequest) : Flow<Response<FriendRequest>> = flow {
+
+        val response = Response<FriendRequest>()
+        request.timestamp = Timestamp.now()
+
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore
+                    .collection("users")
+                    .document(user.idUsers!!)
+                    .collection("friendRequests")
+                    .document(auth.idUsers!!)
+                    .set(request)
+                    .addOnSuccessListener {
+                        cont.resume(true)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            if (result) {
+                response.addData(request)
+            } else {
+                response.addError(FriendError.UNKNOWN_ERROR)
+            }
+
+            emit(response)
+        } catch (e: Exception) {
+            Timber.e("Firestore sendFriendRequest error with user $user and request $request")
+            Timber.e(e)
+            response.addError(FriendError.UNKNOWN_ERROR)
+            emit(response)
+        }
+    }
+
+    fun isFriendOrPending(user: User, auth: User) : Flow<Boolean> = flow {
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore
+                    .collection("users")
+                    .document(auth.idUsers!!)
+                    .collection("friendRequests")
+                    .whereEqualTo("dest", user.username!!)
+                    .whereIn("status", listOf(FriendRequestType.PENDING_REQUEST.message, FriendRequestType.ACCEPTED_REQUEST.message))
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        cont.resume(!documents.isEmpty)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore isFriendOrPending error with user $user and auth $auth")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    fun isWaitingForResponse(user: User, auth: User) : Flow<Boolean> = flow {
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore
+                    .collection("users")
+                    .document(auth.idUsers!!)
+                    .collection("friendRequests")
+                    .whereEqualTo("dest", user.username!!)
+                    .whereEqualTo("status", FriendRequestType.ADD_REQUEST.message)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        cont.resume(!documents.isEmpty)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore isWaitingForResponse error with user $user and auth $auth")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    fun addPendingRequest(user: User, auth: User, request: FriendRequest) : Flow<Boolean> = flow {
+        request.timestamp = Timestamp.now()
+
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore
+                    .collection("users")
+                    .document(auth.idUsers!!)
+                    .collection("friendRequests")
+                    .document(user.idUsers!!)
+                    .set(request)
+                    .addOnSuccessListener {
+                        cont.resume(true)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+
+        } catch (e: Exception) {
+            Timber.e("Firestore addPendingRequest error with user $user and request $request")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    fun acceptFriendRequest(user: User, auth: User, request: FriendRequest) : Flow<Response<FriendRequest>> = flow {
+        val response = Response<FriendRequest>()
+        request.timestamp = Timestamp.now()
+
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore
+                    .collection("users")
+                    .document(auth.idUsers!!)
+                    .collection("friendRequests")
+                    .document(user.idUsers!!)
+                    .update(
+                        mapOf(
+                            "author" to request.author,
+                            "dest" to request.dest,
+                            "status" to request.status,
+                            "timestamp" to request.timestamp
+                        )
+                    )
+                    .addOnSuccessListener {
+                        cont.resume(true)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            if (result) {
+                response.addData(request)
+            } else {
+                response.addError(FriendError.UNKNOWN_ERROR)
+            }
+
+            emit(response)
+        } catch (e: Exception) {
+            Timber.e("Firestore acceptFriendRequest error with user $user and request $request")
+            Timber.e(e)
+            response.addError(FriendError.UNKNOWN_ERROR)
+            emit(response)
+        }
+    }
+
+    fun acceptPendingFriendRequest(user: User, auth: User, request: FriendRequest) : Flow<Boolean> = flow {
+        request.timestamp = Timestamp.now()
+
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore
+                    .collection("users")
+                    .document(user.idUsers!!)
+                    .collection("friendRequests")
+                    .document(auth.idUsers!!)
+                    .update(
+                        mapOf(
+                            "author" to request.author,
+                            "dest" to request.dest,
+                            "status" to request.status,
+                            "timestamp" to request.timestamp
+                        )
+                    )
+                    .addOnSuccessListener {
+                        cont.resume(true)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore acceptPendingRequest error with user $user and request $request")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    fun getAllPendingRequests(user: User) : Flow<List<FriendRequest>> = flow {
+        try {
+            val result = suspendCoroutine<List<FriendRequest>> { cont ->
+                firestore
+                    .collection("users")
+                    .document(user.idUsers!!)
+                    .collection("friendRequests")
+                    .whereEqualTo("status", FriendRequestType.PENDING_REQUEST.message)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val requests = mutableListOf<FriendRequest>()
+                        for (document in documents) {
+                            val request = FriendRequest(
+                                author = document.getString("author")!!,
+                                dest = document.getString("dest")!!,
+                                displayDestId = null,
+                                displayDest = null,
+                                displayDestAvatar = null,
+                                status = document.getString("status")!!,
+                                timestamp = document.getTimestamp("timestamp")!!
+                            )
+                            request.let { requests.add(it) }
+                        }
+                        cont.resume(requests)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore getAllPendingRequests error with user $user")
+            Timber.e(e)
+            emit(emptyList())
+        }
+    }
+
+    fun getAllFriends(user: User) : Flow<List<FriendRequest>> = flow {
+        try {
+            val result = suspendCoroutine<List<FriendRequest>> { cont ->
+                firestore
+                    .collection("users")
+                    .document(user.idUsers!!)
+                    .collection("friendRequests")
+                    .whereEqualTo("status", FriendRequestType.ACCEPTED_REQUEST.message)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val requests = mutableListOf<FriendRequest>()
+                        for (document in documents) {
+                            val request = FriendRequest(
+                                author = document.getString("author")!!,
+                                dest = document.getString("dest")!!,
+                                displayDestId = null,
+                                displayDest = null,
+                                displayDestAvatar = null,
+                                status = document.getString("status")!!,
+                                timestamp = document.getTimestamp("timestamp")!!
+                            )
+                            request.let { requests.add(it) }
+                        }
+                        cont.resume(requests)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore getAllFriends error with user $user")
+            Timber.e(e)
+            emit(emptyList())
+        }
+    }
+
+    fun getAllFriendRequests(user: User) : Flow<List<FriendRequest>> = flow {
+        try {
+            val result = suspendCoroutine<List<FriendRequest>> { cont ->
+                firestore
+                    .collection("users")
+                    .document(user.idUsers!!)
+                    .collection("friendRequests")
+                    .whereEqualTo("status", FriendRequestType.ADD_REQUEST.message)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val requests = mutableListOf<FriendRequest>()
+                        for (document in documents) {
+                            val request = FriendRequest(
+                                author = document.getString("author")!!,
+                                dest = document.getString("dest")!!,
+                                displayDestId = null,
+                                displayDest = null,
+                                displayDestAvatar = null,
+                                status = document.getString("status")!!,
+                                timestamp = document.getTimestamp("timestamp")!!
+                            )
+                            request.let { requests.add(it) }
+                        }
+                        cont.resume(requests)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore getAllFriendRequests error with user $user")
             Timber.e(e)
             emit(emptyList())
         }

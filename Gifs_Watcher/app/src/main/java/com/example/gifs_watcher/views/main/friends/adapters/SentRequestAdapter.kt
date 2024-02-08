@@ -1,5 +1,6 @@
 package com.example.gifs_watcher.views.main.friends.adapters
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +17,12 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.gifs_watcher.R
-import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.models.FriendRequest
 import com.example.gifs_watcher.utils.enums.FriendPopUpType
 import com.example.gifs_watcher.views.main.friends.popUp.FriendsPopup
 
 
-class SentRequesteAdapter(private val users: ArrayList<User?>?) : RecyclerView.Adapter<SentRequesteAdapter.ItemViewHolder>() {
+class SentRequestAdapter(private val users: ArrayList<FriendRequest>, private val title : TextView) : RecyclerView.Adapter<SentRequestAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
@@ -34,26 +35,29 @@ class SentRequesteAdapter(private val users: ArrayList<User?>?) : RecyclerView.A
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.sent_request_card_list, parent, false)
+
         return ItemViewHolder(adapterLayout)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         Log.println(Log.INFO,"debug","onBindViewHolder open" )
-        val item = users?.get(position)
+        val item = users[position]
         Log.println(Log.INFO,"debug", "onBindViewHolder item : $item")
+
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.card.context, "Clicked: ${item?.displayname}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(holder.card.context, "Clicked: ${item.displayDest}", Toast.LENGTH_SHORT).show()
         }
         holder.action.setOnClickListener {
-            val showPopUp = FriendsPopup(item!!, FriendPopUpType.DELETE_SENT, "Annuler votre demande", "Voulez vous vraiment annuler votre demande d'amis envers ${item.displayname} ?")
+            val showPopUp = FriendsPopup(item, FriendPopUpType.DELETE_SENT, "Annuler votre demande", "Voulez vous vraiment annuler votre demande d'amis envers ${item.displayDest} ?")
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
-        holder.textView.text = item?.displayname
-        holder.descView.text = item?.username
+
+        holder.textView.text = item.displayDest
+        holder.descView.text = item.dest
         try {
             // Loading main gif
             Glide.with(holder.itemView.context)
-                .load(item?.profilPicture)
+                .load(item.displayDestAvatar)
                 .transform(MultiTransformation(CenterCrop(), FitCenter(), RoundedCorners(90)))
                 .into(holder.gif)
 
@@ -67,7 +71,7 @@ class SentRequesteAdapter(private val users: ArrayList<User?>?) : RecyclerView.A
     }
 
     override fun getItemCount(): Int {
-        return users!!.size  // vraiment pas sur de ca
+        return users.size  // vraiment pas sur de ca
     }
 
 }

@@ -10,14 +10,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:id="@+id/add_friends_CardDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:background="@drawable/surface_container_low_round"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+
+    <TextView
             android:id="@+id/tv_add_friends_popUp_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,9 +27,9 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/alata"
             android:text="Title"
+            android:textColor="@color/md_theme_dark_onBackground"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/md_theme_dark_onBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="16dp"
             android:background="@android:color/transparent"
             android:text="Button"
@@ -59,7 +60,7 @@
             android:id="@+id/bt_add_friends_popup_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
             android:text="Button"
@@ -80,31 +81,35 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/add_friend_textinput"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:hint="@string/addFriendPopUp_title"
+            android:layout_height="63dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Utilisateur"
             android:textColorHint="@color/md_theme_dark_onSurface"
             android:theme="@style/EditTextTheme"
             app:hintTextAppearance="@style/EditTextThemeLayout"
+            app:startIconDrawable="@drawable/identidiant_icon"
+            app:startIconMinSize="30dp"
+            app:startIconTint="@color/md_theme_dark_onSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_add_friends_popUp_title"
-            app:startIconDrawable="@drawable/identidiant_icon"
-            app:startIconMinSize="30dp"
-            app:startIconTint="@color/md_theme_dark_onSurface">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_identifiant_textinput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/md_theme_dark_surfaceVariant"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
+                android:textColorHint="@color/md_theme_dark_onSurfaceVariant"
                 android:textColor="@color/md_theme_dark_onSurface"
-                android:textColorHint="@color/md_theme_dark_onSurfaceVariant" />
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                />
         </com.google.android.material.textfield.TextInputLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

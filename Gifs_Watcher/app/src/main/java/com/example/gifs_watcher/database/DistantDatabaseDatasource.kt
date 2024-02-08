@@ -1,11 +1,13 @@
 package com.example.gifs_watcher.database
 
+import com.example.gifs_watcher.models.FriendRequest
 import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.models.responses.Response
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 
 object DistantDatabaseDatasource {
     suspend fun login(id : String, password : String) : Flow<Response<User>> = flow {
@@ -114,6 +116,69 @@ object DistantDatabaseDatasource {
 
     suspend fun getLikedGifs(userId : String, type : String) : Flow<List<GifMap>> = flow {
         DistantDatabase.firestoreService.getLikedGifs(userId, type).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun getUserByUsername(username : String) : Flow<User?> = flow {
+        DistantDatabase.firestoreService.getUserByUsername(username).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun sendFriendRequest(user: User, auth : User, request: FriendRequest) : Flow<Response<FriendRequest>> = flow {
+        DistantDatabase.firestoreService.sendFriendRequest(user, auth, request).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun isFriendOrPending(user: User, auth : User) : Flow<Boolean> = flow {
+        DistantDatabase.firestoreService.isFriendOrPending(user, auth).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun isWaitingForResponse(user: User, auth : User) : Flow<Boolean> = flow {
+        DistantDatabase.firestoreService.isWaitingForResponse(user, auth).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun addPendingRequest(user: User, auth : User, request : FriendRequest) : Flow<Boolean> = flow {
+        DistantDatabase.firestoreService.addPendingRequest(user, auth, request).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun acceptFriendRequest(user: User, auth : User, request : FriendRequest) : Flow<Response<FriendRequest>> = flow {
+        DistantDatabase.firestoreService.acceptFriendRequest(user, auth, request).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun acceptPendingFriendRequest(user: User, auth : User, request : FriendRequest) : Flow<Boolean> = flow {
+        DistantDatabase.firestoreService.acceptPendingFriendRequest(user, auth, request).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun getAllPendingRequests(user: User) : Flow<List<FriendRequest>> = flow {
+        DistantDatabase.firestoreService.getAllPendingRequests(user).collect{
+            Timber.e("getAllPendingRequests: $it")
+            emit(it)
+        }
+    }
+
+    suspend fun getAllFriends(user: User) : Flow<List<FriendRequest>> = flow {
+        DistantDatabase.firestoreService.getAllFriends(user).collect{
+            Timber.e("getAllFriends: $it")
+            emit(it)
+        }
+    }
+
+    suspend fun getAllFriendRequests(user: User) : Flow<List<FriendRequest>> = flow {
+        DistantDatabase.firestoreService.getAllFriendRequests(user).collect{
+            Timber.e("getAllFriendRequests: $it")
             emit(it)
         }
     }

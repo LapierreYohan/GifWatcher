@@ -19,4 +19,6 @@ data class User (
     var profilPicture: String? = null,
 
     var lowProfilPicture: String? = null,
+
+    var staticProfilPicture : String? = null,
 )

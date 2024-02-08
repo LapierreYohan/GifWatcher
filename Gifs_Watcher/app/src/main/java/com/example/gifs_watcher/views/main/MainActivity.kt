@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +35,26 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_friends, R.id.navigation_home, R.id.navigation_profil
             )
         )
+
+        mainViewModel.friendsRequestNumber.observe(this) { response ->
+            response?.let {number ->
+
+                val nav = binding.navView
+                val badge = nav.getOrCreateBadge(R.id.navigation_friends)
+
+                if (number > 0) {
+                    Timber.e("number: $number")
+
+                    badge.number = number
+                    badge.isVisible = true
+                } else {
+                    badge.number = 0
+                    badge.isVisible = false
+                }
+            }
+        }
+
+        mainViewModel.listenFriendsRequest()
 
         mainViewModel.getRandomGif()
 

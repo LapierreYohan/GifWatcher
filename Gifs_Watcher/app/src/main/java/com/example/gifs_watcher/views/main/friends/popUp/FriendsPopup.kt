@@ -1,5 +1,6 @@
 package com.example.gifs_watcher.views.main.friends.popUp
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -63,6 +64,7 @@ class FriendsPopup(): DialogFragment() {
                     dismiss()                }
                 btnRightTV.setOnClickListener {
                     _acceptFriend.postValue(user.dest)
+                    dismiss()
                 }
             }
             FriendPopUpType.REFUSE_PENDING -> {
@@ -76,6 +78,7 @@ class FriendsPopup(): DialogFragment() {
                     dismiss()                }
                 btnRightTV.setOnClickListener {
                     _denyFriend.postValue(user.dest)
+                    dismiss()
                 }
             }
             FriendPopUpType.DELETE_FRIEND -> {
@@ -89,6 +92,7 @@ class FriendsPopup(): DialogFragment() {
                     dismiss()                }
                 btnRightTV.setOnClickListener {
                     _deleteFriend.postValue(user.dest)
+                    dismiss()
                 }
             }
             FriendPopUpType.DELETE_SENT -> {
@@ -103,6 +107,7 @@ class FriendsPopup(): DialogFragment() {
                 }
                 btnRightTV.setOnClickListener {
                     _cancelRequest.postValue(user.dest)
+                    dismiss()
                 }
             }
             FriendPopUpType.ADD_FRIEND -> {

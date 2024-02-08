@@ -71,6 +71,9 @@ class MainViewModel : ViewModel() {
     private val sharesGif : MutableLiveData<ArrayList<GifMap?>> = MutableLiveData(arrayListOf())
     val shares : LiveData<ArrayList<GifMap?>> = sharesGif
 
+    private val _friendsRequestNumber : MutableLiveData<Int> = MutableLiveData()
+    val friendsRequestNumber : LiveData<Int> = _friendsRequestNumber
+
     var seeGifTraitement : Boolean = false
 
     fun getRandomGif(theme: String = "") {
@@ -130,6 +133,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             userRepo.getAllFriendRequests().collect {
                 pendingFriends.postValue(ArrayList(it))
+                _friendsRequestNumber.postValue(it.size)
             }
         }
     }
@@ -388,7 +392,6 @@ class MainViewModel : ViewModel() {
         //Add user to friends list
         userRepo.acceptFriendRequest(dest).collect { request ->
             //Notify user
-            notifyUser(dest)
             _addedFriendResponse.postValue(request)
         }
     }
@@ -401,16 +404,69 @@ class MainViewModel : ViewModel() {
             userRepo.addPendingRequest(dest).collect { success ->
                 if (success) {
                     //Notify user
-                    notifyUser(dest)
                     _addedFriendResponse.postValue(request)
                 }
             }
         }
     }
 
-    private suspend fun notifyUser(dest : User) {
+    private fun notifyUser() {
         this.getFriendsUsers()
         this.getPendingFriendsUsers()
         this.getSentFriendsUsers()
+    }
+
+    fun acceptFriend(username: String) {
+        viewModelScope.launch {
+            userRepo.getUserByUsername(username).collect { dest ->
+                if (dest != null) {
+                    userRepo.acceptFriendRequest(dest).collect {
+                    }
+                }
+            }
+        }
+    }
+
+    fun denyFriend(username: String) {
+        viewModelScope.launch {
+            userRepo.getUserByUsername(username).collect { dest ->
+                if (dest != null) {
+                    userRepo.removeFriendRequest(dest).collect {
+                    }
+                }
+            }
+        }
+    }
+
+    fun deleteFriend(username: String) {
+        viewModelScope.launch {
+            userRepo.getUserByUsername(username).collect { dest ->
+                if (dest != null) {
+                    userRepo.removeFriendRequest(dest).collect {
+                    }
+                }
+            }
+        }
+    }
+
+    fun cancelRequest(username: String) {
+        viewModelScope.launch {
+            userRepo.getUserByUsername(username).collect { dest ->
+                if (dest != null) {
+                    userRepo.removeFriendRequest(dest).collect {
+                    }
+                }
+            }
+        }
+    }
+
+    fun listenFriendsRequest() {
+        viewModelScope.launch {
+            userRepo.setUpFriendsRequestListener().collect {notify ->
+                if (notify) {
+                    notifyUser()
+                }
+            }
+        }
     }
 }

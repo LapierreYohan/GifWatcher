@@ -10,7 +10,9 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import kotlin.coroutines.resume
@@ -614,5 +616,46 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
             Timber.e(e)
             emit(emptyList())
         }
+    }
+
+    fun removeFriendRequest(user: User, auth: User) : Flow<Boolean> = flow {
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore
+                    .collection("users")
+                    .document(user.idUsers!!)
+                    .collection("friendRequests")
+                    .document(auth.idUsers!!)
+                    .delete()
+                    .addOnSuccessListener {
+                        cont.resume(true)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore removeFriendRequest error with user $user and auth $auth")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    fun setupSnapShotListener(user: User): Flow<Boolean> = callbackFlow {
+        val listener = firestore
+            .collection("users")
+            .document(user.idUsers!!)
+            .collection("friendRequests")
+            .addSnapshotListener { _, error ->
+                if (error != null) {
+                    close(error)
+                } else {
+                    trySend(true).isSuccess
+                }
+            }
+
+        awaitClose { listener.remove() }
     }
 }

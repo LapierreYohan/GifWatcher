@@ -183,5 +183,26 @@ object UserRepository {
             emit (listWithUserData)
         }
     }
+
+    fun removeFriendRequest(user: User) : Flow<Boolean> = flow {
+        val auth = cache.getAuthUser()!!
+
+        database.removeFriendRequest(user, auth).collect { firstFinish ->
+            if (firstFinish) {
+                database.removeFriendRequest(auth, user).collect { secondFinish ->
+                    emit(secondFinish)
+                }
+            } else {
+                emit(false)
+            }
+        }
+    }
+
+    fun setUpFriendsRequestListener() : Flow<Boolean> = flow {
+        val auth = cache.getAuthUser()!!
+        database.setUpFriendsRequestListener(auth).collect {
+            emit(it)
+        }
+    }
 }
 

@@ -9,6 +9,7 @@ import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.example.gifs_watcher.views.main.friends.adapters.FriendsAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.PendingRequesteAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.SentRequestAdapter
 import com.example.gifs_watcher.views.main.friends.popUp.AddFriendsPopup
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
 
 class FriendsFragment : Fragment() {
@@ -91,11 +93,23 @@ class FriendsFragment : Fragment() {
 
         mainViewModel.pendings.observe(viewLifecycleOwner) { response ->
             Timber.e("pendings: $response")
-            response?.let {
+            response?.let { it ->
                 pendingTitle.text = "Pending Request - ${it.size}"
                 val adapter = PendingRequesteAdapter(it, pendingTitle)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
+
+                adapter.acceptFriend.observe(viewLifecycleOwner) { response ->
+                    response?.let {username ->
+                        mainViewModel.acceptFriend(username)
+                    }
+                }
+
+                adapter.denyFriend.observe(viewLifecycleOwner) { response ->
+                    response?.let {username ->
+                        mainViewModel.denyFriend(username)
+                    }
+                }
             }
         }
 
@@ -115,6 +129,12 @@ class FriendsFragment : Fragment() {
                 val adapter = FriendsAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
+
+                adapter.deleteFriend.observe(viewLifecycleOwner) { response ->
+                    response?.let {username ->
+                        mainViewModel.deleteFriend(username)
+                    }
+                }
             }
         }
 
@@ -134,6 +154,12 @@ class FriendsFragment : Fragment() {
                 val adapter = SentRequestAdapter(it, entTitle)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
+
+                adapter.cancelRequest.observe(viewLifecycleOwner) { response ->
+                    response?.let {username ->
+                        mainViewModel.cancelRequest(username)
+                    }
+                }
             }
         }
 

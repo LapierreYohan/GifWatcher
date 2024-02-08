@@ -182,4 +182,16 @@ object DistantDatabaseDatasource {
             emit(it)
         }
     }
+
+    suspend fun removeFriendRequest(user: User, auth : User) : Flow<Boolean> = flow {
+        DistantDatabase.firestoreService.removeFriendRequest(user, auth).collect{
+            emit(it)
+        }
+    }
+
+    suspend fun setUpFriendsRequestListener(user: User) : Flow<Boolean> = flow {
+        DistantDatabase.firestoreService.setupSnapShotListener(user).collect{
+            emit(it)
+        }
+    }
 }

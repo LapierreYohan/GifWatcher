@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -28,6 +30,9 @@ import java.util.Locale
 
 
 class FriendsAdapter(private val users: ArrayList<FriendRequest>) : RecyclerView.Adapter<FriendsAdapter.ItemViewHolder>() {
+
+    private val _deleteFriend : MutableLiveData<String> = MutableLiveData()
+    val deleteFriend : LiveData<String> = _deleteFriend
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
@@ -53,7 +58,14 @@ class FriendsAdapter(private val users: ArrayList<FriendRequest>) : RecyclerView
             Toast.makeText(holder.card.context, "Clicked: ${item.displayDest}", Toast.LENGTH_SHORT).show()
         }
         holder.action.setOnClickListener {
-            val showPopUp = FriendsPopup(item, FriendPopUpType.DELETE_FRIEND, "Supprimer ${item.displayDest}", "Voulez vous vraiment supprimer de vos amis ${item.displayDest} ?")
+            val showPopUp = FriendsPopup(item, FriendPopUpType.DELETE_FRIEND, "Delete ${item.displayDest}", "Do you really want to delete ${item.displayDest} from your friends ?")
+
+            showPopUp.deleteFriend.observeForever { response ->
+                response?.let {
+                    _deleteFriend.postValue(it)
+                }
+            }
+
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
 

@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -26,6 +28,9 @@ import java.util.Locale
 
 
 class SentRequestAdapter(private val users: ArrayList<FriendRequest>, private val title : TextView) : RecyclerView.Adapter<SentRequestAdapter.ItemViewHolder>() {
+
+    private val _cancelRequest : MutableLiveData<String> = MutableLiveData()
+    val cancelRequest : LiveData<String> = _cancelRequest
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
@@ -52,7 +57,14 @@ class SentRequestAdapter(private val users: ArrayList<FriendRequest>, private va
             Toast.makeText(holder.card.context, "Clicked: ${item.displayDest}", Toast.LENGTH_SHORT).show()
         }
         holder.action.setOnClickListener {
-            val showPopUp = FriendsPopup(item, FriendPopUpType.DELETE_SENT, "Annuler votre demande", "Voulez vous vraiment annuler votre demande d'amis envers ${item.displayDest} ?")
+            val showPopUp = FriendsPopup(item, FriendPopUpType.DELETE_SENT, "Cancel your request", "Do you really want to cancel your friend request to ${item.displayDest} ?")
+
+            showPopUp.cancelRequest.observeForever { response ->
+                response?.let {
+                    _cancelRequest.postValue(it)
+                }
+            }
+
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
 

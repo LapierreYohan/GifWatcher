@@ -28,8 +28,8 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
 
             // Image de profil par défaut
             user.profilPicture = "https://media.tenor.com/Gn82P94Ap5wAAAAd/beluga-cat.gif"
-            user.lowProfilPicture = "https://tenor.com/fr/view/random-xd-beluga-idk-zzz-bored-gif-25806498"
-            user.staticProfilPicture = "https://tenor.com/fr/view/random-xd-beluga-idk-zzz-bored-gif-25806498"
+            user.lowProfilPicture = "https://c.tenor.com/3sXHR0CjS1wAAAAC/tenor.gif"
+            user.staticProfilPicture = "https://c.tenor.com/3sXHR0CjS1wAAAAC/tenor.gif"
 
             val result = suspendCoroutine { cont ->
                 firestore.collection("users").document(user.idUsers!!).set(user)

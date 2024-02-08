@@ -23,6 +23,18 @@ class FriendsPopup(): DialogFragment() {
     private lateinit var title : String
     private lateinit var desc : String
 
+    private val _acceptFriend : MutableLiveData<String> = MutableLiveData()
+    val acceptFriend : LiveData<String> = _acceptFriend
+
+    private val _denyFriend : MutableLiveData<String> = MutableLiveData()
+    val denyFriend : LiveData<String> = _denyFriend
+
+    private val _deleteFriend : MutableLiveData<String> = MutableLiveData()
+    val deleteFriend : LiveData<String> = _deleteFriend
+
+    private val _cancelRequest : MutableLiveData<String> = MutableLiveData()
+    val cancelRequest : LiveData<String> = _cancelRequest
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,7 +62,7 @@ class FriendsPopup(): DialogFragment() {
                 btnLeftTV.setOnClickListener {
                     dismiss()                }
                 btnRightTV.setOnClickListener {
-                    Toast.makeText(context, "Clicked: Accepter", Toast.LENGTH_SHORT).show()
+                    _acceptFriend.postValue(user.dest)
                 }
             }
             FriendPopUpType.REFUSE_PENDING -> {
@@ -63,12 +75,12 @@ class FriendsPopup(): DialogFragment() {
                 btnLeftTV.setOnClickListener {
                     dismiss()                }
                 btnRightTV.setOnClickListener {
-                    Toast.makeText(context, "Clicked: Rejeter", Toast.LENGTH_SHORT).show()
+                    _denyFriend.postValue(user.dest)
                 }
             }
             FriendPopUpType.DELETE_FRIEND -> {
                 btnLeftTV.text = getString(R.string.cancel)
-                btnRightTV.text = getString(R.string.remove)
+                btnRightTV.text = getString(R.string.delete)
 
                 btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_errorContainer)!!)
                 btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onErrorContainer)!!)
@@ -76,21 +88,21 @@ class FriendsPopup(): DialogFragment() {
                 btnLeftTV.setOnClickListener {
                     dismiss()                }
                 btnRightTV.setOnClickListener {
-                    Toast.makeText(context, "Clicked: Supprimer", Toast.LENGTH_SHORT).show()
+                    _deleteFriend.postValue(user.dest)
                 }
             }
             FriendPopUpType.DELETE_SENT -> {
                 btnLeftTV.text = getString(R.string.cancel)
                 btnRightTV.text = getString(R.string.remove)
 
-                btnRightTV.setBackgroundColor(context?.getColor(R.color.md_theme_dark_errorContainer)!!)
-                btnRightTV.setTextColor(context?.getColor(R.color.md_theme_dark_onErrorContainer)!!)
+                btnRightTV.setBackgroundColor(context?.getColor(R.color.orange)!!)
+                btnRightTV.setTextColor(context?.getColor(R.color.white)!!)
 
                 btnLeftTV.setOnClickListener {
                     dismiss()
                 }
                 btnRightTV.setOnClickListener {
-                    Toast.makeText(context, "Clicked: Supprimer", Toast.LENGTH_SHORT).show()
+                    _cancelRequest.postValue(user.dest)
                 }
             }
             FriendPopUpType.ADD_FRIEND -> {
@@ -107,8 +119,6 @@ class FriendsPopup(): DialogFragment() {
                     Toast.makeText(context, "Clicked: Ajouter", Toast.LENGTH_SHORT).show()
                 }
             }
-
-
         }
 
         return view

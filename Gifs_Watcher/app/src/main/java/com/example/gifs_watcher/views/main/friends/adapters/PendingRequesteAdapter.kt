@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -27,6 +29,12 @@ import java.util.Locale
 
 
 class PendingRequesteAdapter(private val users: ArrayList<FriendRequest>, private val title : TextView) : RecyclerView.Adapter<PendingRequesteAdapter.ItemViewHolder>() {
+
+    private val _acceptFriend : MutableLiveData<String> = MutableLiveData()
+    val acceptFriend : LiveData<String> = _acceptFriend
+
+    private val _denyFriend : MutableLiveData<String> = MutableLiveData()
+    val denyFriend : LiveData<String> = _denyFriend
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.tv_title)
@@ -53,11 +61,25 @@ class PendingRequesteAdapter(private val users: ArrayList<FriendRequest>, privat
             Toast.makeText(holder.card.context, "Clicked: ${item.displayDest}", Toast.LENGTH_SHORT).show()
         }
         holder.actionValide.setOnClickListener {
-            val showPopUp = FriendsPopup(item, FriendPopUpType.ACCEPT_PENDING, "Accepter ${item.displayDest}", "Voulez vous vraiment accepter ${item.displayDest} ?")
+            val showPopUp = FriendsPopup(item, FriendPopUpType.ACCEPT_PENDING, "Accept ${item.displayDest}", "Do you really want to accept the friend request from ${item.displayDest} ?")
+
+            showPopUp.acceptFriend.observeForever { response ->
+                response?.let {
+                    _acceptFriend.postValue(it)
+                }
+            }
+
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
         holder.actionDelete.setOnClickListener {
-            val showPopUp = FriendsPopup(item, FriendPopUpType.REFUSE_PENDING, "Rejeter ${item.displayDest}", "Voulez vous vraiment rejeter la demande d'amis de ${item.displayDest} ?")
+            val showPopUp = FriendsPopup(item, FriendPopUpType.REFUSE_PENDING, "Reject ${item.displayDest}", "Do you really want to reject the friend request from ${item.displayDest} ?")
+
+            showPopUp.denyFriend.observeForever { response ->
+                response?.let {
+                    _denyFriend.postValue(it)
+                }
+            }
+
             showPopUp.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "Friends_popup")
         }
 

@@ -42,7 +42,7 @@ class FriendsFragment : Fragment() {
         _binding = FragmentFriendsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val showPopUp = AddFriendsPopup( "Ajouter un ami")
+        val showPopUp = AddFriendsPopup("Add a Friend")
 
         showPopUp.addedFriend.observe(viewLifecycleOwner) { response ->
             response?.let {

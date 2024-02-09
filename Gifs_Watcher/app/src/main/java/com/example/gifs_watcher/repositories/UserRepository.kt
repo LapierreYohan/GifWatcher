@@ -1,5 +1,6 @@
 package com.example.gifs_watcher.repositories
 
+import com.example.gifs_watcher.BuildConfig
 import com.example.gifs_watcher.cache.CacheDatasource
 import com.example.gifs_watcher.database.DistantDatabaseDatasource
 import com.example.gifs_watcher.models.FriendRequest
@@ -7,8 +8,16 @@ import com.example.gifs_watcher.models.User
 import com.example.gifs_watcher.models.responses.Response
 import com.example.gifs_watcher.utils.enums.FriendError
 import com.example.gifs_watcher.utils.enums.FriendRequestType
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import timber.log.Timber
 
 object UserRepository {
     private var cache : CacheDatasource = CacheDatasource
@@ -67,6 +76,7 @@ object UserRepository {
         val request = FriendRequest(
             author = user.username!!,
             displayDestId = null,
+            destToken = user.token!!,
             dest = auth.username!!,
             displayDestAvatar = null,
             displayDest = null,
@@ -100,6 +110,7 @@ object UserRepository {
         val request = FriendRequest(
             author = auth!!.username!!,
             displayDestId = null,
+            destToken = user.token!!,
             dest = user.username!!,
             displayDestAvatar = null,
             displayDest = null,
@@ -107,6 +118,11 @@ object UserRepository {
         )
 
         database.addPendingRequest(user, auth, request).collect {
+
+            val title = "Nouvelle demande d'amitié"
+            val body = "${auth.displayname} vous a envoyé une demande d'ami !"
+
+            sendFriendRequestNotification(user.token!!, title, body)
             emit(it)
         }
     }
@@ -117,6 +133,7 @@ object UserRepository {
         val requestAut = FriendRequest(
             author = auth!!.username!!,
             displayDestId = null,
+            destToken = auth.token!!,
             dest = user.username!!,
             displayDestAvatar = null,
             displayDest = null,
@@ -125,6 +142,7 @@ object UserRepository {
 
         val requestDest = FriendRequest(
             author = user.username!!,
+            destToken = user.token!!,
             displayDestId = null,
             dest = auth.username!!,
             displayDestAvatar = null,
@@ -134,6 +152,11 @@ object UserRepository {
 
         database.acceptFriendRequest(user, auth, requestAut).collect { response ->
             database.acceptPendingFriendRequest(user, auth, requestDest).collect {
+
+                val title = "Demande d'amitié acceptée"
+                val body = "${auth.displayname} a accepté votre demande d'ami !"
+
+                sendFriendRequestNotification(user.token!!, title, body)
                 emit(response)
             }
         }
@@ -202,6 +225,37 @@ object UserRepository {
         val auth = cache.getAuthUser()!!
         database.setUpFriendsRequestListener(auth).collect {
             emit(it)
+        }
+    }
+
+    private suspend fun sendFriendRequestNotification(fcmToken: String, title: String, body: String) {
+        withContext(Dispatchers.IO) {
+            try {
+                val client = OkHttpClient()
+                val apiUrl = BuildConfig.NOTIFICATION_API
+
+                val json = JSONObject().apply {
+                    put("fcmToken", fcmToken)
+                    put("title", title)
+                    put("body", body)
+                }
+
+                val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+                val request = Request.Builder()
+                    .url(apiUrl)
+                    .post(requestBody)
+                    .build()
+
+                val response = client.newCall(request).execute()
+
+                if (response.isSuccessful) {
+                    Timber.d("Notification sent successfully")
+                } else {
+                    Timber.e("Error sending notification: ${response.code}")
+                }
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
         }
     }
 }

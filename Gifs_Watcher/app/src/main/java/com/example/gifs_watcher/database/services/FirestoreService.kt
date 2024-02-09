@@ -10,6 +10,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -20,6 +21,8 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class FirestoreService(private var firestore: FirebaseFirestore) {
+
+
 
     suspend fun createUser(user: User) : Flow<Boolean> = flow {
 
@@ -32,6 +35,17 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
             user.profilPicture = "https://media.tenor.com/Gn82P94Ap5wAAAAd/beluga-cat.gif"
             user.lowProfilPicture = "https://c.tenor.com/3sXHR0CjS1wAAAAC/tenor.gif"
             user.staticProfilPicture = "https://c.tenor.com/3sXHR0CjS1wAAAAC/tenor.gif"
+
+            user.token = suspendCoroutine { cont ->
+                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Timber.e("FirebaseMessaging token error")
+                        cont.resume(null)
+                    } else {
+                        cont.resume(task.result)
+                    }
+                }
+            }
 
             val result = suspendCoroutine { cont ->
                 firestore.collection("users").document(user.idUsers!!).set(user)
@@ -46,6 +60,37 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
             emit(result)
         } catch (e: Exception) {
             Timber.e("Firestore createUser error with user $user")
+            Timber.e(e)
+            emit(false)
+        }
+    }
+
+    suspend fun updateToken(user: User) : Flow<Boolean> = flow {
+        try {
+            user.token = suspendCoroutine { cont ->
+                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Timber.e("FirebaseMessaging token error")
+                        cont.resume(null)
+                    } else {
+                        cont.resume(task.result)
+                    }
+                }
+            }
+
+            val result = suspendCoroutine { cont ->
+                firestore.collection("users").document(user.idUsers!!).update("token", user.token)
+                    .addOnSuccessListener {
+                        cont.resume(true)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore updateToken error with user $user")
             Timber.e(e)
             emit(false)
         }
@@ -523,7 +568,8 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
                                 displayDest = null,
                                 displayDestAvatar = null,
                                 status = document.getString("status")!!,
-                                timestamp = document.getTimestamp("timestamp")!!
+                                timestamp = document.getTimestamp("timestamp")!!,
+                                destToken = document.getString("destToken") ?: "",
                             )
                             request.let { requests.add(it) }
                         }
@@ -561,7 +607,8 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
                                 displayDest = null,
                                 displayDestAvatar = null,
                                 status = document.getString("status")!!,
-                                timestamp = document.getTimestamp("timestamp")!!
+                                timestamp = document.getTimestamp("timestamp")!!,
+                                destToken = document.getString("destToken") ?: "",
                             )
                             request.let { requests.add(it) }
                         }
@@ -599,7 +646,8 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
                                 displayDest = null,
                                 displayDestAvatar = null,
                                 status = document.getString("status")!!,
-                                timestamp = document.getTimestamp("timestamp")!!
+                                timestamp = document.getTimestamp("timestamp")!!,
+                                destToken = document.getString("destToken") ?: "",
                             )
                             request.let { requests.add(it) }
                         }

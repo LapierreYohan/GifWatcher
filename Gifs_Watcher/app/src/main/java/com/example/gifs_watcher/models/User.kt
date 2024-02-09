@@ -21,4 +21,6 @@ data class User (
     var lowProfilPicture: String? = null,
 
     var staticProfilPicture : String? = null,
+
+    var token : String? = null,
 )

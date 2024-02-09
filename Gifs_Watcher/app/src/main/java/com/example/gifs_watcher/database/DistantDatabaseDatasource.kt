@@ -6,6 +6,7 @@ import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.utils.enums.UserErrors
 import com.example.gifs_watcher.models.responses.Response
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 
@@ -18,8 +19,14 @@ object DistantDatabaseDatasource {
                 if (it != null) {
                     DistantDatabase.authService.login(it.mail!!, password).collect{ firebaseUser ->
                         if (firebaseUser != null) {
-                            response.addData(it)
-                            emit(response)
+                            DistantDatabase.firestoreService.updateToken(it) .collect {isTokenSet ->
+                                if (isTokenSet) {
+                                    DistantDatabase.firestoreService.getUserByUsernameOrEmail(id).collect{newUser ->
+                                        response.addData(newUser!!)
+                                        emit(response)
+                                    }
+                                }
+                            }
                         } else {
                             response.addError(UserErrors.ID_OR_PASSWORD_INVALID)
                             emit(response)

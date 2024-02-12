@@ -48,6 +48,14 @@ android {
             buildConfigField("String", "NOTIFICATION_API", "\"https://gifwatcher-notifs.onrender.com/send\"")
         }
 
+        create("recette") {
+            dimension = "environment"
+            versionNameSuffix = "-recette"
+            buildConfigField("String", "TENOR_API_KEY", "\"AIzaSyB-2TBQ-nEu3fCtMpo9EN9mfqjb9P9A3OA\"")
+            buildConfigField("String", "FIREBASE_API_KEY", "\"AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI\"")
+            buildConfigField("String", "NOTIFICATION_API", "\"https://gifwatcher-notifs.onrender.com/send\"")
+        }
+
         create("production") {
             dimension = "environment"
             versionNameSuffix = "-prod"

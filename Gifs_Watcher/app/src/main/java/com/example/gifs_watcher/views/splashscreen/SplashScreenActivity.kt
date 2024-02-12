@@ -29,6 +29,9 @@ class SplashScreenActivity : AppCompatActivity() {
             "production" -> {
                 setContentView(R.layout.activity_splash_screen_prod)
             }
+            "recette" -> {
+                setContentView(R.layout.activity_splash_screen_recette)
+            }
             else -> {
                 setContentView(R.layout.activity_splash_screen_dev)
             }

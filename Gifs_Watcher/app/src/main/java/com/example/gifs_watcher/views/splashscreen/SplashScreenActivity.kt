@@ -1,12 +1,17 @@
 package com.example.gifs_watcher.views.splashscreen
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gifs_watcher.BuildConfig
 import com.example.gifs_watcher.R
 import com.example.gifs_watcher.views.splashscreen.modals.LoginModal
+import pub.devrel.easypermissions.EasyPermissions
+import pub.devrel.easypermissions.PermissionRequest
 import timber.log.Timber
 
 @SuppressLint("CustomSplashScreen")
@@ -14,6 +19,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private val splashScreenViewModel : SplashScreenViewModel by viewModels<SplashScreenViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

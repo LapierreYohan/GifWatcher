@@ -89,7 +89,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.3")
 
     // Gson
-    implementation ("com.google.code.gson:gson:2.8.7")
+    implementation ("com.google.code.gson:gson:2.10")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Retrofit
@@ -99,16 +99,17 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // Picasso
-    implementation ("com.squareup.picasso:picasso:2.8")
+    implementation ("com.squareup.picasso:picasso:2.71828")
     implementation ("jp.wasabeef:picasso-transformations:2.4.0")
 
     // Co Routine
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("androidx.lifecycle:lifecycle-process:2.7.0")
 
     // Timber
     implementation ("com.jakewharton.timber:timber:5.0.1")
-    implementation("androidx.annotation:annotation:1.6.0")
+    implementation("androidx.annotation:annotation:1.7.1")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     // Firebase
@@ -118,14 +119,13 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
 
     // Chiffrement
     implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
-    implementation("com.google.firebase:firebase-messaging-ktx:23.4.0")
-    implementation("androidx.lifecycle:lifecycle-process:2.7.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     implementation ("jp.wasabeef:glide-transformations:4.3.0")
     implementation ("jp.co.cyberagent.android:gpuimage:2.1.0")
@@ -138,19 +138,19 @@ dependencies {
     implementation("com.google.android.gms:play-services-vision:20.1.3")
 
     // CameraX library
-    implementation("androidx.camera:camera-camera2:1.0.1")
-    implementation("androidx.camera:camera-lifecycle:1.0.1")
-    implementation("androidx.camera:camera-view:1.0.0-alpha30")
+    implementation("androidx.camera:camera-camera2:1.3.1")
+    implementation("androidx.camera:camera-lifecycle:1.3.1")
+    implementation("androidx.camera:camera-view:1.3.1")
 
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
 
     // Animations
     implementation ("com.airbnb.android:lottie:3.4.0")
-    implementation("com.daimajia.androidanimations:library:2.3@aar")
+    implementation("com.daimajia.androidanimations:library:2.4@aar")
 
     // Requêtes HTTP
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

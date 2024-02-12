@@ -1,10 +1,12 @@
 package com.example.gifs_watcher.views.splashscreen.modals
 
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
@@ -28,9 +31,19 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import pub.devrel.easypermissions.EasyPermissions
+import pub.devrel.easypermissions.PermissionRequest
+import timber.log.Timber
 
 @SuppressLint("StaticFieldLeak")
-object LoginModal : BottomSheetDialogFragment() {
+object LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallbacks {
+
+
+    private val NOTIFICATION_PERMISSION_REQUEST_CODE = 123
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private val NOTIFICATION_PERMISSION = Manifest.permission.POST_NOTIFICATIONS
+
 
     const val TAG = "ModalLogin"
     private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
@@ -48,6 +61,7 @@ object LoginModal : BottomSheetDialogFragment() {
 
     private lateinit var title : TextView
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.modal_fragment_login ,container,false)
 
@@ -128,6 +142,10 @@ object LoginModal : BottomSheetDialogFragment() {
                     }
                 }
             }
+        }
+
+        if (!hasNotificationPermission()) {
+            requestNotificationPermission()
         }
 
         return view
@@ -256,5 +274,27 @@ object LoginModal : BottomSheetDialogFragment() {
                 }
                 .playOn(this.appleSignInButton)
         }, delayBetweenAnimations * 2)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun hasNotificationPermission(): Boolean {
+        return EasyPermissions.hasPermissions(requireContext(), NOTIFICATION_PERMISSION)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun requestNotificationPermission() {
+        EasyPermissions.requestPermissions(
+            PermissionRequest.Builder(this, NOTIFICATION_PERMISSION_REQUEST_CODE, NOTIFICATION_PERMISSION)
+                .build()
+        )
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        Timber.d("Permission Notification granted")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        requestNotificationPermission()
     }
 }

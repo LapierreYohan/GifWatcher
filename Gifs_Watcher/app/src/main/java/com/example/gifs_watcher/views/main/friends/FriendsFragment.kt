@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +19,6 @@ import com.example.gifs_watcher.views.main.friends.adapters.FriendsAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.PendingRequesteAdapter
 import com.example.gifs_watcher.views.main.friends.adapters.SentRequestAdapter
 import com.example.gifs_watcher.views.main.friends.popUp.AddFriendsPopup
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
 
 class FriendsFragment : Fragment() {

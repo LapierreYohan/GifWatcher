@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var lastX: Float = 0.0f
     private var lastY: Float = 0.0f
     private var lastZ: Float = 0.0f
-    private val shakeThreshold = 2600
+    private val shakeThreshold = 3000
 
     private var flashHandler: Handler? = null
     private var flashRunnable: Runnable? = null

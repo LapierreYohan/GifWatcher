@@ -1,5 +1,6 @@
 package com.example.gifs_watcher.views.main
 
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
@@ -9,6 +10,7 @@ import android.hardware.SensorManager
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraManager
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +23,13 @@ import com.example.gifs_watcher.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
 import android.os.Handler
+import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
+import androidx.annotation.RequiresApi
+import pub.devrel.easypermissions.EasyPermissions
+import kotlin.math.abs
 
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
@@ -35,7 +44,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var lastX: Float = 0.0f
     private var lastY: Float = 0.0f
     private var lastZ: Float = 0.0f
-    private val shakeThreshold = 3000
+    private val shakeThreshold = 2500
 
     private var flashHandler: Handler? = null
     private var flashRunnable: Runnable? = null
@@ -47,6 +56,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModels<MainViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -118,14 +128,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         navView.setupWithNavController(navController)
     }
 
-    fun start() {
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-    }
-
-    fun stop() {
-        sensorManager.unregisterListener(this)
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -157,14 +159,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 val y = event.values[1]
                 val z = event.values[2]
 
-                val speed = Math.abs(x + y + z - lastX - lastY - lastZ) / diffTime * 10000
+                val speed = abs(x + y + z - lastX - lastY - lastZ) / diffTime * 10000
 
                 if (speed > shakeThreshold && !isMusicPlaying) {
                     // Le téléphone a été secoué
                     Timber.d("Shake detected!")
                     playMusic()
-                    flashHandler = Handler()
+                    flashHandler = Handler(Looper.getMainLooper())
                     flashRunnable = object : Runnable {
+                        @RequiresApi(Build.VERSION_CODES.O)
                         override fun run() {
                             toggleFlash() // Activer/désactiver le flash
                             flashHandler?.postDelayed(this, 50) // Délai de 2 secondes

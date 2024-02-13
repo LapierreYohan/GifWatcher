@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -135,6 +136,9 @@ class ProfilFragment : Fragment() {
                 val adapter = LikesAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
+                adapter.requestGif.observe(viewLifecycleOwner) { gifId ->
+                    mainViewModel.seeGif(gifId, findNavController())
+                }
             }
         }
     }
@@ -148,6 +152,9 @@ class ProfilFragment : Fragment() {
                 val adapter = LikesAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
+                adapter.requestGif.observe(viewLifecycleOwner) { gifId ->
+                    mainViewModel.seeGif(gifId, findNavController())
+                }
             }
         }
     }
@@ -161,6 +168,9 @@ class ProfilFragment : Fragment() {
                 val adapter = LikesAdapter(it)
                 rv.adapter = adapter
                 rv.layoutManager = LinearLayoutManager(this.context)
+                adapter.requestGif.observe(viewLifecycleOwner) { gifId ->
+                    mainViewModel.seeGif(gifId, findNavController())
+                }
             }
         }
     }

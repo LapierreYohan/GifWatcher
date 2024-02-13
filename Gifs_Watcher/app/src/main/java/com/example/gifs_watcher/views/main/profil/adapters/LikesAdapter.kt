@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -17,6 +19,8 @@ import com.example.gifs_watcher.models.maps.models.GifMap
 
 class LikesAdapter(private val gifs: ArrayList<GifMap?>?) : RecyclerView.Adapter<LikesAdapter.ItemViewHolder>() {
 
+    private val _requestGif : MutableLiveData<String> = MutableLiveData()
+    val requestGif : LiveData<String> = _requestGif
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.TitleGifA)
@@ -45,6 +49,10 @@ class LikesAdapter(private val gifs: ArrayList<GifMap?>?) : RecyclerView.Adapter
                 )
             )
             .into(holder.gif)
+
+        holder.itemView.setOnClickListener {
+            _requestGif.postValue(item?.id!!)
+        }
     }
 
     override fun getItemId(p0: Int): Long {

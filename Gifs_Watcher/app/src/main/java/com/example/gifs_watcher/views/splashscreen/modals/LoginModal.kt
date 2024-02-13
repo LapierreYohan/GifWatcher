@@ -3,6 +3,7 @@ package com.example.gifs_watcher.views.splashscreen.modals
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -10,12 +11,14 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -283,10 +286,15 @@ object LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallb
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestNotificationPermission() {
-        EasyPermissions.requestPermissions(
-            PermissionRequest.Builder(this, NOTIFICATION_PERMISSION_REQUEST_CODE, NOTIFICATION_PERMISSION)
-                .build()
-        )
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+        requestNotificationPermissionLauncher.launch(intent)
+    }
+
+    private val requestNotificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            Timber.d("Permission Notification granted")
+        }
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {

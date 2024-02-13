@@ -194,6 +194,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 // Réinitialiser l'indicateur une fois la musique terminée
                 isMusicPlaying = false
                 flashHandler?.removeCallbacks(flashRunnable!!)
+                cameraManager.setTorchMode(cameraId!!, false)
             }
         }
     }

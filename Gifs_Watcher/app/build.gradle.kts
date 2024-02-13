@@ -87,6 +87,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.3")
+    implementation("androidx.media:media:1.7.0")
 
     // Gson
     implementation ("com.google.code.gson:gson:2.10")

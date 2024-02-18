@@ -1,7 +1,7 @@
 package com.example.gifs_watcher.views.main
 
-import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -24,11 +24,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
 import android.os.Handler
 import android.os.Looper
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import androidx.annotation.RequiresApi
-import pub.devrel.easypermissions.EasyPermissions
+import com.example.gifs_watcher.views.splashscreen.SplashScreenActivity
 import kotlin.math.abs
 
 
@@ -120,8 +117,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             }
         }
 
-        mainViewModel.listenFriendsRequest()
+        mainViewModel.signOutResult.observe(this) { response ->
+            response?.let {
+                if (it) {
+                    Timber.d("Déconnexion réussie.")
+                    val intent = Intent(this, SplashScreenActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finishAffinity()
+                }
+            }
+        }
 
+        mainViewModel.listenFriendsRequest()
         mainViewModel.getRandomGif()
 
         setupActionBarWithNavController(navController, appBarConfiguration)

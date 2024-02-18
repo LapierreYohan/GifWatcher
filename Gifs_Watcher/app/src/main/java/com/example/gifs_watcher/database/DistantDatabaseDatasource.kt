@@ -201,4 +201,10 @@ object DistantDatabaseDatasource {
             emit(it)
         }
     }
+
+    suspend fun logout() : Flow<Boolean> = flow {
+        DistantDatabase.authService.logout().collect{
+            emit(it)
+        }
+    }
 }

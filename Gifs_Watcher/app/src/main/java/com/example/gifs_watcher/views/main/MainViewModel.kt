@@ -6,6 +6,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -30,6 +31,8 @@ import com.example.gifs_watcher.models.maps.models.GifMap
 import com.example.gifs_watcher.repositories.UserRepository
 import com.example.gifs_watcher.utils.enums.FriendError
 import com.example.gifs_watcher.utils.enums.GifErrors
+import com.example.gifs_watcher.views.splashscreen.SplashScreenActivity
+import com.example.gifs_watcher.views.splashscreen.modals.LoginModal
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -73,6 +76,10 @@ class MainViewModel : ViewModel() {
 
     private val _friendsRequestNumber : MutableLiveData<Int> = MutableLiveData()
     val friendsRequestNumber : LiveData<Int> = _friendsRequestNumber
+
+
+    private val _signOutResult = MutableLiveData<Boolean>()
+    val signOutResult: LiveData<Boolean> get() = _signOutResult
 
     var seeGifTraitement : Boolean = false
 
@@ -466,6 +473,14 @@ class MainViewModel : ViewModel() {
                 if (notify) {
                     notifyUser()
                 }
+            }
+        }
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            userRepo.signOut().collect {
+                _signOutResult.postValue(it)
             }
         }
     }

@@ -7,12 +7,16 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.navigation.NavController
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.models.Results
+import com.example.gifs_watcher.models.User
+import com.example.gifs_watcher.views.main.MainViewModel
 
-class ParameterMenu(private var context: Context, anchorView: View) {
+class ParameterMenu(private var context: Context, anchorView: View, viewModel : MainViewModel) {
 
     private val popupMenu: PopupMenu
-
+    private val mainViewModel = viewModel
     init {
         val wrapper: Context = ContextThemeWrapper(context, R.style.PopupMenuStyle)
         popupMenu = PopupMenu(wrapper, anchorView)
@@ -36,7 +40,9 @@ class ParameterMenu(private var context: Context, anchorView: View) {
             R.id.menu_parameters -> showToast("Paramètres sélectionné")
             R.id.menu_picture -> showToast("Changer la photo de profil")
             R.id.menu_profil -> showToast("Changer le nom d'utilisateur")
-            R.id.menu_sign_out -> showToast("Sign out")
+            R.id.menu_sign_out -> {
+                mainViewModel.signOut()
+            }
         }
     }
 

@@ -16,9 +16,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 @SuppressLint("StaticFieldLeak")
-object PasswordModal : BottomSheetDialogFragment() {
+class PasswordModal : BottomSheetDialogFragment() {
 
-    const val TAG = "ModalPassword"
+    val TAG = "ModalPassword"
 
     private lateinit var modal : ConstraintLayout
 
@@ -32,7 +32,7 @@ object PasswordModal : BottomSheetDialogFragment() {
         login.setOnClickListener {
             this.dismiss()
             this.modal.visibility = View.INVISIBLE
-            val loginMenu = LoginModal
+            val loginMenu = LoginModal()
             loginMenu.show(this.parentFragmentManager, loginMenu.TAG)
         }
 
@@ -70,13 +70,13 @@ object PasswordModal : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
         // Adapter la fenêtre à la taille de la modal
-        val dialog : Dialog? = PasswordModal.dialog
+        val dialog : Dialog? = this.dialog
 
         if (dialog != null) {
             val bottomSheet : View = dialog.findViewById(R.id.modal_fragment_pass)
             bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
 
-            val view : View? = PasswordModal.view
+            val view : View? = this.view
 
             view?.post {
                 val parent : View = view.parent as View

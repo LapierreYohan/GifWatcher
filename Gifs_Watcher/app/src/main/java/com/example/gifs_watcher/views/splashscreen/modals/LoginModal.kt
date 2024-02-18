@@ -39,16 +39,14 @@ import pub.devrel.easypermissions.PermissionRequest
 import timber.log.Timber
 
 @SuppressLint("StaticFieldLeak")
-object LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallbacks {
+class LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallbacks {
 
-
-    private val NOTIFICATION_PERMISSION_REQUEST_CODE = 123
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val NOTIFICATION_PERMISSION = Manifest.permission.POST_NOTIFICATIONS
 
 
-    const val TAG = "ModalLogin"
+    val TAG = "ModalLogin"
     private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
 
     private lateinit var modal : ConstraintLayout
@@ -83,7 +81,7 @@ object LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallb
         register.setOnClickListener {
             this.dismiss()
             this.modal.visibility = View.INVISIBLE
-            val registerMenu = RegisterModal
+            val registerMenu = RegisterModal()
             registerMenu.show(this.parentFragmentManager, registerMenu.TAG)
         }
 
@@ -92,7 +90,7 @@ object LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallb
         forgotPassword.setOnClickListener {
             this.dismiss()
             this.modal.visibility = View.INVISIBLE
-            val passwordMenu = PasswordModal
+            val passwordMenu = PasswordModal()
             passwordMenu.show(parentFragmentManager, passwordMenu.TAG)
         }
 
@@ -111,8 +109,14 @@ object LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallb
         this.idInputLayout.error = null
         this.passwordInputLayout.error = null
 
+        splashScreenViewModel.loggedLiveData.removeObservers(this)
         splashScreenViewModel.loggedLiveData.observe(this) {
+            if (it == null) {
+                return@observe
+            }
             if (it.success()) {
+                splashScreenViewModel.loggedLiveData.removeObservers(this)
+
                 this.startActivity()
             } else if (it.failed()) {
                 this.idInput.setText("")
@@ -146,6 +150,7 @@ object LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallb
                 }
             }
         }
+
 
         if (!hasNotificationPermission()) {
             requestNotificationPermission()
@@ -238,11 +243,15 @@ object LoginModal : BottomSheetDialogFragment(), EasyPermissions.PermissionCallb
     }
 
     private fun startActivity() {
-        val intent = Intent(this.context, MainActivity::class.java)
+
+        val closeIntent = Intent("ACTION_CLOSE_ACTIVITY")
+        context?.sendBroadcast(closeIntent)
 
         this.dismiss()
+        val intent = Intent(this.context, MainActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+
         startActivity(intent)
-        this.activity?.finish()
     }
 
     private fun animateSignInButtons() {

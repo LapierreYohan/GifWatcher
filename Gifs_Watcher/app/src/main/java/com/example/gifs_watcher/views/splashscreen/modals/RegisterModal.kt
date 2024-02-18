@@ -32,8 +32,8 @@ import java.time.ZoneId
 import java.util.Locale
 
 @SuppressLint("StaticFieldLeak")
-object RegisterModal : BottomSheetDialogFragment() {
-    const val TAG = "ModalRegister"
+class RegisterModal : BottomSheetDialogFragment() {
+    val TAG = "ModalRegister"
     private val splashScreenViewModel by activityViewModels<SplashScreenViewModel>()
 
     private lateinit var modal : ConstraintLayout
@@ -62,7 +62,7 @@ object RegisterModal : BottomSheetDialogFragment() {
         login.setOnClickListener {
             this.dismiss()
             this.modal.visibility = View.INVISIBLE
-            val loginMenu = LoginModal
+            val loginMenu = LoginModal()
             loginMenu.show(this.parentFragmentManager, loginMenu.TAG)
         }
 
@@ -234,13 +234,13 @@ object RegisterModal : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
         // Adapter la fenêtre à la taille de la modal
-        val dialog : Dialog? = RegisterModal.dialog
+        val dialog : Dialog? = this.dialog
 
         if (dialog != null) {
             val bottomSheet : View = dialog.findViewById(R.id.modal_fragment_sign)
             bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
 
-            val view : View? = RegisterModal.view
+            val view : View? = this.view
 
             view?.post {
 

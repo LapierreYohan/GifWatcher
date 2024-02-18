@@ -72,7 +72,7 @@ class ProfilFragment : Fragment() {
             this.bio.text = profilUser.bio
         }
 
-        this.parameterMenu = ParameterMenu(requireContext(), binding.profilParameters)
+        this.parameterMenu = ParameterMenu(requireContext(), binding.profilParameters, mainViewModel)
 
         try {
             Glide.with(this)
@@ -85,6 +85,9 @@ class ProfilFragment : Fragment() {
         } catch (e: Exception) {
             Log.println(Log.ERROR, "debug", "Gif create error : " + e.message)
         }
+
+        val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        selectedMenuItemId = sharedPreferences.getInt("selected_menu_item_id", R.id.menu_likes)
 
         return root
     }

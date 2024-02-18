@@ -24,8 +24,8 @@ class SplashScreenViewModel : ViewModel() {
     private var userRepo : UserRepository = UserRepository
     private var gifRepo : GifRepository = GifRepository
 
-    private val _loggedLiveData: MutableLiveData<Response<User>> = MutableLiveData()
-    val loggedLiveData : LiveData<Response<User>> = _loggedLiveData
+    private val _loggedLiveData: MutableLiveData<Response<User>?> = MutableLiveData()
+    val loggedLiveData : MutableLiveData<Response<User>?> = _loggedLiveData
 
     private val _signinLiveData: MutableLiveData<Response<User>> = MutableLiveData()
     val signinLiveData : LiveData<Response<User>> = _signinLiveData
@@ -35,7 +35,6 @@ class SplashScreenViewModel : ViewModel() {
     }
 
     fun login(id : String, password : String) {
-
         val response = Response<User>()
 
         if (id.isBlank()) {
@@ -175,5 +174,9 @@ class SplashScreenViewModel : ViewModel() {
         viewModelScope.launch {
             gifRepo.prepareGifs()
         }
+    }
+
+    fun resetLoginDetails() {
+        _loggedLiveData.postValue(null)
     }
 }

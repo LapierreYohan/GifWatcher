@@ -222,9 +222,11 @@ object UserRepository {
     }
 
     fun setUpFriendsRequestListener() : Flow<Boolean> = flow {
-        val auth = cache.getAuthUser()!!
-        database.setUpFriendsRequestListener(auth).collect {
-            emit(it)
+        val auth = cache.getAuthUser()
+        if (auth != null) {
+            database.setUpFriendsRequestListener(auth).collect {
+                emit(it)
+            }
         }
     }
 
@@ -256,6 +258,13 @@ object UserRepository {
             } catch (e: Exception) {
                 Timber.e(e)
             }
+        }
+    }
+
+    fun signOut() : Flow<Boolean> = flow {
+        database.logout().collect {
+            cache.setAuthUser(null)
+            emit(it)
         }
     }
 }

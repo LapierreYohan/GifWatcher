@@ -45,4 +45,17 @@ class AuthService(private var auth: FirebaseAuth) {
             throw e
         }
     }
+
+    suspend fun logout() : Flow<Boolean> = flow {
+        try {
+            val result = suspendCoroutine { cont ->
+                auth.signOut()
+                cont.resume(true)
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }

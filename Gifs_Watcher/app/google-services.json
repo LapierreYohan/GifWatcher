@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "783718256781",
+    "firebase_url": "https://gifswatcher-1695048501603-default-rtdb.firebaseio.com",
     "project_id": "gifswatcher-1695048501603",
     "storage_bucket": "gifswatcher-1695048501603.appspot.com"
   },
@@ -12,7 +13,12 @@
           "package_name": "com.example.gifs_watcher"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "783718256781-uhhpap96qbdlpivi1qra3dngtef18pqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI"
@@ -20,7 +26,99 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783718256781-uhhpap96qbdlpivi1qra3dngtef18pqo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783718256781:android:dd479811f54da93e4f92c4",
+        "android_client_info": {
+          "package_name": "com.example.gifs_watcher.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783718256781-uhhpap96qbdlpivi1qra3dngtef18pqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783718256781-uhhpap96qbdlpivi1qra3dngtef18pqo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783718256781:android:e872a42a2d12fd6f4f92c4",
+        "android_client_info": {
+          "package_name": "com.example.gifs_watcher.prod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783718256781-uhhpap96qbdlpivi1qra3dngtef18pqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783718256781-uhhpap96qbdlpivi1qra3dngtef18pqo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783718256781:android:91240dec90aab26e4f92c4",
+        "android_client_info": {
+          "package_name": "com.example.gifs_watcher.recette"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783718256781-uhhpap96qbdlpivi1qra3dngtef18pqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783718256781-uhhpap96qbdlpivi1qra3dngtef18pqo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

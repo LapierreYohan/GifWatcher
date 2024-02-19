@@ -43,6 +43,7 @@ android {
         create("develop") {
             dimension = "environment"
             versionNameSuffix = "-dev"
+            applicationIdSuffix = ".dev"
             buildConfigField("String", "TENOR_API_KEY", "\"AIzaSyB-2TBQ-nEu3fCtMpo9EN9mfqjb9P9A3OA\"")
             buildConfigField("String", "FIREBASE_API_KEY", "\"AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI\"")
             buildConfigField("String", "NOTIFICATION_API", "\"https://gifwatcher-notifs.onrender.com/send\"")
@@ -51,6 +52,7 @@ android {
         create("recette") {
             dimension = "environment"
             versionNameSuffix = "-recette"
+            applicationIdSuffix = ".recette"
             buildConfigField("String", "TENOR_API_KEY", "\"AIzaSyB-2TBQ-nEu3fCtMpo9EN9mfqjb9P9A3OA\"")
             buildConfigField("String", "FIREBASE_API_KEY", "\"AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI\"")
             buildConfigField("String", "NOTIFICATION_API", "\"https://gifwatcher-notifs.onrender.com/send\"")
@@ -59,6 +61,7 @@ android {
         create("production") {
             dimension = "environment"
             versionNameSuffix = "-prod"
+            applicationIdSuffix = ".prod"
             buildConfigField("String", "TENOR_API_KEY", "\"AIzaSyB-2TBQ-nEu3fCtMpo9EN9mfqjb9P9A3OA\"")
             buildConfigField("String", "FIREBASE_API_KEY", "\"AIzaSyDdl-e8gRE1eY3xgTWdfI0mUcm4_N6Y0UI\"")
             buildConfigField("String", "NOTIFICATION_API", "\"https://gifwatcher-notifs.onrender.com/send\"")

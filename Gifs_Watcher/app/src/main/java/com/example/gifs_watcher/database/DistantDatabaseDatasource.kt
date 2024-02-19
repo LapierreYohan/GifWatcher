@@ -49,7 +49,15 @@ object DistantDatabaseDatasource {
             if (it != null) {
                 val userId = it.uid
                 DistantDatabase.firestoreService.getUserById(userId).collect{ user ->
-                    emit(user)
+                    if (user != null) {
+                        DistantDatabase.firestoreService.updateToken(user).collect { isTokenSet ->
+                            if (isTokenSet) {
+                                DistantDatabase.firestoreService.getUserById(userId).collect{ finalUser ->
+                                    emit(finalUser)
+                                }
+                            }
+                        }
+                    }
                 }
             } else {
                 emit(null)

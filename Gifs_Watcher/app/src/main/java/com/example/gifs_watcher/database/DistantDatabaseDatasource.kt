@@ -44,6 +44,19 @@ object DistantDatabaseDatasource {
 
     }
 
+    fun getCurrentUser() : Flow<User?> = flow {
+        DistantDatabase.authService.getCurrentUser().collect{
+            if (it != null) {
+                val userId = it.uid
+                DistantDatabase.firestoreService.getUserById(userId).collect{ user ->
+                    emit(user)
+                }
+            } else {
+                emit(null)
+            }
+        }
+    }
+
     suspend fun register(userToInsert : User) : Flow<Response<User>> = flow {
 
         val response = Response<User>()

@@ -13,7 +13,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gifs_watcher.BuildConfig
 import com.example.gifs_watcher.R
+import com.example.gifs_watcher.views.main.MainActivity
 import com.example.gifs_watcher.views.splashscreen.modals.LoginModal
+import com.google.firebase.auth.FirebaseAuth
+import timber.log.Timber
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
@@ -55,7 +58,20 @@ class SplashScreenActivity : AppCompatActivity() {
 
         splashScreenViewModel.resetLoginDetails()
 
-        showLoginModal()
+        splashScreenViewModel.currentAuth.observe(this) {
+            if (it != null) {
+                Timber.d("User is logged in")
+                Timber.d("User is ${it.username}")
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                Timber.d("User is not logged in")
+                showLoginModal()
+            }
+        }
+
+        splashScreenViewModel.getLoggedUser()
     }
 
     private fun showLoginModal() {

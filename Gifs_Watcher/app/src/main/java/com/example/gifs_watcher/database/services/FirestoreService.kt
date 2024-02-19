@@ -176,6 +176,27 @@ class FirestoreService(private var firestore: FirebaseFirestore) {
         }
     }
 
+    suspend fun getUserById(id: String): Flow<User?> = flow {
+        try {
+            val result = suspendCoroutine { cont ->
+                firestore.collection("users").document(id).get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        val user = documentSnapshot.toObject(User::class.java)
+                        cont.resume(user)
+                    }
+                    .addOnFailureListener { exception ->
+                        cont.resumeWithException(exception)
+                    }
+            }
+
+            emit(result)
+        } catch (e: Exception) {
+            Timber.e("Firestore getUserById error with ID $id")
+            Timber.e(e)
+            emit(null)
+        }
+    }
+
     suspend fun checkGifAvailability(gifId: String): Flow<Boolean> = flow {
         try {
             val result = suspendCoroutine { cont ->

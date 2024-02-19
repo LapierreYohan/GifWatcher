@@ -58,4 +58,12 @@ class AuthService(private var auth: FirebaseAuth) {
             throw e
         }
     }
+
+    suspend fun getCurrentUser() : Flow<FirebaseUser?> = flow {
+        try {
+            emit(auth.currentUser)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }

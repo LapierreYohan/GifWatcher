@@ -267,5 +267,17 @@ object UserRepository {
             emit(it)
         }
     }
+
+    suspend fun getAuthUser() : Flow<User?> = flow {
+        val cacheUser = cache.getAuthUser()
+        if (cacheUser != null) {
+            emit(cacheUser)
+        } else {
+            database.getCurrentUser().collect {
+                cache.setAuthUser(it)
+                emit(it)
+            }
+        }
+    }
 }
 

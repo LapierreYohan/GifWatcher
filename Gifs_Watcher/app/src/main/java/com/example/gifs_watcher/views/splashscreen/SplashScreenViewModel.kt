@@ -24,6 +24,9 @@ class SplashScreenViewModel : ViewModel() {
     private var userRepo : UserRepository = UserRepository
     private var gifRepo : GifRepository = GifRepository
 
+    private val _currentAuth: MutableLiveData<User?> = MutableLiveData()
+    val currentAuth : MutableLiveData<User?> = _currentAuth
+
     private val _loggedLiveData: MutableLiveData<Response<User>?> = MutableLiveData()
     val loggedLiveData : MutableLiveData<Response<User>?> = _loggedLiveData
 
@@ -178,5 +181,13 @@ class SplashScreenViewModel : ViewModel() {
 
     fun resetLoginDetails() {
         _loggedLiveData.postValue(null)
+    }
+
+    fun getLoggedUser() {
+        viewModelScope.launch {
+            userRepo.getAuthUser().collect {
+                _currentAuth.postValue(it)
+            }
+        }
     }
 }
